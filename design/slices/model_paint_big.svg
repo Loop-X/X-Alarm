@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="240px" height="240px" viewBox="0 0 240 240" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.7.2 (28276) - http://www.bohemiancoding.com/sketch -->
+    <title>model_paint_big</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="clock-right-copy-3" transform="translate(-240.000000, -420.000000)">
+            <g id="model_paint_big" transform="translate(180.000000, 360.000000)">
+                <polygon id="Shape" points="0 0 360 0 360 360 0 360"></polygon>
+                <path d="M60,120 L120,120 L120,60 L60,60 L60,120 L60,120 Z M150,300 L210,300 L210,240 L150,240 L150,300 L150,300 Z M60,300 L120,300 L120,240 L60,240 L60,300 L60,300 Z M60,210 L120,210 L120,150 L60,150 L60,210 L60,210 Z M150,210 L210,210 L210,150 L150,150 L150,210 L150,210 Z M240,60 L240,120 L300,120 L300,60 L240,60 L240,60 Z M150,120 L210,120 L210,60 L150,60 L150,120 L150,120 Z M240,210 L300,210 L300,150 L240,150 L240,210 L240,210 Z M240,300 L300,300 L300,240 L240,240 L240,300 L240,300 Z" id="Shape" fill="#E60044"></path>
+            </g>
+        </g>
+    </g>
+</svg>

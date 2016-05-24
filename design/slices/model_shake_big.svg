@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="360px" height="270px" viewBox="0 0 360 270" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.7.2 (28276) - http://www.bohemiancoding.com/sketch -->
+    <title>model_shake_big</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="clock-right-copy-4" transform="translate(-180.000000, -405.000000)">
+            <g id="model_shake_big" transform="translate(180.000000, 360.000000)">
+                <polygon id="Shape" points="0 0 360 0 360 360 0 360"></polygon>
+                <path d="M0,225 L30,225 L30,135 L0,135 L0,225 L0,225 Z M45,255 L75,255 L75,105 L45,105 L45,255 L45,255 Z M330,135 L330,225 L360,225 L360,135 L330,135 L330,135 Z M285,255 L315,255 L315,105 L285,105 L285,255 L285,255 Z M247.5,45 L112.5,45 C100.05,45 90,55.05 90,67.5 L90,292.5 C90,304.95 100.05,315 112.5,315 L247.5,315 C259.95,315 270,304.95 270,292.5 L270,67.5 C270,55.05 259.95,45 247.5,45 L247.5,45 Z M240,285 L120,285 L120,75 L240,75 L240,285 L240,285 Z" id="Shape" fill="#E60044"></path>
+            </g>
+        </g>
+    </g>
+</svg>

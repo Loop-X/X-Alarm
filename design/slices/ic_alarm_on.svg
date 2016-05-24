@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="40px" height="41px" viewBox="0 0 40 41" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.7.2 (28276) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_alarm_on</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="clock-down" transform="translate(-606.000000, -233.000000)">
+            <g id="alarm" transform="translate(26.000000, 168.000000)">
+                <g id="ic_alarm_on" transform="translate(560.000000, 46.000000)">
+                    <polygon id="Shape" points="0 0 80 0 80 80 0 80"></polygon>
+                    <path d="M60,27.44 L50.8,19.72 L48.22,22.78 L57.42,30.5 L60,27.44 L60,27.44 Z M31.76,22.78 L29.2,19.72 L20,27.42 L22.58,30.48 L31.76,22.78 L31.76,22.78 Z M40,24 C30.06,24 22,32.06 22,42 C22,51.94 30.04,60 40,60 C49.94,60 58,51.94 58,42 C58,32.06 49.94,24 40,24 L40,24 Z M40,56 C32.26,56 26,49.74 26,42 C26,34.26 32.26,28 40,28 C47.74,28 54,34.26 54,42 C54,49.74 47.74,56 40,56 L40,56 Z M37.08,45.06 L32.82,40.8 L30.7,42.92 L37.06,49.28 L49.06,37.28 L46.94,35.16 L37.08,45.06 L37.08,45.06 Z" id="Shape" fill="#FFFFFF"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.7.2 (28276) - http://www.bohemiancoding.com/sketch -->
+    <title>colock_second</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <circle id="path-1" cx="32" cy="32" r="20"></circle>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.901960784   0 0 0 0 0   0 0 0 0 0.266666667  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="clock" transform="translate(-536.000000, -373.000000)">
+            <g id="colock_second" transform="translate(536.000000, 373.000000)">
+                <rect id="Rectangle-47" fill="#000000" opacity="0.01" x="0" y="0" width="64" height="64"></rect>
+                <g id="Oval-8">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                    <use fill="#060511" fill-rule="evenodd" xlink:href="#path-1"></use>
+                </g>
+                <path d="M38,36.3740021 C36.8820979,38.9692785 34.3012558,40.7862038 31.2960481,40.7862038 C27.266552,40.7862038 24,37.5196518 24,33.4901557 C24,30.6629271 25.6080885,28.2112877 27.9595031,27 C27.5784798,27.8845683 27.3674068,28.8595579 27.3674068,29.8838463 C27.3674068,33.9133424 30.6339588,37.1798944 34.6634549,37.1798944 C35.8657224,37.1798944 37.0000705,36.8890972 38,36.3740021 Z" id="Combined-Shape" fill="#FFFFFF"></path>
+                <polygon id="Star-1" fill="#FFFFFF" points="32.5 25.9429833 30.954915 26.7552826 31.25 25.0348052 30 23.8163563 31.7274575 23.5653421 32.5 22 33.2725425 23.5653421 35 23.8163563 33.75 25.0348052 34.045085 26.7552826"></polygon>
+                <polygon id="Star-1-Copy" fill="#FFFFFF" points="37.5 30.2846241 36.6047544 30.7552826 36.7757311 29.758412 36.0514622 29.0524243 37.0523772 28.9069828 37.5 28 37.9476228 28.9069828 38.9485378 29.0524243 38.2242689 29.758412 38.3952456 30.7552826"></polygon>
+                <polygon id="Star-1-Copy-2" fill="#FFFFFF" points="22.4485378 29.9554445 21.8782119 30.2552826 21.9871344 29.6202154 21.5257311 29.1704583 22.1633748 29.0778032 22.4485378 28.5 22.7337007 29.0778032 23.3713444 29.1704583 22.9099411 29.6202154 23.0188637 30.2552826"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>
