@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@android:color/holo_red_dark"
     tools:openDrawer="start">
 
     <!-- Main Content -->
@@ -19,7 +20,7 @@
         android:name="io.github.loop_x.yummywakeup.module.UnlockType.UnlockTypeFragment"
         android:layout_width="304dp"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
+        android:layout_gravity="left"
         android:tag="LEFT" />
 
     <!-- Right Menu -->
@@ -28,7 +29,7 @@
         android:name="io.github.loop_x.yummywakeup.module.Settings.SettingsFragment"
         android:layout_width="304dp"
         android:layout_height="match_parent"
-        android:layout_gravity="end"
+        android:layout_gravity="right"
         android:tag="RIGHT" />
 
 </android.support.v4.widget.DrawerLayout>
