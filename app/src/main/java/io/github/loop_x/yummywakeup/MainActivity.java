@@ -1,5 +1,6 @@
 package io.github.loop_x.yummywakeup;
 
+import android.graphics.Color;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 
@@ -18,6 +19,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onViewInitial() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout.setScrimColor(Color.TRANSPARENT); // Disable dark fading in Navigation Drawer
         mDrawerLayout.addDrawerListener(new DrawerListener());
     }
 
