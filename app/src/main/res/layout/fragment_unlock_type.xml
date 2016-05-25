@@ -5,10 +5,10 @@
     android:background="@android:color/holo_red_dark"
     tools:context="io.github.loop_x.yummywakeup.module.UnlockType.UnlockTypeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <ListView
+        android:id="@+id/fg_unlock_type_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:divider="@drawable/list_divider"/><!-- ToDo divider not work -->
 
 </FrameLayout>

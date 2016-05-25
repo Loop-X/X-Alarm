@@ -11,7 +11,9 @@ public abstract class BaseFragment extends Fragment implements AppComponentIniti
 
     // Root view of fragment
     private View viewContainer;
-    
+
+    // ToDo get parent activity
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
