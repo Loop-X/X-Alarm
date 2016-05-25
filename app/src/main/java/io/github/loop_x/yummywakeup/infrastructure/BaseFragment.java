@@ -1,6 +1,7 @@
-package io.github.loop_x.yummywakeup.infrastructure.fragment;
+package io.github.loop_x.yummywakeup.infrastructure;
 
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +10,7 @@ import android.view.ViewGroup;
 /**
  * Created by chuandong on 15/8/23.
  */
-public abstract class BaseFragment extends Fragment implements InitFragment {
+public abstract class BaseFragment extends Fragment implements AppComponentInitial {
 
     // Root view of fragment
     private View viewContainer;
@@ -18,44 +19,26 @@ public abstract class BaseFragment extends Fragment implements InitFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initConfig(getArguments());
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         viewContainer = inflater.inflate(getLayoutId(), container, false);
-        initView(viewContainer);
-        initListener();
-
+        onViewInitial();
         return viewContainer;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        refresh();
+        onRefreshData();
+    }
+    
+    protected View findViewById(@IdRes int id){
+        if (viewContainer == null) return null;
+        return viewContainer.findViewById(id);
     }
 
-  
-
-    // ------------------------------------------------------------------------
-    // BaseFragment features
-    // ------------------------------------------------------------------------
-
-    /**
-     * Refreshes View
-     */
-    public abstract void refresh();
-
-    /**
-     * Gets FragmentView
-     *
-     * @return root view of fragment
-     */
-    public View getFragmentView() {
-        return this.viewContainer;
-    }
-
+    
+   
 }

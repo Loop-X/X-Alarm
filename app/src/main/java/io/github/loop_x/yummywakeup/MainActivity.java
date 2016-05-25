@@ -1,13 +1,11 @@
 package io.github.loop_x.yummywakeup;
 
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 
 import com.nineoldandroids.view.ViewHelper;
 
-import io.github.loop_x.yummywakeup.infrastructure.activity.BaseActivity;
+import io.github.loop_x.yummywakeup.infrastructure.BaseActivity;
 
 public class MainActivity extends BaseActivity {
 
@@ -18,21 +16,19 @@ public class MainActivity extends BaseActivity {
         return R.layout.activity_main;
     }
 
+    
+    
+  
     @Override
-    public void initToolbar() {}
-
-    @Override
-    public void initView() {
+    public void onViewInitial() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-    }
-
-    @Override
-    public void initListener() {
         mDrawerLayout.addDrawerListener(new DrawerListener());
     }
 
+   
+
     @Override
-    public void initData() {
+    public void onRefreshData() {
 
     }
 
