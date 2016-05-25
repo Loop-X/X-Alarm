@@ -7,9 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * Created by chuandong on 15/8/23.
- */
 public abstract class BaseFragment extends Fragment implements AppComponentInitial {
 
     // Root view of fragment
@@ -38,7 +35,5 @@ public abstract class BaseFragment extends Fragment implements AppComponentIniti
         if (viewContainer == null) return null;
         return viewContainer.findViewById(id);
     }
-
-    
    
 }

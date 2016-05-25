@@ -45,13 +45,16 @@ public class MainActivity extends BaseActivity {
                 mContent.setTranslationX(mMenu.getMeasuredWidth() * (1 - scale));
                 mContent.setPivotX(0);
                 mContent.setPivotY(mContent.getMeasuredHeight() / 2);
+                mContent.invalidate();
                 mContent.setScaleX(rightScale);
                 mContent.setScaleY(rightScale);
+
             } else {
 
                 mContent.setTranslationX(-mMenu.getMeasuredWidth() * slideOffset);
                 mContent.setPivotX(mContent.getMeasuredWidth());
                 mContent.setPivotY(mContent.getMeasuredHeight() / 2);
+                mContent.invalidate();
                 mContent.setScaleX(rightScale);
                 mContent.setScaleY(rightScale);
 
