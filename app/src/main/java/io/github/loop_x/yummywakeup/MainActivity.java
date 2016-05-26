@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 
 import java.lang.reflect.Field;
@@ -96,6 +97,22 @@ public class MainActivity extends BaseActivity {
 
         }
 
+    }
+
+    /**
+     * Open Left Drawer
+     * @param view
+     */
+    public void openLeftDrawer(View view) {
+        mDrawerLayout.openDrawer(Gravity.LEFT);
+    }
+
+    /**
+     * Open Right Drawer
+     * @param view
+     */
+    public void openRightDrawer(View view) {
+        mDrawerLayout.openDrawer(Gravity.RIGHT);
     }
 
     /**
