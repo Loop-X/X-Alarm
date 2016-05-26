@@ -6,5 +6,6 @@
 
     <color name="black">#000</color>
     <color name="white">#fff</color>
+    <color name="white_opacity_half">#8fff</color>
 
 </resources>
