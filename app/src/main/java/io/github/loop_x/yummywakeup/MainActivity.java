@@ -2,12 +2,16 @@ package io.github.loop_x.yummywakeup;
 
 import android.graphics.Color;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.View;
 
 import io.github.loop_x.yummywakeup.infrastructure.BaseActivity;
 
 public class MainActivity extends BaseActivity {
 
+    
+    private static final String TAG = "yummywakeup.MainActivity";
+    
     private DrawerLayout mDrawerLayout;
 
     @Override
@@ -31,10 +35,17 @@ public class MainActivity extends BaseActivity {
 
     private class DrawerListener implements DrawerLayout.DrawerListener {
 
+
+        /**
+         * 
+         * @param drawerView The child menu view that was moved
+         * @param slideOffset center content view  to left|right menu : 0~1,
+         */
         @Override
         public void onDrawerSlide(View drawerView, float slideOffset) {
 
-            View mContent = mDrawerLayout.getChildAt(0);
+            Log.e("TAG",String.format("slideOffset : %f",slideOffset));
+            View centerView = mDrawerLayout.getChildAt(0);
             View mMenu = drawerView;
             float scale = 1 - slideOffset;
             float rightScale = 0.8f + scale * 0.2f;
@@ -44,21 +55,21 @@ public class MainActivity extends BaseActivity {
 
                 mMenu.setScaleX(leftScale);
                 mMenu.setScaleY(leftScale);
-                mContent.setTranslationX(mMenu.getMeasuredWidth() * (1 - scale));
-                mContent.setPivotX(0);
-                mContent.setPivotY(mContent.getMeasuredHeight() / 2);
-                mContent.invalidate();
-                mContent.setScaleX(rightScale);
-                mContent.setScaleY(rightScale);
+                centerView.setTranslationX(mMenu.getMeasuredWidth() * (1 - scale));
+                centerView.setPivotX(0);
+                centerView.setPivotY(centerView.getMeasuredHeight() / 2);
+                centerView.invalidate();
+                centerView.setScaleX(rightScale);
+                centerView.setScaleY(rightScale);
 
             } else {
 
-                mContent.setTranslationX(-mMenu.getMeasuredWidth() * slideOffset);
-                mContent.setPivotX(mContent.getMeasuredWidth());
-                mContent.setPivotY(mContent.getMeasuredHeight() / 2);
-                mContent.invalidate();
-                mContent.setScaleX(rightScale);
-                mContent.setScaleY(rightScale);
+                centerView.setTranslationX(-mMenu.getMeasuredWidth() * slideOffset);
+                centerView.setPivotX(centerView.getMeasuredWidth());
+                centerView.setPivotY(centerView.getMeasuredHeight() / 2);
+                centerView.invalidate();
+                centerView.setScaleX(rightScale);
+                centerView.setScaleY(rightScale);
 
             }
 
