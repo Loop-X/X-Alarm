@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/black"
+    android:background="@color/loopX_1"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -49,7 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:textColor="@color/white_opacity_half"
+        android:textColor="@color/loopX_2"
         android:textAlignment="center"
         android:text="@string/wake_up_in"/>
 

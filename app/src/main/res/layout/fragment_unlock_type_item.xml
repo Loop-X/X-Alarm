@@ -16,6 +16,6 @@
         android:layout_height="24dp"
         app:font="BebasNeue.otf"
         android:textSize="20sp"
-        android:textColor="@color/white"/>
+        android:textColor="@color/loopX_3"/>
 
 </LinearLayout>
