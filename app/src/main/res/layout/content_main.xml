@@ -2,55 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/loopX_1"
     android:orientation="vertical">
 
-    <RelativeLayout
+    
+    <AnalogClock
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:paddingLeft="22dp"
-        android:paddingRight="22dp"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentLeft="true"
-            android:onClick="openLeftDrawer"
-            android:src="@drawable/main_left" />
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/main_mid"/>
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentRight="true"
-            android:onClick="openRightDrawer"
-            android:src="@drawable/main_right"/>
-
-    </RelativeLayout>
-
-    <AnalogClock
-        android:layout_marginTop="30dp"
+        android:layout_marginBottom="15dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:layout_marginBottom="15dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:dial="@drawable/clock_main" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textColor="@color/loopX_2"
+        android:text="@string/wake_up_in"
         android:textAlignment="center"
-        android:text="@string/wake_up_in"/>
+        android:textColor="@color/loopX_2"
+        android:textSize="18sp" />
 
 </LinearLayout>

@@ -1,146 +1,123 @@
 package io.github.loop_x.yummywakeup;
 
-import android.graphics.Color;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.ViewDragHelper;
-import android.util.Log;
-import android.view.Gravity;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
-import java.lang.reflect.Field;
+import com.special.ResideMenu.ResideMenu;
+import com.special.ResideMenu.ResideMenuItem;
 
 import io.github.loop_x.yummywakeup.infrastructure.BaseActivity;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
-    
     private static final String TAG = "yummywakeup.MainActivity";
-    
-    private DrawerLayout mDrawerLayout;
+    private ResideMenu resideMenu;
+    private ResideMenuItem itemModelNormal;
+    private ResideMenuItem itemModeMath;
+    private ResideMenuItem itemModePaint;
+    private ResideMenuItem itemModeShake;
+    private View openRightDrawerView;
+    private View openLeftDrawerView;
+
+
 
     @Override
     public int getLayoutId() {
         return R.layout.activity_main;
     }
 
-
     @Override
     public void onViewInitial() {
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerLayout.setScrimColor(Color.TRANSPARENT); // Disable dark fading in Navigation Drawer
-        mDrawerLayout.addDrawerListener(new DrawerListener());
+        resideMenu = new ResideMenu(this);
+        resideMenu.setBackground(R.color.loopX_2);
+        resideMenu.attachToActivity(this);
+        resideMenu.setMenuListener(menuListener);
 
-        setDrawlayoutTouchArea("mLeftDragger", 3);
-        setDrawlayoutTouchArea("mRightDragger", 3);
+        resideMenu.setScaleValue(0.7f);
+
+        // create menu items;
+        itemModelNormal = new ResideMenuItem(this, R.drawable.model_normal, "NORMAL");
+        itemModeMath = new ResideMenuItem(this, R.drawable.model_math, "MATH");
+        itemModePaint = new ResideMenuItem(this, R.drawable.model_paint, "PAINT");
+        itemModeShake = new ResideMenuItem(this, R.drawable.model_shake, "SHAKE");
+
+        itemModelNormal.setOnClickListener(this);
+        itemModeMath.setOnClickListener(this);
+        itemModePaint.setOnClickListener(this);
+        itemModeShake.setOnClickListener(this);
+
+        resideMenu.addMenuItem(itemModelNormal, ResideMenu.DIRECTION_LEFT);
+        resideMenu.addMenuItem(itemModeMath, ResideMenu.DIRECTION_LEFT);
+        resideMenu.addMenuItem(itemModePaint, ResideMenu.DIRECTION_LEFT);
+        resideMenu.addMenuItem(itemModeShake, ResideMenu.DIRECTION_LEFT);
+
+        openRightDrawerView = findViewById(R.id.openRightDrawer);
+        openLeftDrawerView = findViewById(R.id.openLeftDrawer);
+
+        openLeftDrawerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
+            }
+        });
+
+        openRightDrawerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resideMenu.openMenu(ResideMenu.DIRECTION_RIGHT);
+            }
+        });
     }
-
 
     @Override
     public void onRefreshData() {
 
     }
 
-    private class DrawerListener implements DrawerLayout.DrawerListener {
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        return resideMenu.dispatchTouchEvent(ev);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == itemModelNormal) {
+            Toast.makeText(MainActivity.this, "Normal", Toast.LENGTH_SHORT).show();
+
+        } else if (v == itemModeMath) {
+            Toast.makeText(MainActivity.this, "Math", Toast.LENGTH_SHORT).show();
+
+        } else if (v == itemModePaint) {
+            Toast.makeText(MainActivity.this, "Paint", Toast.LENGTH_SHORT).show();
+
+        } else if (v == itemModeShake) {
+            Toast.makeText(MainActivity.this, "Shake", Toast.LENGTH_SHORT).show();
+        }
+    }
 
 
-        /**
-         * 
-         * @param drawerView The child menu view that was moved
-         * @param slideOffset center content view  to left|right menu : 0~1,
-         */
+    private void changeFragment(Fragment targetFragment) {
+        resideMenu.clearIgnoredViewList();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_fragment, targetFragment, "fragment")
+                .setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .commit();
+    }
+
+
+    private ResideMenu.OnMenuListener menuListener = new ResideMenu.OnMenuListener() {
         @Override
-        public void onDrawerSlide(View drawerView, float slideOffset) {
-
-            Log.e("TAG",String.format("slideOffset : %f",slideOffset));
-            View centerView = mDrawerLayout.getChildAt(0);
-            View mMenu = drawerView;
-            float scale = 1 - slideOffset;
-            float rightScale = 0.8f + scale * 0.2f;
-
-            if (drawerView.getTag().equals("LEFT")) {
-                float leftScale = 1 - 0.3f * scale;
-
-                mMenu.setScaleX(leftScale);
-                mMenu.setScaleY(leftScale);
-                centerView.setTranslationX(mMenu.getMeasuredWidth() * (1 - scale));
-                centerView.setPivotX(0);
-                centerView.setPivotY(centerView.getMeasuredHeight() / 2);
-                centerView.invalidate();
-                centerView.setScaleX(rightScale);
-                centerView.setScaleY(rightScale);
-
-            } else {
-
-                centerView.setTranslationX(-mMenu.getMeasuredWidth() * slideOffset);
-                centerView.setPivotX(centerView.getMeasuredWidth());
-                centerView.setPivotY(centerView.getMeasuredHeight() / 2);
-                centerView.invalidate();
-                centerView.setScaleX(rightScale);
-                centerView.setScaleY(rightScale);
-
-            }
-
+        public void openMenu() {
+            Toast.makeText(MainActivity.this, "Menu is opened!", Toast.LENGTH_SHORT).show();
         }
 
         @Override
-        public void onDrawerOpened(View drawerView) {
-
+        public void closeMenu() {
+            Toast.makeText(MainActivity.this, "Menu is closed!", Toast.LENGTH_SHORT).show();
         }
-
-        @Override
-        public void onDrawerClosed(View drawerView) {
-
-        }
-
-        @Override
-        public void onDrawerStateChanged(int newState) {
-
-        }
-
-    }
-
-    /**
-     * Open Left Drawer
-     * @param view
-     */
-    public void openLeftDrawer(View view) {
-        mDrawerLayout.openDrawer(Gravity.LEFT);
-    }
-
-    /**
-     * Open Right Drawer
-     * @param view
-     */
-    public void openRightDrawer(View view) {
-        mDrawerLayout.openDrawer(Gravity.RIGHT);
-    }
-
-    /**
-     * Set Drawlayout left/right dragger touch area
-     *
-     * @param dragger mLeftDragger | mRightDragger
-     */
-    private void setDrawlayoutTouchArea(String dragger, int area) {
-
-        Field mDragger = null;//mRightDragger for right obviously
-        try {
-            mDragger = mDrawerLayout.getClass().getDeclaredField(
-                    dragger);
-            mDragger.setAccessible(true);
-            ViewDragHelper draggerObj = (ViewDragHelper) mDragger.get(mDrawerLayout);
-
-            Field mEdgeSize = draggerObj.getClass().getDeclaredField(
-                    "mEdgeSize");
-            mEdgeSize.setAccessible(true);
-            int edge = mEdgeSize.getInt(draggerObj);
-
-            mEdgeSize.setInt(draggerObj, edge * area);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
-    }
-
+    };
 }
