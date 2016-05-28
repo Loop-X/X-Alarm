@@ -1,20 +1,25 @@
 package com.special.ResideMenu;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Rect;
-import android.os.Build;
 import android.util.DisplayMetrics;
-import android.view.*;
+import android.view.KeyCharacterMap;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
-import android.widget.*;
-
-import com.nineoldandroids.animation.Animator;
-import com.nineoldandroids.animation.AnimatorSet;
-import com.nineoldandroids.animation.ObjectAnimator;
-import com.nineoldandroids.view.ViewHelper;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +38,7 @@ public class ResideMenu extends FrameLayout {
     private static final int PRESSED_DOWN = 3;
     private static final int PRESSED_DONE = 4;
     private static final int PRESSED_MOVE_VERTICAL = 5;
-
+    private static final int ROTATE_Y_ANGLE = 10;
     private ImageView imageViewShadow;
     private ImageView imageViewBackground;
     private LinearLayout layoutLeftMenu;
@@ -71,9 +76,9 @@ public class ResideMenu extends FrameLayout {
     private List<Integer> disabledSwipeDirection = new ArrayList<Integer>();
     // Valid scale factor is between 0.0f and 1.0f.
     private float mScaleValue = 0.5f;
-
     private boolean mUse3D;
-    private static final int ROTATE_Y_ANGLE = 10;
+    
+    private float lastActionDownX, lastActionDownY;
 
     public ResideMenu(Context context) {
         super(context);
@@ -259,17 +264,6 @@ public class ResideMenu extends FrameLayout {
     }
 
     /**
-     * WARNING: It will be removed from v2.0.
-     *
-     * @param menuItems
-     */
-    @Deprecated
-    public void setMenuItems(List<ResideMenuItem> menuItems) {
-        this.leftMenuItems = menuItems;
-        rebuildMenu();
-    }
-
-    /**
      * Set menu items by a array;
      *
      * @param menuItems
@@ -308,6 +302,17 @@ public class ResideMenu extends FrameLayout {
     }
 
     /**
+     * WARNING: It will be removed from v2.0.
+     *
+     * @param menuItems
+     */
+    @Deprecated
+    public void setMenuItems(List<ResideMenuItem> menuItems) {
+        this.leftMenuItems = menuItems;
+        rebuildMenu();
+    }
+
+    /**
      * Return instances of menu items;
      *
      * @return
@@ -317,6 +322,10 @@ public class ResideMenu extends FrameLayout {
             return leftMenuItems;
         else
             return rightMenuItems;
+    }
+
+    public OnMenuListener getMenuListener() {
+        return menuListener;
     }
 
     /**
@@ -329,11 +338,6 @@ public class ResideMenu extends FrameLayout {
         this.menuListener = menuListener;
     }
 
-
-    public OnMenuListener getMenuListener() {
-        return menuListener;
-    }
-
     /**
      * Show the menu;
      */
@@ -342,6 +346,7 @@ public class ResideMenu extends FrameLayout {
         setScaleDirection(direction);
 
         isOpened = true;
+
         AnimatorSet scaleDown_activity = buildScaleDownAnimation(viewActivity, mScaleValue, mScaleValue);
         AnimatorSet scaleDown_shadow = buildScaleDownAnimation(imageViewShadow,
                 mScaleValue + shadowAdjustScaleX, mScaleValue + shadowAdjustScaleY);
@@ -394,10 +399,10 @@ public class ResideMenu extends FrameLayout {
             pivotX = screenWidth * -0.5f;
         }
 
-        ViewHelper.setPivotX(viewActivity, pivotX);
-        ViewHelper.setPivotY(viewActivity, pivotY);
-        ViewHelper.setPivotX(imageViewShadow, pivotX);
-        ViewHelper.setPivotY(imageViewShadow, pivotY);
+        viewActivity.setPivotX(pivotX);
+        viewActivity.setPivotY(pivotY);
+        imageViewShadow.setPivotX(pivotX);
+        imageViewShadow.setPivotY(pivotY);
         scaleDirection = direction;
     }
 
@@ -410,13 +415,39 @@ public class ResideMenu extends FrameLayout {
         return isOpened;
     }
 
+    /**
+     * A helper method to build scale down animation;
+     *
+     * @param target
+     * @param targetScaleX
+     * @param targetScaleY
+     * @return
+     */
+    private AnimatorSet buildScaleDownAnimation(View target, float targetScaleX, float targetScaleY) {
+
+        AnimatorSet scaleDown = new AnimatorSet();
+        scaleDown.playTogether(
+                ObjectAnimator.ofFloat(target, "scaleX", targetScaleX),
+                ObjectAnimator.ofFloat(target, "scaleY", targetScaleY)
+        );
+
+        if (mUse3D) {
+            int angle = scaleDirection == DIRECTION_LEFT ? -ROTATE_Y_ANGLE : ROTATE_Y_ANGLE;
+            scaleDown.playTogether(ObjectAnimator.ofFloat(target, "rotationY", angle));
+        }
+
+        scaleDown.setInterpolator(AnimationUtils.loadInterpolator(activity,
+                android.R.anim.decelerate_interpolator));
+        scaleDown.setDuration(250);
+        return scaleDown;
+    }
+
     private OnClickListener viewActivityOnClickListener = new OnClickListener() {
         @Override
         public void onClick(View view) {
             if (isOpened()) closeMenu();
         }
     };
-
     private Animator.AnimatorListener animationListener = new Animator.AnimatorListener() {
         @Override
         public void onAnimationStart(Animator animation) {
@@ -453,33 +484,8 @@ public class ResideMenu extends FrameLayout {
 
         }
     };
-
-    /**
-     * A helper method to build scale down animation;
-     *
-     * @param target
-     * @param targetScaleX
-     * @param targetScaleY
-     * @return
-     */
-    private AnimatorSet buildScaleDownAnimation(View target, float targetScaleX, float targetScaleY) {
-
-        AnimatorSet scaleDown = new AnimatorSet();
-        scaleDown.playTogether(
-                ObjectAnimator.ofFloat(target, "scaleX", targetScaleX),
-                ObjectAnimator.ofFloat(target, "scaleY", targetScaleY)
-        );
-
-        if (mUse3D) {
-            int angle = scaleDirection == DIRECTION_LEFT ? -ROTATE_Y_ANGLE : ROTATE_Y_ANGLE;
-            scaleDown.playTogether(ObjectAnimator.ofFloat(target, "rotationY", angle));
-        }
-
-        scaleDown.setInterpolator(AnimationUtils.loadInterpolator(activity,
-                android.R.anim.decelerate_interpolator));
-        scaleDown.setDuration(250);
-        return scaleDown;
-    }
+    
+    
 
     /**
      * A helper method to build scale up animation;
@@ -571,17 +577,15 @@ public class ResideMenu extends FrameLayout {
         float scaleFloatX = ((currentRawX - lastRawX) / getScreenWidth()) * 0.75f;
         scaleFloatX = scaleDirection == DIRECTION_RIGHT ? -scaleFloatX : scaleFloatX;
 
-        float targetScale = ViewHelper.getScaleX(viewActivity) - scaleFloatX;
+        float targetScale = viewActivity.getScaleX() - scaleFloatX;
         targetScale = targetScale > 1.0f ? 1.0f : targetScale;
         targetScale = targetScale < 0.5f ? 0.5f : targetScale;
         return targetScale;
     }
 
-    private float lastActionDownX, lastActionDownY;
-
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        float currentActivityScaleX = ViewHelper.getScaleX(viewActivity);
+        float currentActivityScaleX = viewActivity.getScaleX();
         if (currentActivityScaleX == 1.0f)
             setScaleDirectionByRawX(ev.getRawX());
 
@@ -621,17 +625,17 @@ public class ResideMenu extends FrameLayout {
                     if (mUse3D) {
                         int angle = scaleDirection == DIRECTION_LEFT ? -ROTATE_Y_ANGLE : ROTATE_Y_ANGLE;
                         angle *= (1 - targetScale) * 2;
-                        ViewHelper.setRotationY(viewActivity, angle);
+                        viewActivity.setRotationY(angle);
 
-                        ViewHelper.setScaleX(imageViewShadow, targetScale - shadowAdjustScaleX);
-                        ViewHelper.setScaleY(imageViewShadow, targetScale - shadowAdjustScaleY);
+                        imageViewShadow.setScaleX(targetScale - shadowAdjustScaleX);
+                        imageViewShadow.setScaleY(targetScale - shadowAdjustScaleY);
                     } else {
-                        ViewHelper.setScaleX(imageViewShadow, targetScale + shadowAdjustScaleX);
-                        ViewHelper.setScaleY(imageViewShadow, targetScale + shadowAdjustScaleY);
+                        imageViewShadow.setScaleX(targetScale + shadowAdjustScaleX);
+                        imageViewShadow.setScaleY(targetScale + shadowAdjustScaleY);
                     }
-                    ViewHelper.setScaleX(viewActivity, targetScale);
-                    ViewHelper.setScaleY(viewActivity, targetScale);
-                    ViewHelper.setAlpha(scrollViewMenu, (1 - targetScale) * 2.0f);
+                    viewActivity.setScaleX(targetScale);
+                    viewActivity.setScaleY(targetScale);
+                    scrollViewMenu.setAlpha((1 - targetScale) * 2.0f);
 
                     lastRawX = ev.getRawX();
                     return true;
@@ -683,6 +687,18 @@ public class ResideMenu extends FrameLayout {
         mUse3D = use3D;
     }
 
+    private void showScrollViewMenu(View scrollViewMenu) {
+        if (scrollViewMenu != null && scrollViewMenu.getParent() == null) {
+            addView(scrollViewMenu);
+        }
+    }
+
+    private void hideScrollViewMenu(View scrollViewMenu) {
+        if (scrollViewMenu != null && scrollViewMenu.getParent() != null) {
+            removeView(scrollViewMenu);
+        }
+    }
+
     public interface OnMenuListener {
 
         /**
@@ -694,17 +710,5 @@ public class ResideMenu extends FrameLayout {
          * This method will be called at the finished time of closing menu animations.
          */
         public void closeMenu();
-    }
-
-    private void showScrollViewMenu(View scrollViewMenu) {
-        if (scrollViewMenu != null && scrollViewMenu.getParent() == null) {
-            addView(scrollViewMenu);
-        }
-    }
-
-    private void hideScrollViewMenu(View scrollViewMenu) {
-        if (scrollViewMenu != null && scrollViewMenu.getParent() != null) {
-            removeView(scrollViewMenu);
-        }
     }
 }
