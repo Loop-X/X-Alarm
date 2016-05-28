@@ -9,16 +9,11 @@ import android.widget.Toast;
 import io.github.loop_x.yummywakeup.infrastructure.BaseActivity;
 import io.github.loop_x.yummywakeup.module.AnalogClock.AnalogClockView;
 import io.github.loop_x.yummywakeup.module.mainpage.ResideMenu;
-import io.github.loop_x.yummywakeup.module.mainpage.ResideMenuItem;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String TAG = "yummywakeup.MainActivity";
     private ResideMenu resideMenu;
-    private ResideMenuItem itemModelNormal;
-    private ResideMenuItem itemModeMath;
-    private ResideMenuItem itemModePaint;
-    private ResideMenuItem itemModeShake;
     private View openRightDrawerView;
     private View openLeftDrawerView;
 
@@ -29,29 +24,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onViewInitial() {
-        resideMenu = new ResideMenu(this);
+        resideMenu = new ResideMenu(this,R.layout.main_left_menu,R.layout.main_right_menu);
         resideMenu.setBackground(R.color.loopX_2);
         resideMenu.attachToActivity(this);
         resideMenu.setMenuListener(menuListener);
-
-        resideMenu.setScaleValue(0.7f);
-
-        // create menu items;
-        itemModelNormal = new ResideMenuItem(this, R.drawable.model_normal, "NORMAL");
-        itemModeMath = new ResideMenuItem(this, R.drawable.model_math, "MATH");
-        itemModePaint = new ResideMenuItem(this, R.drawable.model_paint, "PAINT");
-        itemModeShake = new ResideMenuItem(this, R.drawable.model_shake, "SHAKE");
-
-        itemModelNormal.setOnClickListener(this);
-        itemModeMath.setOnClickListener(this);
-        itemModePaint.setOnClickListener(this);
-        itemModeShake.setOnClickListener(this);
-
-        resideMenu.addMenuItem(itemModelNormal, ResideMenu.DIRECTION_LEFT);
-        resideMenu.addMenuItem(itemModeMath, ResideMenu.DIRECTION_LEFT);
-        resideMenu.addMenuItem(itemModePaint, ResideMenu.DIRECTION_LEFT);
-        resideMenu.addMenuItem(itemModeShake, ResideMenu.DIRECTION_LEFT);
-
+        resideMenu.setScaleValue(0.5f);
+        
         openRightDrawerView = findViewById(R.id.openRightDrawer);
         openLeftDrawerView = findViewById(R.id.openLeftDrawer);
 
@@ -83,7 +61,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (v == itemModelNormal) {
+    /*    if (v == itemModelNormal) {
             Toast.makeText(MainActivity.this, "Normal", Toast.LENGTH_SHORT).show();
 
         } else if (v == itemModeMath) {
@@ -94,7 +72,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         } else if (v == itemModeShake) {
             Toast.makeText(MainActivity.this, "Shake", Toast.LENGTH_SHORT).show();
-        }
+        }*/
     }
 
 
