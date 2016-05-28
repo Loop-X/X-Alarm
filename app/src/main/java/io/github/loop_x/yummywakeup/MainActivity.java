@@ -6,10 +6,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
-import com.special.ResideMenu.ResideMenu;
-import com.special.ResideMenu.ResideMenuItem;
-
 import io.github.loop_x.yummywakeup.infrastructure.BaseActivity;
+import io.github.loop_x.yummywakeup.module.mainpage.ResideMenu;
+import io.github.loop_x.yummywakeup.module.mainpage.ResideMenuItem;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 

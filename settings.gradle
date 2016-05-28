@@ -1,1 +1,1 @@
-include ':app', ':Fontinator', ':Fontinator-master', ':ResideMenu'
+include ':app', ':Fontinator', ':Fontinator-master'
