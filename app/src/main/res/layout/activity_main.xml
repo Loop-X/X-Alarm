@@ -6,71 +6,18 @@
     android:background="@color/loopX_1"
     android:fitsSystemWindows="true">
 
-    <RelativeLayout
-        android:id="@+id/titleBarLayout"
+    <!-- Main Content -->
+    <include
+        android:id="@+id/main_content"
+        layout="@layout/content_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingLeft="22dp"
-        android:paddingRight="22dp"
-        android:paddingTop="10dp">
-
-        <ImageView
-            android:id="@+id/openLeftDrawer"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentLeft="true"
-            android:onClick="openLeftDrawer"
-            android:scaleType="centerCrop"
-            android:src="@drawable/main_left" />
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerHorizontal="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/main_mid" />
-
-        <ImageView
-            android:id="@+id/openRightDrawer"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentRight="true"
-            android:onClick="openRightDrawer"
-            android:scaleType="centerCrop"
-            android:src="@drawable/main_right" />
-
-    </RelativeLayout>
+        android:layout_height="match_parent" />
 
     <FrameLayout
         android:id="@+id/main_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/titleBarLayout"
+        android:layout_below="@id/main_content"
         android:orientation="vertical" />
-
-    <!-- Main Content -->
-    <!--<include
-        layout="@layout/content_main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />-->
-
-    <!-- Left Menu -->
-    <!--  <fragment
-          android:id="@+id/fg_left_menu"
-          android:name="io.github.loop_x.yummywakeup.module.UnlockType.UnlockTypeFragment"
-          android:layout_width="304dp"
-          android:layout_height="match_parent"
-          android:layout_gravity="left"
-          android:tag="LEFT" />
-  
-      &lt;!&ndash; Right Menu &ndash;&gt;
-      <fragment
-          android:id="@+id/fg_right_menu"
-          android:name="io.github.loop_x.yummywakeup.module.Settings.SettingsFragment"
-          android:layout_width="304dp"
-          android:layout_height="match_parent"
-          android:layout_gravity="right"
-          android:tag="RIGHT" />-->
 
 </RelativeLayout>

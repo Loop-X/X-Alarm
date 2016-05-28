@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<declare-styleable name="AnalogClockView">
+		<attr name="dial" format="integer" />
+		<attr name="hand_hour" format="integer" />
+		<attr name="hand_minute" format="integer" />
+		<attr name="hand_second" format="integer" />
+	</declare-styleable>
+</resources>
