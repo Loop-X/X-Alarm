@@ -9,7 +9,7 @@
     <RelativeLayout
         android:id="@+id/titleBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:orientation="horizontal"
         android:paddingLeft="22dp"
         android:paddingRight="22dp"
@@ -17,25 +17,28 @@
 
         <ImageView
             android:id="@+id/openLeftDrawer"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             android:onClick="openLeftDrawer"
             android:scaleType="centerCrop"
             android:src="@drawable/main_left" />
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:scaleType="centerCrop"
             android:src="@drawable/main_mid" />
 
         <ImageView
             android:id="@+id/openRightDrawer"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:onClick="openRightDrawer"
             android:scaleType="centerCrop"
             android:src="@drawable/main_right" />
