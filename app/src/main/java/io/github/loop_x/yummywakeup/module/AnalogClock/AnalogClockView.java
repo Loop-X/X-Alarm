@@ -217,7 +217,7 @@ public class AnalogClockView extends RelativeLayout {
 			if (isRunning){
 				proceed();
 				mHandler.sendEmptyMessageDelayed(0, 1000);
-			}
+            }
 		}
 	};
 }
