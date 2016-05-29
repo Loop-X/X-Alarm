@@ -42,7 +42,7 @@
 
     </RelativeLayout>
 
-    <io.github.loop_x.yummywakeup.module.AnalogClock.AnalogClockView
+    <io.github.loop_x.yummywakeup.module.AnalogClock.AnalogClock
         android:id="@+id/analog_clock"
         android:layout_below="@id/titleBarLayout"
         android:layout_width="300dp"
