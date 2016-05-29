@@ -75,7 +75,7 @@ public class AnalogClockView extends RelativeLayout {
 
 		mDialResourceID = array.getResourceId(R.styleable.AnalogClockView_dial, R.drawable.clock_main);
 		mHourHandResourceID = array.getResourceId(R.styleable.AnalogClockView_hand_hour, R.drawable.clock_hour_hand);
-		mMinuteHandResourceID = array.getResourceId(R.styleable.AnalogClockView_hand_minute, R.drawable.clock_min_hand);
+		mMinuteHandResourceID = array.getResourceId(R.styleable.AnalogClockView_hand_minute, R.drawable.clock_minute_hand);
 		mSecondHandResourceID = array.getResourceId(R.styleable.AnalogClockView_hand_second, R.drawable.clock_second_hand);
 
 		array.recycle();
