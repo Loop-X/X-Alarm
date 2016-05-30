@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import io.github.loop_x.yummywakeup.infrastructure.BaseActivity;
-import io.github.loop_x.yummywakeup.module.AnalogClock.AnalogClockView;
 import io.github.loop_x.yummywakeup.module.mainpage.ResideMenu;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {

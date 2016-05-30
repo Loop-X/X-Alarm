@@ -22,11 +22,14 @@ import io.github.loop_x.yummywakeup.R;
  */
 public class AnalogClock extends View {
 
+    private static final String TAG = "yummywakeup.AnalogClock";
+
     private Calendar mCalendar;
     private Drawable mHourHand;
     private Drawable mMinuteHand;
     private Drawable mSecondHand;
     private Drawable mDial;
+    private Drawable mNightIcon;
     private int mDialWidth;
     private int mDialHeight;
     private boolean mAttached;
@@ -106,6 +109,7 @@ public class AnalogClock extends View {
         mHourHand = ContextCompat.getDrawable(mContext, R.drawable.clock_hour_hand);
         mMinuteHand = ContextCompat.getDrawable(mContext, R.drawable.clock_minute_hand);
         mSecondHand = ContextCompat.getDrawable(mContext, R.drawable.clock_second_hand);
+        mNightIcon = ContextCompat.getDrawable(mContext, R.drawable.clock_night);
     }
 
     private void initData() {
@@ -214,6 +218,7 @@ public class AnalogClock extends View {
         drawHand(canvas, mHourHand, x, y, mHour / 12.0f * 360.0f, changed);
         drawHand(canvas, mMinuteHand, x, y, mMinutes / 60.0f * 360.0f, changed);
         drawHand(canvas, mSecondHand, x, y, mSeconds / 60.0f * 360.0f, changed);
+        drawIcon(canvas, mNightIcon, x, y, mSeconds / 60.0f * 360.0f, changed);
 
         if (scaled) {
             canvas.restore();
@@ -231,6 +236,29 @@ public class AnalogClock extends View {
         }
         hand.draw(canvas);
         canvas.restore();
+    }
+
+    private void drawIcon(Canvas canvas, Drawable hand, int x, int y, float angle,
+                          boolean changed) {
+
+        canvas.save();
+
+        if (changed) {
+            final int w = hand.getIntrinsicWidth();
+            final int h = hand.getIntrinsicHeight();
+            hand.setBounds(x - (w / 2), y - (h / 2), x + (w / 2), y + (h / 2));
+        }
+
+        int iconX = mDial.getIntrinsicWidth() / 2 - 20;
+        int iconY = mDial.getIntrinsicHeight() / 2 - 20;
+
+        float a = (float) (iconX * Math.sin(Math.toRadians(angle)));
+        float b = (float) (-iconY * Math.cos(Math.toRadians(angle)));
+
+        canvas.translate(a, b);
+        hand.draw(canvas);
+        canvas.restore();
+
     }
 
     /**
