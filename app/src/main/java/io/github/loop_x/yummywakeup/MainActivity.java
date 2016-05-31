@@ -35,6 +35,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         openLeftDrawerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                resideMenu.setBackgroundColor(MainActivity.this.getResources().getColor(R.color.loopX_2));
+
                 resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
             }
         });
@@ -43,6 +45,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 resideMenu.openMenu(ResideMenu.DIRECTION_RIGHT);
+                resideMenu.setBackgroundColor(MainActivity.this.getResources().getColor(R.color.loopX_1));
+
+            }
+        });
+
+        resideMenu.setMenuScrollStateListener(new ResideMenu.OnMenuScrollStateListener() {
+            @Override
+            public void onMenuScrolling(int direction) {
+                int color = direction == ResideMenu.DIRECTION_LEFT ? R.color.loopX_2 : R.color.loopX_1;
+                resideMenu.setBackgroundColor(MainActivity.this.getResources().getColor(color));
             }
         });
 

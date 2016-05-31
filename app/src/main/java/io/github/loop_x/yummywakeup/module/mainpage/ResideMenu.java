@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
 import android.util.DisplayMetrics;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
@@ -71,6 +72,7 @@ public class ResideMenu extends FrameLayout {
     private List<ResideMenuItem> rightMenuItems;
     private DisplayMetrics displayMetrics = new DisplayMetrics();
     private OnMenuListener menuListener;
+    private OnMenuScrollStateListener menuScrollStateListener;
     private float lastRawX;
     private boolean isInIgnoredView = false;
     private int scaleDirection = DIRECTION_LEFT;
@@ -224,6 +226,10 @@ public class ResideMenu extends FrameLayout {
         imageViewBackground.setImageResource(imageResource);
     }
 
+    public void setBackgroundColor(int color) {
+        imageViewBackground.setImageDrawable(new ColorDrawable(color));
+    }
+
     /**
      * The visibility of the shadow under the activity;
      *
@@ -340,6 +346,11 @@ public class ResideMenu extends FrameLayout {
         this.menuListener = menuListener;
     }
 
+    public void setMenuScrollStateListener(OnMenuScrollStateListener menuListener) {
+        this.menuScrollStateListener = menuListener;
+    }
+
+    
     /**
      * Show the menu;
      */
@@ -623,6 +634,10 @@ public class ResideMenu extends FrameLayout {
                     if (currentActivityScaleX < 0.95)
                         showScrollViewMenu(scrollViewMenu);
 
+                    if (menuScrollStateListener != null){
+                        menuScrollStateListener.onMenuScrolling(scaleDirection);
+                    }
+                    
                     float targetScale = getTargetScale(ev.getRawX());
                     if (mUse3D) {
                         int angle = scaleDirection == DIRECTION_LEFT ? -ROTATE_Y_ANGLE : ROTATE_Y_ANGLE;
@@ -700,6 +715,20 @@ public class ResideMenu extends FrameLayout {
             removeView(scrollViewMenu);
         }
     }
+    
+
+    /**
+     * Callback interface for responding to changing state of the selected menu.
+     */
+    public interface OnMenuScrollStateListener {
+
+    
+        public void onMenuScrolling(int direction);
+        
+       
+    }
+    
+    
 
     public interface OnMenuListener {
 

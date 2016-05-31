@@ -2,38 +2,78 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="right"
-    android:paddingLeft="120dp"
-    android:orientation="vertical">
+    android:gravity="left"
+    android:orientation="vertical"
+    android:paddingLeft="160dp">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="51.5dp"
+        android:layout_height="24.5dp"
+        android:layout_marginRight="213.5dp"
+        android:layout_marginTop="112dp"
         android:background="@color/loopX_2"
-        android:textColor="@color/loopX_3"
-        android:text="@string/volume" />
+        android:gravity="center"
+        android:text="@string/volume"
+        android:textColor="@color/loopX_3" />
 
     <SeekBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="51.5dp"
+        android:layout_height="24.5dp"
+        android:layout_marginRight="213.5dp"
         android:background="@color/loopX_2"
-        android:textColor="@color/loopX_3"
-        android:text="@string/vibration" />
+        android:gravity="center"
+        android:text="@string/vibration"
+        android:textColor="@color/loopX_3" />
 
     <ToggleButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="51.5dp"
+        android:layout_height="24.5dp"
         android:background="@color/loopX_2"
-        android:textColor="@color/loopX_3"
-        android:text="@string/Ringtone" />
+        android:gravity="center"
+        android:text="@string/Ringtone"
+        android:textColor="@color/loopX_3" />
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="29dp"
+        android:text="WARM BREEZE"
+        android:textColor="@color/loopX_3"
+        android:textSize="18sp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:text="FOREST GLADE"
+        android:textColor="@color/loopX_3_40_alpha"
+        android:textSize="18sp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:text="MORNING MIST"
+        android:textColor="@color/loopX_3_40_alpha"
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:text="SUNRISE"
+        android:textColor="@color/loopX_3_40_alpha"
+        android:textSize="18sp" />
 
 </LinearLayout>
