@@ -2,11 +2,13 @@ package io.github.loop_x.yummywakeup;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
 import io.github.loop_x.yummywakeup.infrastructure.BaseActivity;
+import io.github.loop_x.yummywakeup.module.SetAlarm.SetAlarmFragment;
 import io.github.loop_x.yummywakeup.module.mainpage.ResideMenu;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
@@ -84,6 +86,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         } else if (v == itemModeShake) {
             Toast.makeText(MainActivity.this, "Shake", Toast.LENGTH_SHORT).show();
         }*/
+        switch (v.getId()) {
+            case R.id.tv_alarm_time:
+                changeFragment(new SetAlarmFragment());
+                break;
+        }
     }
 
 
