@@ -18,7 +18,7 @@
             android:layout_height="24dp"
             android:src="@drawable/model_normal" />
 
-        <TextView
+        <io.github.loop_x.yummywakeup.infrastructure.YummyTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="29dp"
@@ -47,7 +47,7 @@
             android:layout_height="24dp"
             android:src="@drawable/model_math" />
 
-        <TextView
+        <io.github.loop_x.yummywakeup.infrastructure.YummyTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="29dp"
@@ -75,7 +75,7 @@
             android:layout_height="24dp"
             android:src="@drawable/model_paint" />
 
-        <TextView
+        <io.github.loop_x.yummywakeup.infrastructure.YummyTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="29dp"
@@ -103,7 +103,7 @@
             android:layout_height="24dp"
             android:src="@drawable/model_shake" />
 
-        <TextView
+        <io.github.loop_x.yummywakeup.infrastructure.YummyTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="29dp"

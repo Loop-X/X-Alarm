@@ -51,7 +51,7 @@
         android:layout_marginBottom="40dp"
         android:layout_centerHorizontal="true"/>
 
-    <TextView
+    <io.github.loop_x.yummywakeup.infrastructure.YummyTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tv_wake_up"
@@ -62,7 +62,7 @@
         android:textStyle="bold"
         android:textSize="18sp" />
 
-    <TextView
+    <io.github.loop_x.yummywakeup.infrastructure.YummyTextView
         android:id="@+id/tv_alarm_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

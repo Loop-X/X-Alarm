@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:paddingLeft="160dp">
 
-    <TextView
+    <io.github.loop_x.yummywakeup.infrastructure.YummyTextView
         android:layout_width="51.5dp"
         android:layout_height="24.5dp"
         android:layout_marginRight="213.5dp"
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <TextView
+    <io.github.loop_x.yummywakeup.infrastructure.YummyTextView
         android:layout_width="51.5dp"
         android:layout_height="24.5dp"
         android:layout_marginRight="213.5dp"
@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <TextView
+    <io.github.loop_x.yummywakeup.infrastructure.YummyTextView
         android:layout_width="51.5dp"
         android:layout_height="24.5dp"
         android:background="@color/loopX_2"
@@ -42,7 +42,7 @@
         android:textColor="@color/loopX_3" />
 
 
-    <TextView
+    <io.github.loop_x.yummywakeup.infrastructure.YummyTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="29dp"
@@ -51,7 +51,7 @@
         android:textSize="18sp" />
 
 
-    <TextView
+    <io.github.loop_x.yummywakeup.infrastructure.YummyTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="22dp"
@@ -60,7 +60,7 @@
         android:textSize="18sp" />
 
 
-    <TextView
+    <io.github.loop_x.yummywakeup.infrastructure.YummyTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="22dp"
@@ -68,7 +68,7 @@
         android:textColor="@color/loopX_3_40_alpha"
         android:textSize="18sp" />
 
-    <TextView
+    <io.github.loop_x.yummywakeup.infrastructure.YummyTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="22dp"
