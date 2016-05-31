@@ -47,16 +47,29 @@
         android:layout_below="@id/titleBarLayout"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
         android:layout_centerHorizontal="true"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/tv_wake_up"
         android:layout_below="@id/analog_clock"
         android:text="@string/wake_up_in"
         android:textAlignment="center"
         android:textColor="@color/loopX_2"
+        android:textStyle="bold"
         android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tv_alarm_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_wake_up"
+        android:text="12:20"
+        android:textAlignment="center"
+        android:textColor="@color/loopX_2"
+        android:textSize="50sp" />
 
 </RelativeLayout>
