@@ -28,7 +28,10 @@ public class YummyTimePicker extends View {
 
     private List<String> mDataList;
     private int mCurrentSelected;
-    private Paint mPaint;
+
+    private Paint mPaint; // Draw text
+    private Paint mPaintDividerLine; // Draw divider line
+
     private float mTextSize;
     private int mViewHeight;
     private int mViewWidth;
@@ -84,6 +87,10 @@ public class YummyTimePicker extends View {
         mPaint.setTextAlign(Paint.Align.CENTER);
         mPaint.setColor(ContextCompat.getColor(getContext(), R.color.loopX_3));
         mPaint.setTypeface(tf);
+
+        mPaintDividerLine = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaintDividerLine.setStyle(Paint.Style.FILL);
+        mPaintDividerLine.setColor(ContextCompat.getColor(getContext(), R.color.loopX_6));
 
     }
 
@@ -155,6 +162,9 @@ public class YummyTimePicker extends View {
 
             canvas.drawText(mDataList.get(mCurrentSelected), x, baseline, mPaint);
 
+            // Draw Divider Line
+            drawDividerLine(canvas);
+
             // Draw items above mCurrentSelected
             for (int i = 1; i <= mCurrentSelected; i++)
             {
@@ -192,10 +202,9 @@ public class YummyTimePicker extends View {
 
         // Draw Text
         canvas.drawText(text, (float) (mViewWidth / 2), baseline, mPaint);
-
     }
 
-    public void setGradientColor(int type) {
+    private void setGradientColor(int type) {
         Shader shader = null;
 
         if (type == -1) {
@@ -209,6 +218,20 @@ public class YummyTimePicker extends View {
         }
 
         mPaint.setShader(shader);
+    }
+
+    private void drawDividerLine(Canvas canvas) {
+        canvas.drawLine(0,
+                mViewHeight / 2 - MARGIN_ALPHA * mTextSize / 2,
+                mViewWidth,
+                mViewHeight / 2 - MARGIN_ALPHA * mTextSize / 2,
+                mPaintDividerLine);
+
+        canvas.drawLine(0,
+                mViewHeight / 2 + MARGIN_ALPHA * mTextSize / 2,
+                mViewWidth,
+                mViewHeight / 2 + MARGIN_ALPHA * mTextSize / 2,
+                mPaintDividerLine);
     }
 
     private void performSelect() {
