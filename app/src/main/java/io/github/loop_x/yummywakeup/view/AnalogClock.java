@@ -1,4 +1,4 @@
-package io.github.loop_x.yummywakeup.module.AnalogClock;
+package io.github.loop_x.yummywakeup.view;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
