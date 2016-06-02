@@ -2,7 +2,10 @@ package io.github.loop_x.yummywakeup.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
+import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
@@ -148,7 +151,7 @@ public class YummyTimePicker extends View {
 
             // http://www.open-open.com/lib/view/open1459931221098.html
             Paint.FontMetricsInt fontMetricsInt = mPaint.getFontMetricsInt();
-            float baseline = (float) (y - (fontMetricsInt.top / 2 + fontMetricsInt.bottom / 2));
+            float baseline = y - (fontMetricsInt.top / 2 + fontMetricsInt.bottom / 2);
 
             canvas.drawText(mDataList.get(mCurrentSelected), x, baseline, mPaint);
 
@@ -184,10 +187,29 @@ public class YummyTimePicker extends View {
         // String to draw
         String text = mDataList.get(mCurrentSelected + type * position);
 
+        // Set Gradient Color on item above and below
+        setGradientColor(type);
+
         // Draw Text
         canvas.drawText(text, (float) (mViewWidth / 2), baseline, mPaint);
+
     }
 
+    public void setGradientColor(int type) {
+        Shader shader = null;
+
+        if (type == -1) {
+            shader = new LinearGradient(0, mPaint.getTextSize() / 4,
+                    0, mPaint.getTextSize() * 2,
+                    Color.BLACK, Color.WHITE, Shader.TileMode.CLAMP);
+        } else if (type == 1) {
+            shader = new LinearGradient(0, mViewHeight - mPaint.getTextSize() / 4,
+                    0, mViewHeight - mPaint.getTextSize() * 2,
+                    Color.BLACK, Color.WHITE, Shader.TileMode.CLAMP);
+        }
+
+        mPaint.setShader(shader);
+    }
 
     private void performSelect() {
         if (mSelectListener != null) {
