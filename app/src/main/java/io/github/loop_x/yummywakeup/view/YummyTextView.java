@@ -1,4 +1,4 @@
-package io.github.loop_x.yummywakeup.infrastructure;
+package io.github.loop_x.yummywakeup.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;
