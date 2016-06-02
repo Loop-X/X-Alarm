@@ -1,13 +1,25 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="io.github.loop_x.yummywakeup.module.SetAlarm.SetAlarmFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
+    <!-- Top Bar -->
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_alignParentTop="true">
 
-</FrameLayout>
+    </RelativeLayout>
+
+    <!-- Area to set alarm -->
+
+    <!-- Bottom Button -->
+    <ImageView
+        android:layout_width="68dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/icon_set_choose_big"
+        android:background="@color/loopX_5"/>
+
+</RelativeLayout>

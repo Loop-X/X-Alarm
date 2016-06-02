@@ -43,13 +43,13 @@
 
     </RelativeLayout>
 
-    <io.github.loop_x.yummywakeup.module.AnalogClock.AnalogClock
+    <io.github.loop_x.yummywakeup.view.AnalogClock
         android:id="@+id/analog_clock"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_centerInParent="true" />
 
-    <io.github.loop_x.yummywakeup.infrastructure.YummyTextView
+    <io.github.loop_x.yummywakeup.view.YummyTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tv_wake_up"
@@ -60,7 +60,7 @@
         android:textStyle="bold"
         android:textSize="18sp" />
 
-    <io.github.loop_x.yummywakeup.infrastructure.YummyTextView
+    <io.github.loop_x.yummywakeup.view.YummyTextView
         android:id="@+id/tv_alarm_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -71,5 +71,10 @@
         android:textAlignment="center"
         android:textColor="@color/loopX_2"
         android:textSize="50sp" />
+
+    <io.github.loop_x.yummywakeup.view.YummyTimePicker
+        android:id="@+id/test"
+        android:layout_width="80dp"
+        android:layout_height="160dp" />
 
 </RelativeLayout>
