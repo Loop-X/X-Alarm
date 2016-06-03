@@ -1,6 +1,7 @@
 package io.github.loop_x.yummywakeup.view;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
@@ -109,7 +110,11 @@ public class YummyTimePicker extends View {
      */
     public void setData(List<String> datas) {
         mDataList = datas;
-        mCurrentSelected = datas.size() / 2;
+        if (datas.size() < 2) {
+            mCurrentSelected = 0;
+        } else {
+            mCurrentSelected = datas.size() / 2 - 1;
+        }
         invalidate();
     }
 
@@ -160,6 +165,7 @@ public class YummyTimePicker extends View {
             Paint.FontMetricsInt fontMetricsInt = mPaint.getFontMetricsInt();
             float baseline = y - (fontMetricsInt.top / 2 + fontMetricsInt.bottom / 2);
 
+            // Draw item selected (the item in the middle of picker)
             canvas.drawText(mDataList.get(mCurrentSelected), x, baseline, mPaint);
 
             // Draw Divider Line
