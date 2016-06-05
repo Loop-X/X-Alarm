@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/loopX_1"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:tag="mainView">
 
 
     <RelativeLayout
@@ -50,15 +51,15 @@
         android:layout_centerInParent="true" />
 
     <io.github.loop_x.yummywakeup.view.YummyTextView
+        android:id="@+id/tv_wake_up"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tv_wake_up"
         android:layout_below="@id/analog_clock"
         android:text="@string/wake_up_in"
         android:textAlignment="center"
         android:textColor="@color/loopX_2"
-        android:textStyle="bold"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <io.github.loop_x.yummywakeup.view.YummyTextView
         android:id="@+id/tv_alarm_time"
@@ -75,6 +76,7 @@
     <io.github.loop_x.yummywakeup.view.YummyTimePicker
         android:id="@+id/test"
         android:layout_width="80dp"
-        android:layout_height="160dp" />
+        android:layout_height="160dp"
+        android:visibility="gone"/>
 
 </RelativeLayout>

@@ -1,23 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/drawer_layout"
+<io.github.loop_x.yummywakeup.view.LoopXDragMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dragMenuLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/loopX_1"
     android:fitsSystemWindows="true">
 
-    <!-- Main Content -->
+    <include
+        android:id="@+id/menuLeft"
+        layout="@layout/menu_left"
+         />
+
+    <include
+        android:id="@+id/menuRight"
+        layout="@layout/menu_right"
+         />
+
     <include
         android:id="@+id/main_content"
         layout="@layout/content_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <FrameLayout
-        android:id="@+id/main_fragment"
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/main_content"
-        android:orientation="vertical" />
-
-</RelativeLayout>
+         />
+    
+</io.github.loop_x.yummywakeup.view.LoopXDragMenuLayout>
