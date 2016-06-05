@@ -18,7 +18,6 @@
         </activity>
         <activity
             android:name=".module.SetAlarm.SetAlarmActivity"
-            android:label="@string/title_activity_set_alarm"
             android:theme="@style/AppTheme"></activity>
     </application>
 

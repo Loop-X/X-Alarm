@@ -1,13 +1,18 @@
 package io.github.loop_x.yummywakeup;
 
+import android.content.Intent;
 import android.view.View;
 
 import io.github.loop_x.yummywakeup.infrastructure.BaseActivity;
+import io.github.loop_x.yummywakeup.module.SetAlarm.SetAlarmActivity;
 import io.github.loop_x.yummywakeup.view.LoopXDragMenuLayout;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String TAG = "yummywakeup.MainActivity";
+
+    private static final int SET_ALARM_REQUEST_CODE = 1;
+
     private View openRightDrawerView;
     private View openLeftDrawerView;
     private LoopXDragMenuLayout loopXDragMenuLayout;
@@ -59,14 +64,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
 
         switch (v.getId()) {
+            // Go to Set Alarm Activity
             case R.id.tv_alarm_time:
-            //    changeFragment(new SetAlarmFragment());
+                Intent intent = new Intent(MainActivity.this, SetAlarmActivity.class);
+                startActivityForResult(intent, SET_ALARM_REQUEST_CODE);
                 break;
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
- /*   private void changeFragment(Fragment targetFragment) {
+    /*   private void changeFragment(Fragment targetFragment) {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_fragment, targetFragment, "fragment")
