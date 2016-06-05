@@ -8,19 +8,16 @@
 
     <include
         android:id="@+id/menuLeft"
-        layout="@layout/menu_left"
-         />
+        layout="@layout/menu_left" />
 
     <include
         android:id="@+id/menuRight"
-        layout="@layout/menu_right"
-         />
+        layout="@layout/menu_right" />
 
     <include
         android:id="@+id/main_content"
         layout="@layout/content_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-         />
+        android:layout_height="match_parent" />
     
 </io.github.loop_x.yummywakeup.view.LoopXDragMenuLayout>
