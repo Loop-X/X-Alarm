@@ -369,4 +369,57 @@ public class YummyTimePicker extends View {
         void onSelect(String text);
     }
 
+    /**
+     * Set Time Picker to show hours
+     */
+    public void setHour() {
+
+        List<String> list = new ArrayList<>();
+
+        for(int i = 0; i < 24; i ++) {
+
+            if(i < 10) {
+                list.add("0" + i);
+            } else {
+                list.add("" + i);
+            }
+        }
+
+        setData(list);
+    }
+
+    /**
+     * Set Time Picker to show minutes
+     */
+    public void setMinute() {
+
+        List<String> list = new ArrayList<>();
+
+        for(int i = 0; i < 60; i ++) {
+
+            if(i < 10) {
+                list.add("0" + i);
+            } else {
+                list.add("" + i);
+            }
+        }
+
+        setData(list);
+
+    }
+
+    /**
+     * Set Time Picker to show AM / PM
+     */
+    public void setAMPM() {
+
+        List<String> list = new ArrayList<>();
+
+        list.add("AM");
+        list.add("PM");
+
+        setData(list);
+
+    }
+
 }
