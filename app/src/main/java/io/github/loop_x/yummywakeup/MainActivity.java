@@ -1,7 +1,9 @@
 package io.github.loop_x.yummywakeup;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
+import android.widget.Toast;
 
 import io.github.loop_x.yummywakeup.infrastructure.BaseActivity;
 import io.github.loop_x.yummywakeup.module.SetAlarm.SetAlarmActivity;
@@ -75,6 +77,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case SET_ALARM_REQUEST_CODE:
+                if (resultCode == RESULT_OK) {
+                    Toast.makeText(this, "SET ALARM", Toast.LENGTH_LONG).show();
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     /*   private void changeFragment(Fragment targetFragment) {

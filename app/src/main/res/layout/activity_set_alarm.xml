@@ -181,7 +181,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:layout_above="@+id/fg_set_alarm_bottom"
+        android:layout_above="@+id/im_set_alarm_accept"
         android:baselineAligned="false">
 
         <FrameLayout
@@ -305,10 +305,11 @@
 
     <!-- Bottom Button -->
     <ImageView
-        android:id="@+id/fg_set_alarm_bottom"
+        android:id="@+id/im_set_alarm_accept"
         android:layout_width="match_parent"
         android:layout_height="68dp"
         android:layout_alignParentBottom="true"
+        android:onClick="onClick"
         android:src="@drawable/icon_set_choose_big"
         android:background="@color/loopX_5"/>
 
