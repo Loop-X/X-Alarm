@@ -27,14 +27,24 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         openLeftDrawerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loopXDragMenuLayout.openLeftMenuWithAnimation();
+                if (loopXDragMenuLayout.getMenuStatus() == LoopXDragMenuLayout.MenuStatus.Close){
+                    loopXDragMenuLayout.openLeftMenuWithAnimation();
+                }else {
+                    loopXDragMenuLayout.closeLeftMenuWithAnimation();
+                }
             }
         });
 
         openRightDrawerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loopXDragMenuLayout.openRightMenuWithAnimation();
+                
+                if (loopXDragMenuLayout.getMenuStatus() == LoopXDragMenuLayout.MenuStatus.Close){
+                    loopXDragMenuLayout.openRightMenuWithAnimation();
+                }else {
+                    loopXDragMenuLayout.closeRightMenuWithAnimation();
+                }
+                
             }
         });
 

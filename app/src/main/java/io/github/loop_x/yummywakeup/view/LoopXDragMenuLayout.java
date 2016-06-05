@@ -26,7 +26,23 @@ public class LoopXDragMenuLayout extends FrameLayout {
     private View mainContentView;
     private View rightMenuView;
     private int mainViewRelativeToMenu;
-    
+
+
+    public enum MenuStatus {
+        Drag, Open, Close
+    }
+
+    public MenuStatus getMenuStatus() {
+        if (mainViewRelativeToMenu == 0) {
+            return MenuStatus.Close;
+        } else if (Math.abs(mainViewRelativeToMenu) == range) {
+            return MenuStatus.Open;
+        } else {
+            return MenuStatus.Drag;
+        }
+    }
+
+
     private ViewDragHelper.Callback dragHelperCallback = new ViewDragHelper.Callback() {
         
         @Override
@@ -294,7 +310,6 @@ public class LoopXDragMenuLayout extends FrameLayout {
         }
         return false;
     }
-
     
 
     @Override
