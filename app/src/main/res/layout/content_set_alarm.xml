@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="io.github.loop_x.yummywakeup.module.SetAlarm.SetAlarmActivity">
+
+    <!-- Top Bar -->
+    <RelativeLayout
+        android:id="@+id/rl_set_alarm_top_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:background="@color/loopX_2">
+
+    </RelativeLayout>
+
+    <!-- Area to set alarm -->
+    <RelativeLayout
+        android:id="@+id/rl_set_alarm_middle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_set_alarm_top_bar"
+        android:background="@color/loopX_1">
+
+        <RelativeLayout
+            android:id="@+id/rl_set_alarm_hour_minute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+
+            <io.github.loop_x.yummywakeup.view.YummyTimePicker
+                android:id="@+id/tp_set_alarm_hour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <io.github.loop_x.yummywakeup.view.YummyTimePicker
+                android:id="@+id/tp_set_alarm_minute"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tp_set_alarm_hour"/>
+
+        </RelativeLayout>
+
+        <io.github.loop_x.yummywakeup.view.YummyTimePicker
+            android:id="@+id/tp_set_alarm_am_pm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/rl_set_alarm_hour_minute"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_above="@id/fg_set_alarm_bottom"
+        android:baselineAligned="false">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <!-- Todo could we use include to simply this part? -->
+            <Button
+                android:id="@+id/btn_monday"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/btn_day_of_week_selector"
+                android:onClick="setRepeat"
+                android:layout_gravity="center"
+                android:text="MON"
+                android:textColor="@color/loopX_3" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/btn_tuesday"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/btn_day_of_week_selector"
+                android:onClick="setRepeat"
+                android:text="TUE"
+                android:layout_gravity="center"
+                android:textColor="@color/loopX_3" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/btn_wednesday"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/btn_day_of_week_selector"
+                android:onClick="setRepeat"
+                android:text="WED"
+                android:layout_gravity="center"
+                android:textColor="@color/loopX_3" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/btn_thursday"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/btn_day_of_week_selector"
+                android:onClick="setRepeat"
+                android:text="THU"
+                android:layout_gravity="center"
+
+                android:textColor="@color/loopX_3" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/btn_friday"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/btn_day_of_week_selector"
+                android:onClick="setRepeat"
+                android:text="FRI"
+                android:layout_gravity="center"
+                android:textColor="@color/loopX_3" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/btn_saturday"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/btn_day_of_week_selector"
+                android:onClick="setRepeat"
+                android:text="SAT"
+                android:layout_gravity="center"
+                android:textColor="@color/loopX_3" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/btn_sunday"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/btn_day_of_week_selector"
+                android:onClick="setRepeat"
+                android:text="SUN"
+                android:layout_gravity="center"
+                android:textColor="@color/loopX_3" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <!-- Bottom Button -->
+    <ImageView
+        android:id="@+id/fg_set_alarm_bottom"
+        android:layout_width="68dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/icon_set_choose_big"
+        android:background="@color/loopX_5"/>
+
+</RelativeLayout>
