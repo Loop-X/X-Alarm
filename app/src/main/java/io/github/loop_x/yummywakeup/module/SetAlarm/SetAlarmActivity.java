@@ -3,6 +3,7 @@ package io.github.loop_x.yummywakeup.module.SetAlarm;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -97,16 +98,18 @@ public class SetAlarmActivity extends BaseActivity {
             timePickerAMPM.setAMPM();
             if(mAlarm.hour <= 12) {
                 timePickerAMPM.setSelected("AM");
+                timePickerHour.setSelected(mAlarm.hour);
                 AMPM = "AM";
             } else {
                 timePickerAMPM.setSelected("PM");
+                timePickerHour.setSelected(mAlarm.hour - 12);
                 AMPM = "PM";
             }
         } else {
             timePickerAMPM.setVisibility(View.INVISIBLE);
+            timePickerHour.setSelected(mAlarm.hour);
         }
 
-        timePickerHour.setSelected("" + mAlarm.hour);
         timePickerMinute.setSelected("" + mAlarm.minutes);
 
         timePickerHour.setOnSelectListener(new YummyTimePicker.onSelectListener() {
@@ -119,6 +122,9 @@ public class SetAlarmActivity extends BaseActivity {
                         mAlarm.hour = Integer.valueOf(text);
                     } else {
                         mAlarm.hour = Integer.valueOf(text) + 12;
+                        if(mAlarm.hour == 24) {
+                            mAlarm.hour = 0;
+                        }
                     }
                 }
             }
@@ -135,6 +141,12 @@ public class SetAlarmActivity extends BaseActivity {
             @Override
             public void onSelect(String text) {
                 AMPM = text;
+                if(AMPM.equals("PM")) {
+                    mAlarm.hour = mAlarm.hour + 12;
+                    if(mAlarm.hour == 24) {
+                        mAlarm.hour = 0;
+                    }
+                }
             }
         });
 

@@ -380,7 +380,7 @@ public class YummyTimePicker extends View {
 
         List<String> list = new ArrayList<>();
 
-        for(int i = 0; i < (is24hour? 24 : 12); i ++) {
+        for(int i = 0; i < (is24hour? 24 : 13); i ++) {
 
             if(i < 10) {
                 list.add("0" + i);
