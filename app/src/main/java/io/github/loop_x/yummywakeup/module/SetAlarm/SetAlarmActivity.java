@@ -2,9 +2,12 @@ package io.github.loop_x.yummywakeup.module.SetAlarm;
 
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import java.util.Objects;
 
 import io.github.loop_x.yummywakeup.R;
 import io.github.loop_x.yummywakeup.infrastructure.BaseActivity;
@@ -43,6 +46,9 @@ public class SetAlarmActivity extends BaseActivity {
     private YummyTextView tvCurrentAlarmTime;
     private YummyTextView tvCurrentAlarmAMPM;
 
+    private Boolean is24hMode;
+    private String AMPM;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_set_alarm;
@@ -50,6 +56,10 @@ public class SetAlarmActivity extends BaseActivity {
 
     @Override
     public void onViewInitial() {
+
+        /** Check 12 or 24 hour mode **/
+
+        is24hMode = Alarms.get24HourMode(this);
 
         /** Get alarm object from intent **/
 
@@ -60,13 +70,17 @@ public class SetAlarmActivity extends BaseActivity {
         tvCurrentAlarmTime = (YummyTextView) findViewById(R.id.tv_set_alarm_current_alarm_time);
         tvCurrentAlarmAMPM = (YummyTextView) findViewById(R.id.tv_set_alarm_current_alarm_ampm);
 
-        tvCurrentAlarmTime.setText(mAlarm.hour + ":" + mAlarm.minutes);
-
-        // ToDo 12 / 24
-        if(mAlarm.hour > 12) {
-            tvCurrentAlarmAMPM.setText("PM");
+        if(is24hMode) {
+            tvCurrentAlarmTime.setText(mAlarm.hour + ":" + mAlarm.minutes);
+            tvCurrentAlarmAMPM.setText("");
         } else {
-            tvCurrentAlarmAMPM.setText("AM");
+            if(mAlarm.hour > 12) {
+                tvCurrentAlarmTime.setText((mAlarm.hour - 12) + ":" + mAlarm.minutes);
+                tvCurrentAlarmAMPM.setText("PM");
+            } else {
+                tvCurrentAlarmTime.setText(mAlarm.hour + ":" + mAlarm.minutes);
+                tvCurrentAlarmAMPM.setText("AM");
+            }
         }
 
         /** Init Time Picker **/
@@ -75,22 +89,38 @@ public class SetAlarmActivity extends BaseActivity {
         timePickerMinute = (YummyTimePicker) findViewById(R.id.tp_set_alarm_minute);
         timePickerAMPM = (YummyTimePicker) findViewById(R.id.tp_set_alarm_am_pm);
 
-        timePickerHour.setHour();
+        timePickerHour.setHour(is24hMode);
         timePickerMinute.setMinute();
-        timePickerAMPM.setAMPM();
+
+        if(!is24hMode) {
+            timePickerAMPM.setVisibility(View.VISIBLE);
+            timePickerAMPM.setAMPM();
+            if(mAlarm.hour <= 12) {
+                timePickerAMPM.setSelected("AM");
+                AMPM = "AM";
+            } else {
+                timePickerAMPM.setSelected("PM");
+                AMPM = "PM";
+            }
+        } else {
+            timePickerAMPM.setVisibility(View.INVISIBLE);
+        }
 
         timePickerHour.setSelected("" + mAlarm.hour);
         timePickerMinute.setSelected("" + mAlarm.minutes);
 
-        // ToDo 12 / 24
-        if(mAlarm.hour > 12) {
-            timePickerAMPM.setSelected("PM");
-        }
-
         timePickerHour.setOnSelectListener(new YummyTimePicker.onSelectListener() {
             @Override
             public void onSelect(String text) {
-                mAlarm.hour = Integer.valueOf(text);
+                if(is24hMode) {
+                    mAlarm.hour = Integer.valueOf(text);
+                } else {
+                    if(AMPM.equals("AM")) {
+                        mAlarm.hour = Integer.valueOf(text);
+                    } else {
+                        mAlarm.hour = Integer.valueOf(text) + 12;
+                    }
+                }
             }
         });
 
@@ -104,7 +134,7 @@ public class SetAlarmActivity extends BaseActivity {
         timePickerAMPM.setOnSelectListener(new YummyTimePicker.onSelectListener() {
             @Override
             public void onSelect(String text) {
-
+                AMPM = text;
             }
         });
 

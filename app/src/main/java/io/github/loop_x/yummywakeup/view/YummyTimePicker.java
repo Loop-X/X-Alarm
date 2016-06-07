@@ -372,11 +372,15 @@ public class YummyTimePicker extends View {
     /**
      * Set Time Picker to show hours
      */
-    public void setHour() {
+    /**
+     * Set Time Picker to show hours
+     * @param is24hour If true, 24 hour mode. If false 12 hour mode
+     */
+    public void setHour(Boolean is24hour) {
 
         List<String> list = new ArrayList<>();
 
-        for(int i = 0; i < 24; i ++) {
+        for(int i = 0; i < (is24hour? 24 : 12); i ++) {
 
             if(i < 10) {
                 list.add("0" + i);
