@@ -24,7 +24,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private static final int SET_ALARM_REQUEST_CODE = 1;
 
-    private Alarm alarm;
+    private Alarm mAlarm;
     private int alarmId;
 
     private final static String M24 = "kk:mm";
@@ -90,7 +90,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             // Go to Set Alarm Activity
             case R.id.im_set_alarm:
                 Intent intent = new Intent(MainActivity.this, SetAlarmActivity.class);
-                intent.putExtra(Alarms.ALARM_INTENT_EXTRA, alarm);
+                intent.putExtra(Alarms.ALARM_INTENT_EXTRA, mAlarm);
                 startActivityForResult(intent, SET_ALARM_REQUEST_CODE);
                 break;
         }
@@ -103,7 +103,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         switch (requestCode) {
             case SET_ALARM_REQUEST_CODE:
                 if (resultCode == RESULT_OK) {
-                    Toast.makeText(this, "SET ALARM", Toast.LENGTH_LONG).show();
+                    mAlarm.hour = data.getIntExtra("new_hour", mAlarm.hour);
+                    mAlarm.minutes = data.getIntExtra("new_minute", mAlarm.minutes);
+
+                    long newTime = Alarms.setAlarm(MainActivity.this, mAlarm);
+                    setAlarmTimeOnTextView(mAlarm);
+                    
+                    saveAlarm();
+
+                    Toast.makeText(MainActivity.this,
+                            Alarms.formatToast(MainActivity.this, newTime),
+                            Toast.LENGTH_SHORT).show();
                 }
                 break;
             default:
@@ -129,17 +139,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         if (alarmId == -1) {
             // If no alarm available, set a default alarm with current time
-            alarm = new Alarm();
-            alarmId = Alarms.addAlarm(this, alarm);
+            mAlarm = new Alarm();
+            alarmId = Alarms.addAlarm(this, mAlarm);
 
             saveAlarm();
         } else {
             // ToDo 之前闹钟不灵 可不可能是CONTEXT的问题？
-            alarm = Alarms.getAlarm(getContentResolver(), alarmId);
+            mAlarm = Alarms.getAlarm(getContentResolver(), alarmId);
         }
 
         // Set alarm time on TextView
-        setAlarmTimeOnTextView(alarm);
+        setAlarmTimeOnTextView(mAlarm);
     }
 
     /**
