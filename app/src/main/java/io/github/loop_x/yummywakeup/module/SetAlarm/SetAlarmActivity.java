@@ -40,6 +40,7 @@ public class SetAlarmActivity extends BaseActivity {
     private ImageView btnAccept;
 
     private YummyTextView tvCurrentAlarmTime;
+    private YummyTextView tvCurrentAlarmAMPM;
 
     @Override
     public int getLayoutId() {
@@ -56,7 +57,16 @@ public class SetAlarmActivity extends BaseActivity {
         /** Init top bar **/
 
         tvCurrentAlarmTime = (YummyTextView) findViewById(R.id.tv_set_alarm_current_alarm_time);
+        tvCurrentAlarmAMPM = (YummyTextView) findViewById(R.id.tv_set_alarm_current_alarm_ampm);
+
         tvCurrentAlarmTime.setText(mAlarm.hour + ":" + mAlarm.minutes);
+
+        // ToDo 12 / 24
+        if(mAlarm.hour > 12) {
+            tvCurrentAlarmAMPM.setText("PM");
+        } else {
+            tvCurrentAlarmAMPM.setText("AM");
+        }
 
         /** Init Time Picker **/
 
@@ -71,17 +81,22 @@ public class SetAlarmActivity extends BaseActivity {
         timePickerHour.setSelected("" + mAlarm.hour);
         timePickerMinute.setSelected("" + mAlarm.minutes);
 
+        // ToDo 12 / 24
+        if(mAlarm.hour > 12) {
+            timePickerAMPM.setSelected("PM");
+        }
+
         timePickerHour.setOnSelectListener(new YummyTimePicker.onSelectListener() {
             @Override
             public void onSelect(String text) {
-
+                mAlarm.hour = Integer.valueOf(text);
             }
         });
 
         timePickerMinute.setOnSelectListener(new YummyTimePicker.onSelectListener() {
             @Override
             public void onSelect(String text) {
-
+                mAlarm.minutes = Integer.valueOf(text);
             }
         });
 
@@ -91,7 +106,6 @@ public class SetAlarmActivity extends BaseActivity {
 
             }
         });
-
 
         btnMonday = (Button) findViewById(R.id.btn_monday);
         btnTuesday = (Button) findViewById(R.id.btn_tuesday);
@@ -116,6 +130,8 @@ public class SetAlarmActivity extends BaseActivity {
         switch(view.getId()) {
             case R.id.im_set_alarm_accept:
                 Intent intent = new Intent();
+                intent.putExtra("new_hour", mAlarm.hour);
+                intent.putExtra("new_minute", mAlarm.minutes);
                 setResult(RESULT_OK, intent);
                 finish();
                 break;
