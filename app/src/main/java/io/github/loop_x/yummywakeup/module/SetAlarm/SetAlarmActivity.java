@@ -1,23 +1,16 @@
 package io.github.loop_x.yummywakeup.module.SetAlarm;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Switch;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import io.github.loop_x.yummywakeup.R;
 import io.github.loop_x.yummywakeup.infrastructure.BaseActivity;
 import io.github.loop_x.yummywakeup.module.AlarmModule.Alarms;
 import io.github.loop_x.yummywakeup.module.AlarmModule.model.Alarm;
+import io.github.loop_x.yummywakeup.module.AlarmModule.model.DaysOfWeek;
 import io.github.loop_x.yummywakeup.view.YummyTextView;
 import io.github.loop_x.yummywakeup.view.YummyTimePicker;
 
@@ -29,13 +22,21 @@ public class SetAlarmActivity extends BaseActivity {
     private YummyTimePicker timePickerMinute;
     private YummyTimePicker timePickerAMPM;
 
-    private Button btnMonday;
-    private Button btnTuesday;
-    private Button btnWednesday;
-    private Button btnThursday;
-    private Button btnFriday;
-    private Button btnSaturday;
-    private Button btnSunday;
+    private Button btnMON;
+    private Button btnTUE;
+    private Button btnWED;
+    private Button btnTHU;
+    private Button btnFRI;
+    private Button btnSAT;
+    private Button btnSUN;
+
+    private YummyTextView tvMON;
+    private YummyTextView tvTUE;
+    private YummyTextView tvWED;
+    private YummyTextView tvTHU;
+    private YummyTextView tvFRI;
+    private YummyTextView tvSAT;
+    private YummyTextView tvSUN;
 
     private ImageView btnAccept;
 
@@ -107,15 +108,25 @@ public class SetAlarmActivity extends BaseActivity {
             }
         });
 
-        btnMonday = (Button) findViewById(R.id.btn_monday);
-        btnTuesday = (Button) findViewById(R.id.btn_tuesday);
-        btnWednesday = (Button) findViewById(R.id.btn_wednesday);
-        btnThursday = (Button) findViewById(R.id.btn_thursday);
-        btnFriday = (Button) findViewById(R.id.btn_friday);
-        btnSaturday = (Button) findViewById(R.id.btn_saturday);
-        btnSunday = (Button) findViewById(R.id.btn_sunday);
+        btnMON = (Button) findViewById(R.id.btn_monday);
+        btnTUE = (Button) findViewById(R.id.btn_tuesday);
+        btnWED = (Button) findViewById(R.id.btn_wednesday);
+        btnTHU = (Button) findViewById(R.id.btn_thursday);
+        btnFRI = (Button) findViewById(R.id.btn_friday);
+        btnSAT = (Button) findViewById(R.id.btn_saturday);
+        btnSUN = (Button) findViewById(R.id.btn_sunday);
+
+        tvMON = (YummyTextView) findViewById(R.id.tv_monday);
+        tvTUE = (YummyTextView) findViewById(R.id.tv_tuesday);
+        tvWED = (YummyTextView) findViewById(R.id.tv_wednesday);
+        tvTHU = (YummyTextView) findViewById(R.id.tv_thursday);
+        tvFRI = (YummyTextView) findViewById(R.id.tv_friday);
+        tvSAT = (YummyTextView) findViewById(R.id.tv_saturday);
+        tvSUN = (YummyTextView) findViewById(R.id.tv_sunday);
 
         btnAccept = (ImageView) findViewById(R.id.im_set_alarm_accept);
+
+        initRepeat();
 
     }
 
@@ -130,8 +141,7 @@ public class SetAlarmActivity extends BaseActivity {
         switch(view.getId()) {
             case R.id.im_set_alarm_accept:
                 Intent intent = new Intent();
-                intent.putExtra("new_hour", mAlarm.hour);
-                intent.putExtra("new_minute", mAlarm.minutes);
+                intent.putExtra(Alarms.ALARM_INTENT_EXTRA, mAlarm);
                 setResult(RESULT_OK, intent);
                 finish();
                 break;
@@ -139,13 +149,61 @@ public class SetAlarmActivity extends BaseActivity {
 
     }
 
-
     public void setRepeat(View view) {
+
         if (view.isActivated()) {
             view.setActivated(false);
         } else {
             view.setActivated(true);
         }
+
+        switch (view.getId()) {
+            case R.id.btn_monday:
+                mAlarm.daysOfWeek.set(DaysOfWeek.MONDAY, view.isActivated());
+                break;
+            case R.id.btn_tuesday:
+                mAlarm.daysOfWeek.set(DaysOfWeek.TUESDAY, view.isActivated());
+                break;
+            case R.id.btn_wednesday:
+                mAlarm.daysOfWeek.set(DaysOfWeek.WEDNESDAY, view.isActivated());
+                break;
+            case R.id.btn_thursday:
+                mAlarm.daysOfWeek.set(DaysOfWeek.THURSDAY, view.isActivated());
+                break;
+            case R.id.btn_friday:
+                mAlarm.daysOfWeek.set(DaysOfWeek.FRIDAY, view.isActivated());
+                break;
+            case R.id.btn_saturday:
+                mAlarm.daysOfWeek.set(DaysOfWeek.SATURDAY, view.isActivated());
+                break;
+            case R.id.btn_sunday:
+                mAlarm.daysOfWeek.set(DaysOfWeek.SUNDAY, view.isActivated());
+                break;
+            default:
+                break;
+        }
     }
 
+    private void initRepeat() {
+        if (mAlarm.daysOfWeek.isRepeatSet()) {
+            btnMON.setActivated(mAlarm.daysOfWeek.isSet(DaysOfWeek.MONDAY));
+            btnTUE.setActivated(mAlarm.daysOfWeek.isSet(DaysOfWeek.TUESDAY));
+            btnWED.setActivated(mAlarm.daysOfWeek.isSet(DaysOfWeek.WEDNESDAY));
+            btnTHU.setActivated(mAlarm.daysOfWeek.isSet(DaysOfWeek.THURSDAY));
+            btnFRI.setActivated(mAlarm.daysOfWeek.isSet(DaysOfWeek.FRIDAY));
+            btnSAT.setActivated(mAlarm.daysOfWeek.isSet(DaysOfWeek.SATURDAY));
+            btnSUN.setActivated(mAlarm.daysOfWeek.isSet(DaysOfWeek.SUNDAY));
+
+            int colorActiv = ContextCompat.getColor(this, R.color.loopX_3);
+            int colorNoActiv = ContextCompat.getColor(this, R.color.loopX_6);
+
+            tvMON.setTextColor(mAlarm.daysOfWeek.isSet(DaysOfWeek.MONDAY) ? colorActiv : colorNoActiv);
+            tvTUE.setTextColor(mAlarm.daysOfWeek.isSet(DaysOfWeek.TUESDAY) ? colorActiv : colorNoActiv);
+            tvWED.setTextColor(mAlarm.daysOfWeek.isSet(DaysOfWeek.WEDNESDAY) ? colorActiv : colorNoActiv);
+            tvTHU.setTextColor(mAlarm.daysOfWeek.isSet(DaysOfWeek.THURSDAY) ? colorActiv : colorNoActiv);
+            tvFRI.setTextColor(mAlarm.daysOfWeek.isSet(DaysOfWeek.FRIDAY) ? colorActiv : colorNoActiv);
+            tvSAT.setTextColor(mAlarm.daysOfWeek.isSet(DaysOfWeek.SATURDAY) ? colorActiv : colorNoActiv);
+            tvSUN.setTextColor(mAlarm.daysOfWeek.isSet(DaysOfWeek.SUNDAY) ? colorActiv : colorNoActiv);
+        }
+    }
 }

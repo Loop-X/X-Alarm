@@ -103,12 +103,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         switch (requestCode) {
             case SET_ALARM_REQUEST_CODE:
                 if (resultCode == RESULT_OK) {
-                    mAlarm.hour = data.getIntExtra("new_hour", mAlarm.hour);
-                    mAlarm.minutes = data.getIntExtra("new_minute", mAlarm.minutes);
+                    mAlarm = data.getParcelableExtra(Alarms.ALARM_INTENT_EXTRA);
 
                     long newTime = Alarms.setAlarm(MainActivity.this, mAlarm);
                     setAlarmTimeOnTextView(mAlarm);
-                    
+
                     saveAlarm();
 
                     Toast.makeText(MainActivity.this,

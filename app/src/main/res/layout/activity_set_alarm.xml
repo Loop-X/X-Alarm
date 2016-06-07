@@ -46,6 +46,7 @@
                 android:layout_weight="1">
 
                 <io.github.loop_x.yummywakeup.view.YummyTextView
+                    android:id="@+id/tv_monday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
@@ -60,6 +61,7 @@
                 android:layout_weight="1">
 
                 <io.github.loop_x.yummywakeup.view.YummyTextView
+                    android:id="@+id/tv_tuesday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
@@ -74,6 +76,7 @@
                 android:layout_weight="1">
 
                 <io.github.loop_x.yummywakeup.view.YummyTextView
+                    android:id="@+id/tv_wednesday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
@@ -88,6 +91,7 @@
                 android:layout_weight="1">
 
                 <io.github.loop_x.yummywakeup.view.YummyTextView
+                    android:id="@+id/tv_thursday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
@@ -102,6 +106,7 @@
                 android:layout_weight="1">
 
                 <io.github.loop_x.yummywakeup.view.YummyTextView
+                    android:id="@+id/tv_friday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
@@ -116,6 +121,7 @@
                 android:layout_weight="1">
 
                 <io.github.loop_x.yummywakeup.view.YummyTextView
+                    android:id="@+id/tv_saturday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
@@ -130,6 +136,7 @@
                 android:layout_weight="1">
 
                 <io.github.loop_x.yummywakeup.view.YummyTextView
+                    android:id="@+id/tv_sunday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"

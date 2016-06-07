@@ -3,9 +3,9 @@
 
     <item
         android:state_activated="true"
-        android:drawable="@drawable/btn_circular_pressed"/>
+        android:drawable="@drawable/btn_circular_normal"/>
     <item
         android:state_activated="false"
-        android:drawable="@drawable/btn_circular_normal"/>
+        android:drawable="@drawable/btn_circular_pressed"/>
 
 </selector>
