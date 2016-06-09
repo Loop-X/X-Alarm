@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import java.util.Objects;
 
@@ -42,12 +44,16 @@ public class SetAlarmActivity extends BaseActivity {
     private YummyTextView tvSAT;
     private YummyTextView tvSUN;
 
-    private ImageView btnAccept;
-
     private YummyTextView tvCurrentAlarmTime;
     private YummyTextView tvCurrentAlarmAMPM;
 
+    private ImageView btnAccept;
+    private ImageView btnSwitchOnOffAlarm;
+
+    private RelativeLayout rlTopBar;
+
     private Boolean is24hMode;
+    private Boolean isOn;
     private String AMPM;
 
     @Override
@@ -65,11 +71,22 @@ public class SetAlarmActivity extends BaseActivity {
         /** Get alarm object from intent **/
 
         mAlarm = getIntent().getParcelableExtra(Alarms.ALARM_INTENT_EXTRA);
+        isOn = mAlarm.enabled;
 
         /** Init top bar **/
 
         tvCurrentAlarmTime = (YummyTextView) findViewById(R.id.tv_set_alarm_current_alarm_time);
         tvCurrentAlarmAMPM = (YummyTextView) findViewById(R.id.tv_set_alarm_current_alarm_ampm);
+        btnSwitchOnOffAlarm = (ImageView) findViewById(R.id.iv_switch_on_off_alarm);
+        rlTopBar = (RelativeLayout) findViewById(R.id.rl_set_alarm_top_bar);
+
+        if(isOn) {
+            btnSwitchOnOffAlarm.setImageResource(R.drawable.switch_off);
+            rlTopBar.setBackgroundResource(R.color.loopX_2);
+        } else {
+            btnSwitchOnOffAlarm.setImageResource(R.drawable.switch_on);
+            rlTopBar.setBackgroundResource(R.color.loopX_1);
+        }
 
         if(is24hMode) {
             tvCurrentAlarmTime.setText(mAlarm.hour + ":" + mAlarm.minutes);
@@ -181,6 +198,21 @@ public class SetAlarmActivity extends BaseActivity {
     public void onClick(View view) {
 
         switch(view.getId()) {
+            case R.id.iv_switch_on_off_alarm:
+                if(isOn) {
+                    btnSwitchOnOffAlarm.setImageResource(R.drawable.switch_on);
+                    rlTopBar.setBackgroundResource(R.color.loopX_1);
+                    Toast.makeText(this, R.string.turn_off_alarm, Toast.LENGTH_SHORT).show();
+                    mAlarm.enabled = false;
+                    isOn = false;
+                } else {
+                    btnSwitchOnOffAlarm.setImageResource(R.drawable.switch_off);
+                    rlTopBar.setBackgroundResource(R.color.loopX_2);
+                    Toast.makeText(this, R.string.turn_on_alarm, Toast.LENGTH_SHORT).show();
+                    mAlarm.enabled = true;
+                    isOn = true;
+                }
+                break;
             case R.id.im_set_alarm_accept:
                 Intent intent = new Intent();
                 intent.putExtra(Alarms.ALARM_INTENT_EXTRA, mAlarm);
