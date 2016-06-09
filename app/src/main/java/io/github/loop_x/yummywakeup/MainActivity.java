@@ -27,9 +27,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private int alarmId;
 
     private final static String M24 = "kk:mm";
-    private final static String FORMAT_DATE = "MMM dd";
-    private final static String FORMAT_WDAY = "EEEE";
-    private final static String FORMAT_AMPM = "a";
 
     private View openRightDrawerView;
     private View openLeftDrawerView;

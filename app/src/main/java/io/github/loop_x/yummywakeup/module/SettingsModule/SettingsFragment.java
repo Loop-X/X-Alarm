@@ -7,6 +7,11 @@ import io.github.loop_x.yummywakeup.infrastructure.BaseFragment;
 public class SettingsFragment extends BaseFragment {
 
     @Override
+    public int getLayoutId() {
+        return R.layout.menu_right;
+    }
+
+    @Override
     public void onViewInitial() {
 
     }
@@ -15,11 +20,5 @@ public class SettingsFragment extends BaseFragment {
     public void onRefreshData() {
 
     }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.fragment_settings;
-    }
-
 
 }
