@@ -33,7 +33,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".module.SetAlarm.SetAlarmActivity"
+            android:name=".module.SetAlarmModule.SetAlarmActivity"
             android:theme="@style/AppTheme">
         </activity>
 

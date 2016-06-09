@@ -3,7 +3,6 @@ package io.github.loop_x.yummywakeup;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Toast;
@@ -14,7 +13,7 @@ import io.github.loop_x.yummywakeup.config.PreferenceKeys;
 import io.github.loop_x.yummywakeup.infrastructure.BaseActivity;
 import io.github.loop_x.yummywakeup.module.AlarmModule.Alarms;
 import io.github.loop_x.yummywakeup.module.AlarmModule.model.Alarm;
-import io.github.loop_x.yummywakeup.module.SetAlarm.SetAlarmActivity;
+import io.github.loop_x.yummywakeup.module.SetAlarmModule.SetAlarmActivity;
 import io.github.loop_x.yummywakeup.view.LoopXDragMenuLayout;
 import io.github.loop_x.yummywakeup.view.YummyTextView;
 

@@ -1,4 +1,4 @@
-package io.github.loop_x.yummywakeup.module.Settings;
+package io.github.loop_x.yummywakeup.module.SettingsModule;
 
 
 import io.github.loop_x.yummywakeup.R;

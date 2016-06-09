@@ -1,16 +1,12 @@
-package io.github.loop_x.yummywakeup.module.SetAlarm;
+package io.github.loop_x.yummywakeup.module.SetAlarmModule;
 
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
-import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
-import java.util.Objects;
 
 import io.github.loop_x.yummywakeup.R;
 import io.github.loop_x.yummywakeup.infrastructure.BaseActivity;
