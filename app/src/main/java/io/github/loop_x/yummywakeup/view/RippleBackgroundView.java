@@ -23,7 +23,6 @@ public class RippleBackgroundView extends View implements ViewTreeObserver.OnGlo
 
     private Paint mPaint;
     private float mRippleRadius;
-    private int mRippleBackgroundColor = -1;
     private float mRipplePivotX = Float.MAX_VALUE;
     private float mRipplePivotY = Float.MAX_VALUE;
 
@@ -66,7 +65,6 @@ public class RippleBackgroundView extends View implements ViewTreeObserver.OnGlo
     public void startRipple(RippleBuilder rippleBuilder) {
         if (rippleBuilder == null) return;
 
-        mRippleBackgroundColor = rippleBuilder.backgroundColor;
         if (rippleBuilder.backgroundDrawable !=null){
             setBackgroundDrawable(rippleBuilder.backgroundDrawable);
         }else if (rippleBuilder.backgroundColor != -1){
@@ -145,10 +143,10 @@ public class RippleBackgroundView extends View implements ViewTreeObserver.OnGlo
         private int rippleColor;
         private int backgroundColor;
         private RippleDirection rippleDirection;
-        private int ripplePivotX;
-        private int ripplePivotY;
-        private int finishRippleRadius;
-        private int startRippleRadius;
+        private float ripplePivotX;
+        private float ripplePivotY;
+        private float finishRippleRadius;
+        private float startRippleRadius;
         private Drawable backgroundDrawable;
 
         public RippleBuilder(Context context) {
@@ -174,22 +172,22 @@ public class RippleBackgroundView extends View implements ViewTreeObserver.OnGlo
             return this;
         }
 
-        public RippleBuilder setRipplePivotX(int ripplePivotX) {
+        public RippleBuilder setRipplePivotX(float ripplePivotX) {
             this.ripplePivotX = ripplePivotX;
             return this;
         }
 
-        public RippleBuilder setRipplePivotY(int ripplePivotY) {
+        public RippleBuilder setRipplePivotY(float ripplePivotY) {
             this.ripplePivotY = ripplePivotY;
             return this;
         }
 
-        public RippleBuilder setFinishRippleRadius(int maxRippleRadius) {
+        public RippleBuilder setFinishRippleRadius(float maxRippleRadius) {
             this.finishRippleRadius = maxRippleRadius;
             return this;
         }
 
-        public RippleBuilder setStartRippleRadius(int minRippleRadius) {
+        public RippleBuilder setStartRippleRadius(float minRippleRadius) {
             this.startRippleRadius = minRippleRadius;
             return this;
         }

@@ -24,7 +24,7 @@ public class DayOfWeekSelectorView extends FrameLayout implements View.OnClickLi
     private TextView dayOfWeekView;
     private int selectedRippleColor;
     private int unSelectedRippleColor;
-    private int maxRippleRadius;
+    private float maxRippleRadius;
 
     public DayOfWeekSelectorView(Context context) {
         super(context);
@@ -46,7 +46,7 @@ public class DayOfWeekSelectorView extends FrameLayout implements View.OnClickLi
         dayOfWeekView = (TextView) findViewById(R.id.dayOfWeek);
         selectedRippleColor = UIUtils.getColor(R.color.loopX_2);
         unSelectedRippleColor = Color.parseColor("#FF1B1A30");
-        maxRippleRadius = UIUtils.dip2px(40) / 2;
+        maxRippleRadius = UIUtils.dip2px(40) / 2f;
         setOnClickListener(this);
         
     }
@@ -75,7 +75,7 @@ public class DayOfWeekSelectorView extends FrameLayout implements View.OnClickLi
                     .setRippleColor(unSelectedRippleColor)
                     .setBackgroundDrawable(drawable)
                     .setRippleDirection(RippleBackgroundView.RippleDirection.EXPAND)
-                    .setStartRippleRadius(0)
+                    .setStartRippleRadius(0f)
                     .setFinishRippleRadius(maxRippleRadius)
                     .setRipplePivotX(maxRippleRadius)
                     .setRipplePivotY(maxRippleRadius)
@@ -91,7 +91,7 @@ public class DayOfWeekSelectorView extends FrameLayout implements View.OnClickLi
                     .setRippleColor(selectedRippleColor)
                     .setBackgroundDrawable(drawable)
                     .setRippleDirection(RippleBackgroundView.RippleDirection.EXPAND)
-                    .setStartRippleRadius(0)
+                    .setStartRippleRadius(0f)
                     .setFinishRippleRadius(maxRippleRadius)
                     .setRipplePivotX(maxRippleRadius)
                     .setRipplePivotY(maxRippleRadius)

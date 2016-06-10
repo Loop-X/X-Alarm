@@ -45,6 +45,7 @@
                 android:layout_width="230dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_set_alarm_current_alarm_time"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <FrameLayout
