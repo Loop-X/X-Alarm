@@ -195,7 +195,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:layout_above="@+id/im_set_alarm_accept"
+        android:layout_above="@+id/im_set_alarm_accept_layout"
+        android:layout_marginBottom="20dp"
         android:baselineAligned="false">
 
         <io.github.loop_x.yummywakeup.view.DayOfWeekSelectorView
@@ -243,13 +244,22 @@
     </LinearLayout>
 
     <!-- Bottom Button -->
-    <ImageView
-        android:id="@+id/im_set_alarm_accept"
+    <FrameLayout
+        android:id="@+id/im_set_alarm_accept_layout"
         android:layout_width="match_parent"
         android:layout_height="68dp"
         android:layout_alignParentBottom="true"
         android:background="@color/loopX_5"
-        android:onClick="onClick"
-        android:src="@drawable/icon_set_choose_big" />
+        >
+        <ImageView
+            android:id="@+id/im_set_alarm_accept"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:onClick="onClick"
+            android:layout_gravity="center"
+            android:src="@drawable/icon_set_choose_big" />
+        
+    </FrameLayout>
+    
 
 </RelativeLayout>
