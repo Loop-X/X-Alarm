@@ -1,9 +1,14 @@
 package io.github.loop_x.yummywakeup.view;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -17,18 +22,12 @@ import android.view.animation.DecelerateInterpolator;
 public class RippleBackgroundView extends View implements ViewTreeObserver.OnGlobalLayoutListener {
 
     private Paint mPaint;
-    private float mRippleRadius ;
-    private int  mRippleOutBackgroundColor;
-    private int  mRippleInBackgroundColor  ;
- /*   private int mRippleInColor = Color.RED;
-    private int mRippleOutColor =  Color.RED;*/
+    private float mRippleRadius;
     private int mRippleBackgroundColor = -1;
     private float mRipplePivotX = Float.MAX_VALUE;
     private float mRipplePivotY = Float.MAX_VALUE;
-    
-//    private int mMaxRadius = 0;
-    private int mMinRadius = 0;
-    private int mRippleColor;
+
+    private RippleAnimationListener rippleAnimationListener;
 
     public RippleBackgroundView(Context context) {
         super(context);
@@ -55,78 +54,93 @@ public class RippleBackgroundView extends View implements ViewTreeObserver.OnGlo
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (mRippleBackgroundColor != -1){
-            canvas.drawColor(mRippleBackgroundColor);
-        }
         canvas.drawCircle(mRipplePivotX, mRipplePivotY, mRippleRadius, mPaint);
     }
-    
+
 
     public void setRippleRadius(float rippleRadius) {
         this.mRippleRadius = rippleRadius;
         invalidate();
     }
-    
-  /*  public void startRippleInAnim(){
-        mRippleBackgroundColor = mRippleInBackgroundColor;
-        mPaint.setColor(mRippleInColor);
-        ObjectAnimator fadeOutAnimation = ObjectAnimator.ofFloat(this, "rippleRadius",getFinalRadius(),0);
-        fadeOutAnimation.setDuration(350);
-        fadeOutAnimation.setInterpolator(new DecelerateInterpolator());
-        fadeOutAnimation.start();
-    }
-    
-    public void startRippleOutAnim(){
-        mRippleBackgroundColor = mRippleOutBackgroundColor;
-        mPaint.setColor(mRippleOutColor);
-        ObjectAnimator fadeOutAnimation = ObjectAnimator.ofFloat(this, "rippleRadius", mRippleRadius,getFinalRadius());
-        fadeOutAnimation.setDuration(350);
-        fadeOutAnimation.setInterpolator(new DecelerateInterpolator());
-        fadeOutAnimation.start();
-    }*/
-    
-    
-    public void startRipple(RippleBuilder rippleBuilder){
+
+    public void startRipple(RippleBuilder rippleBuilder) {
         if (rippleBuilder == null) return;
-        
+
         mRippleBackgroundColor = rippleBuilder.backgroundColor;
+        if (rippleBuilder.backgroundDrawable !=null){
+            setBackgroundDrawable(rippleBuilder.backgroundDrawable);
+        }else if (rippleBuilder.backgroundColor != -1){
+            setBackgroundDrawable(new ColorDrawable(rippleBuilder.backgroundColor));
+        }
+        
         mRipplePivotX = rippleBuilder.ripplePivotX;
         mRipplePivotY = rippleBuilder.ripplePivotY;
-        
-        int startRadius;
-        int endRadius;
-        
+
         mPaint.setColor(rippleBuilder.rippleColor);
-        ObjectAnimator rippleAnimation = ObjectAnimator.ofFloat(this, "rippleRadius", rippleBuilder.startRippleRadius,rippleBuilder.finishRippleRadius);
+        ObjectAnimator rippleAnimation = ObjectAnimator.ofFloat(this, "rippleRadius", rippleBuilder.startRippleRadius, rippleBuilder.finishRippleRadius);
         rippleAnimation.setDuration(350);
         rippleAnimation.setInterpolator(new DecelerateInterpolator());
+        rippleAnimation.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                super.onAnimationStart(animation);
+                if (rippleAnimationListener != null) {
+                    rippleAnimationListener.onRippleStart();
+                }
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                if (rippleAnimationListener != null) {
+                    rippleAnimationListener.onRippleFinished();
+                }
+            }
+        });
+
+        rippleAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                if (rippleAnimationListener != null) {
+                    rippleAnimationListener.onRippleUpdate((Float) animation.getAnimatedValue());
+                }
+            }
+        });
         rippleAnimation.start();
-        
+
+
     }
-   
 
     @Override
     public void onGlobalLayout() {
         getViewTreeObserver().removeGlobalOnLayoutListener(this);
-        if (mRipplePivotX == Float.MAX_VALUE){
+        if (mRipplePivotX == Float.MAX_VALUE) {
             mRipplePivotX = getMeasuredWidth() / 2;
         }
-        
-        if (mRipplePivotY == Float.MAX_VALUE){
+
+        if (mRipplePivotY == Float.MAX_VALUE) {
             mRipplePivotY = getMeasuredHeight() / 2;
         }
-     /*   if (mMaxRadius == 0){
-            mMaxRadius = Math.max(getWidth(), getHeight());
-        }*/
+
     }
 
-
-    public static enum RippleDirection{
-        EXPAND,SHRINK
+    public void setRippleAnimationListener(RippleAnimationListener rippleAnimationListener) {
+        this.rippleAnimationListener = rippleAnimationListener;
     }
 
+    public static enum RippleDirection {
+        EXPAND, SHRINK
+    }
 
-    public static class RippleBuilder{
+    public interface RippleAnimationListener {
+        public void onRippleStart();
+
+        public void onRippleUpdate(float radius);
+
+        public void onRippleFinished();
+    }
+
+    public static class RippleBuilder {
         public Context context;
         private int rippleColor;
         private int backgroundColor;
@@ -135,6 +149,7 @@ public class RippleBackgroundView extends View implements ViewTreeObserver.OnGlo
         private int ripplePivotY;
         private int finishRippleRadius;
         private int startRippleRadius;
+        private Drawable backgroundDrawable;
 
         public RippleBuilder(Context context) {
             this.context = context;
@@ -179,6 +194,28 @@ public class RippleBackgroundView extends View implements ViewTreeObserver.OnGlo
             return this;
         }
 
+        public RippleBuilder setBackgroundDrawable(Drawable backgroundDrawable) {
+            this.backgroundDrawable = backgroundDrawable;
+            return this;
+        }
+    }
+
+    public class RippleAnimationListenerAdapter implements RippleAnimationListener {
+
+        @Override
+        public void onRippleStart() {
+
+        }
+
+        @Override
+        public void onRippleUpdate(float radius) {
+
+        }
+
+        @Override
+        public void onRippleFinished() {
+
+        }
     }
 
 }
