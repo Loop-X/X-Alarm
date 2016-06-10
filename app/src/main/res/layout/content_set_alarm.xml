@@ -9,8 +9,7 @@
         android:id="@+id/rl_set_alarm_top_bar"
         android:layout_width="match_parent"
         android:layout_height="156dp"
-        android:layout_alignParentTop="true"
-        >
+        android:layout_alignParentTop="true">
 
         <io.github.loop_x.yummywakeup.view.RippleBackgroundView
             android:id="@+id/rippleBackground"
@@ -21,9 +20,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="60dp"
             android:layout_marginLeft="30dp"
-            >
+            android:layout_marginTop="60dp">
 
             <io.github.loop_x.yummywakeup.view.YummyTextView
                 android:id="@+id/tv_set_alarm_current_alarm_time"
@@ -199,122 +197,47 @@
         android:layout_above="@+id/im_set_alarm_accept"
         android:baselineAligned="false">
 
-        <FrameLayout
+        <io.github.loop_x.yummywakeup.view.DayOfWeekSelectorView
+            android:id="@+id/mondaySelector"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1" />
 
-            <!-- Todo could we use include to simply this part? -->
-            <Button
-                android:id="@+id/btn_monday"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:background="@drawable/btn_day_of_week_selector"
-                android:onClick="setRepeat"
-                android:text="MON"
-                android:textColor="@color/loopX_3" />
-        </FrameLayout>
-
-        <FrameLayout
+        <io.github.loop_x.yummywakeup.view.DayOfWeekSelectorView
+            android:id="@+id/tuesdaySelector"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1" />
 
-            <Button
-                android:id="@+id/btn_tuesday"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:background="@drawable/btn_day_of_week_selector"
-                android:onClick="setRepeat"
-                android:text="TUE"
-                android:textColor="@color/loopX_3" />
-
-        </FrameLayout>
-
-        <FrameLayout
+        <io.github.loop_x.yummywakeup.view.DayOfWeekSelectorView
+            android:id="@+id/wednesdaySelector"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1" />
 
-            <Button
-                android:id="@+id/btn_wednesday"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:background="@drawable/btn_day_of_week_selector"
-                android:onClick="setRepeat"
-                android:text="WED"
-                android:textColor="@color/loopX_3" />
-        </FrameLayout>
-
-        <FrameLayout
+        <io.github.loop_x.yummywakeup.view.DayOfWeekSelectorView
+            android:id="@+id/thursdaySelector"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1" />
 
-            <Button
-                android:id="@+id/btn_thursday"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:background="@drawable/btn_day_of_week_selector"
-                android:onClick="setRepeat"
-                android:text="THU"
-
-                android:textColor="@color/loopX_3" />
-
-        </FrameLayout>
-
-        <FrameLayout
+        <io.github.loop_x.yummywakeup.view.DayOfWeekSelectorView
+            android:id="@+id/fridaySelector"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1" />
 
-            <Button
-                android:id="@+id/btn_friday"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:background="@drawable/btn_day_of_week_selector"
-                android:onClick="setRepeat"
-                android:text="FRI"
-                android:textColor="@color/loopX_3" />
-        </FrameLayout>
-
-        <FrameLayout
+        <io.github.loop_x.yummywakeup.view.DayOfWeekSelectorView
+            android:id="@+id/saturdaySelector"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1" />
 
-            <Button
-                android:id="@+id/btn_saturday"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:background="@drawable/btn_day_of_week_selector"
-                android:onClick="setRepeat"
-                android:text="SAT"
-                android:textColor="@color/loopX_3" />
-        </FrameLayout>
-
-        <FrameLayout
+        <io.github.loop_x.yummywakeup.view.DayOfWeekSelectorView
+            android:id="@+id/sundaySelector"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <Button
-                android:id="@+id/btn_sunday"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:background="@drawable/btn_day_of_week_selector"
-                android:onClick="setRepeat"
-                android:text="SUN"
-                android:textColor="@color/loopX_3" />
-
-        </FrameLayout>
+            android:layout_weight="1" />
 
     </LinearLayout>
 
