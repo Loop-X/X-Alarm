@@ -22,9 +22,12 @@ public class LoopXDragMenuLayout extends FrameLayout {
     private int leftMenuHeight;
     private int rightMenuWidth;
     private int rightMenuHeight;
+    private int shadowViewWidth;
+    private int shadowViewHeight;
     private View leftMenuView;
     private View mainContentView;
     private View rightMenuView;
+    private View shadowView;
     private int mainViewRelativeToMenu;
 
 
@@ -77,8 +80,8 @@ public class LoopXDragMenuLayout extends FrameLayout {
         /**
          * 当拖拽的子View，手势释放的时候回调的方法， 然后根据左滑或者右滑的距离进行判断打开或者关闭
          * @param releasedChild
-         * @param xvel
-         * @param yvel 大于0 表示向右滑动,小于0表示向左滑动,等于0表示释放前没有滑动动作
+         * @param xvel 大于0 表示向右滑动,小于0表示向左滑动,等于0表示释放前没有滑动动作
+         * @param yvel 
          */
         @Override
         public void onViewReleased(View releasedChild, float xvel, float yvel) {
@@ -184,11 +187,14 @@ public class LoopXDragMenuLayout extends FrameLayout {
                     mainViewRelativeToMenu = -range;
                 }
             }
-
+           
+            //layout shadow view
+            shadowView.layout(mainViewRelativeToMenu, 0, mainViewRelativeToMenu + shadowViewWidth, shadowViewHeight);
 
             if (changedView == mainContentView) {
                 if (mainViewRelativeToMenu > 0) {
 
+                    //向右滑动，打开左边菜单
                     float percent = mainViewRelativeToMenu / (float) range;
                     float f1 = 1 - percent * 0.3f;
                     mainContentView.setScaleX(f1);
@@ -196,19 +202,26 @@ public class LoopXDragMenuLayout extends FrameLayout {
 
                     rightMenuView.layout(Utils.getScreenWidth(), 0, Utils.getScreenWidth() + rightMenuView.getWidth(), rightMenuView.getHeight());
                     leftMenuView.layout(0, 0, leftMenuWidth, leftMenuHeight);
-
                     leftMenuView.setTranslationX(-leftMenuView.getWidth() / 2.3f + leftMenuView.getWidth() / 2.3f * percent);
                     leftMenuView.setScaleX(0.5f + 0.5f * percent);
                     leftMenuView.setScaleY(0.5f + 0.5f * percent);
                     leftMenuView.setAlpha(percent);
 
+                    shadowView.setScaleX(f1 * 1.4f * (1 - percent * 0.12f));
+                    shadowView.setScaleY(f1 * 1.85f * (1 - percent * 0.12f));
+                    shadowView.setAlpha(percent);
+
                 } else if (mainViewRelativeToMenu < 0) {
 
+                    //向左滑动，打开右边菜单
+
+                    
                     float percent = -mainViewRelativeToMenu / (float) range;
                     float f2 = 1 - percent * 0.3f;
+                    
                     mainContentView.setScaleX(f2);
                     mainContentView.setScaleY(f2);
-
+                    
                     leftMenuView.layout(-leftMenuWidth, 0, 0, leftMenuHeight);
                     rightMenuView.layout(0, 0, rightMenuView.getWidth(), rightMenuView.getHeight());
 
@@ -220,9 +233,13 @@ public class LoopXDragMenuLayout extends FrameLayout {
                     int w = (int) (rightMenuView.getWidth() * 0.2);
                     rightMenuView.setTranslationX(w - w * percent);
 
+                    shadowView.setScaleX(f2 * 1.8f * (1 - percent * 0.12f));
+                    shadowView.setScaleY(f2 * 2.8f * (1 - percent * 0.12f));
+                    shadowView.setAlpha(percent);
                 }
             } else if (changedView == leftMenuView) {
 
+                //手指在左菜单上滑动
 
                 leftMenuView.layout(0, 0, leftMenuWidth, leftMenuHeight);
                 mainContentView.layout(mainViewRelativeToMenu, 0, mainViewRelativeToMenu + leftMenuWidth, leftMenuHeight);
@@ -236,7 +253,16 @@ public class LoopXDragMenuLayout extends FrameLayout {
                 leftMenuView.setScaleY(0.5f + 0.5f * percent);
                 leftMenuView.setAlpha(percent);
 
+                shadowView.setScaleX(f1 * 1.4f * (1 - percent * 0.12f));
+                shadowView.setScaleY(f1 * 1.85f * (1 - percent * 0.12f));
+                shadowView.setAlpha(percent);
+
+
             } else if (changedView == rightMenuView) {
+
+                //手指在右菜单上滑动
+
+
                 rightMenuView.layout(0, 0, rightMenuWidth, rightMenuHeight);
                 mainContentView.layout(mainViewRelativeToMenu, 0, mainViewRelativeToMenu + leftMenuWidth, leftMenuHeight);
 
@@ -251,6 +277,10 @@ public class LoopXDragMenuLayout extends FrameLayout {
                 rightMenuView.setPivotX(rightMenuView.getMeasuredHeight() / 2);
                 int w = (int) (rightMenuView.getWidth() * 0.2);
                 rightMenuView.setTranslationX(w - w * percent);
+
+                shadowView.setScaleX(f2 * 1.7f * (1 - percent * 0.12f));
+                shadowView.setScaleY(f2 * 2.8f * (1 - percent * 0.12f));
+                shadowView.setAlpha(percent);
             }
 
 
@@ -277,10 +307,13 @@ public class LoopXDragMenuLayout extends FrameLayout {
         leftMenuView = findViewWithTag("leftMenu");
         mainContentView = findViewWithTag("mainView");
         rightMenuView = findViewWithTag("rightMenu");
+        shadowView = findViewWithTag("bgShadowView");
 
         leftMenuView.setClickable(true);
         mainContentView.setClickable(true);
         rightMenuView.setClickable(true);
+
+
     }
 
     @Override
@@ -292,6 +325,8 @@ public class LoopXDragMenuLayout extends FrameLayout {
         rightMenuWidth = rightMenuView.getMeasuredWidth();
         rightMenuHeight = rightMenuView.getMeasuredHeight();
 
+        shadowViewWidth  = shadowView.getMeasuredWidth();
+        shadowViewHeight = shadowView.getMeasuredHeight();
         //屏幕宽度的 60%
         range = (int) (leftMenuWidth * 0.6f);
     }

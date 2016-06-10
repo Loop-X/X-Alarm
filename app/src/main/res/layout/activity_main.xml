@@ -14,10 +14,18 @@
         android:id="@+id/menuRight"
         layout="@layout/menu_right" />
 
+    <ImageView
+        android:id="@+id/bgShadowView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:tag="bgShadowView"
+        android:src="@drawable/bg_drag_shadow" />
+
     <include
         android:id="@+id/main_content"
         layout="@layout/content_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
     
 </io.github.loop_x.yummywakeup.view.LoopXDragMenuLayout>
