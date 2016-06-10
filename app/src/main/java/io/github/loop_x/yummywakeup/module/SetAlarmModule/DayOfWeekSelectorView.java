@@ -1,4 +1,4 @@
-package io.github.loop_x.yummywakeup.view;
+package io.github.loop_x.yummywakeup.module.SetAlarmModule;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 import io.github.loop_x.yummywakeup.R;
 import io.github.loop_x.yummywakeup.UIUtils;
 import io.github.loop_x.yummywakeup.module.AlarmModule.model.DaysOfWeek;
+import io.github.loop_x.yummywakeup.view.RippleBackgroundView;
 
 /**
  * Author UFreedom

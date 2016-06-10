@@ -14,7 +14,6 @@ import io.github.loop_x.yummywakeup.infrastructure.BaseActivity;
 import io.github.loop_x.yummywakeup.module.AlarmModule.Alarms;
 import io.github.loop_x.yummywakeup.module.AlarmModule.model.Alarm;
 import io.github.loop_x.yummywakeup.module.AlarmModule.model.DaysOfWeek;
-import io.github.loop_x.yummywakeup.view.DayOfWeekSelectorView;
 import io.github.loop_x.yummywakeup.view.RippleBackgroundView;
 import io.github.loop_x.yummywakeup.view.YummyTextView;
 import io.github.loop_x.yummywakeup.view.YummyTimePicker;

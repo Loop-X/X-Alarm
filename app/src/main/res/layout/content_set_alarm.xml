@@ -199,43 +199,43 @@
         android:layout_marginBottom="20dp"
         android:baselineAligned="false">
 
-        <io.github.loop_x.yummywakeup.view.DayOfWeekSelectorView
+        <io.github.loop_x.yummywakeup.module.SetAlarmModule.DayOfWeekSelectorView
             android:id="@+id/mondaySelector"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
-        <io.github.loop_x.yummywakeup.view.DayOfWeekSelectorView
+        <io.github.loop_x.yummywakeup.module.SetAlarmModule.DayOfWeekSelectorView
             android:id="@+id/tuesdaySelector"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
-        <io.github.loop_x.yummywakeup.view.DayOfWeekSelectorView
+        <io.github.loop_x.yummywakeup.module.SetAlarmModule.DayOfWeekSelectorView
             android:id="@+id/wednesdaySelector"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
-        <io.github.loop_x.yummywakeup.view.DayOfWeekSelectorView
+        <io.github.loop_x.yummywakeup.module.SetAlarmModule.DayOfWeekSelectorView
             android:id="@+id/thursdaySelector"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
-        <io.github.loop_x.yummywakeup.view.DayOfWeekSelectorView
+        <io.github.loop_x.yummywakeup.module.SetAlarmModule.DayOfWeekSelectorView
             android:id="@+id/fridaySelector"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
-        <io.github.loop_x.yummywakeup.view.DayOfWeekSelectorView
+        <io.github.loop_x.yummywakeup.module.SetAlarmModule.DayOfWeekSelectorView
             android:id="@+id/saturdaySelector"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
-        <io.github.loop_x.yummywakeup.view.DayOfWeekSelectorView
+        <io.github.loop_x.yummywakeup.module.SetAlarmModule.DayOfWeekSelectorView
             android:id="@+id/sundaySelector"
             android:layout_width="0dp"
             android:layout_height="match_parent"
