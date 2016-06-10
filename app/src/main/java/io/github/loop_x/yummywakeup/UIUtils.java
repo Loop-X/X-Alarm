@@ -2,6 +2,7 @@ package io.github.loop_x.yummywakeup;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.annotation.ColorRes;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.WindowManager;
@@ -29,6 +30,9 @@ public class UIUtils {
         return dm.heightPixels;
     }
 
+    public static  int getColor(@ColorRes int id){
+        return RunTime.getApp().getResources().getColor(id);
+    }
     
     public static int dip2px(float dp) {
         Resources r = RunTime.getApp().getResources();
