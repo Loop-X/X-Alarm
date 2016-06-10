@@ -5,14 +5,17 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.facebook.rebound.SpringUtil;
+
 import io.github.loop_x.yummywakeup.R;
+import io.github.loop_x.yummywakeup.UIUtils;
 import io.github.loop_x.yummywakeup.infrastructure.BaseActivity;
 import io.github.loop_x.yummywakeup.module.AlarmModule.Alarms;
 import io.github.loop_x.yummywakeup.module.AlarmModule.model.Alarm;
 import io.github.loop_x.yummywakeup.module.AlarmModule.model.DaysOfWeek;
+import io.github.loop_x.yummywakeup.view.RippleBackgroundView;
 import io.github.loop_x.yummywakeup.view.YummyTextView;
 import io.github.loop_x.yummywakeup.view.YummyTimePicker;
 
@@ -45,12 +48,17 @@ public class SetAlarmActivity extends BaseActivity {
 
     private ImageView btnAccept;
     private ImageView btnSwitchOnOffAlarm;
-
-    private RelativeLayout rlTopBar;
-
+    private View setAlarmTopBarView;
+    
+    private RippleBackgroundView rippleBackgroundView;
+    
     private Boolean is24hMode;
     private Boolean isOn;
     private String AMPM;
+    
+    private int maxRippleRadius;
+    private int ripplePivotY;
+    private int ripplePivotX;
 
     @Override
     public int getLayoutId() {
@@ -59,6 +67,7 @@ public class SetAlarmActivity extends BaseActivity {
 
     @Override
     public void onViewInitial() {
+
 
         /** Check 12 or 24 hour mode **/
 
@@ -74,14 +83,21 @@ public class SetAlarmActivity extends BaseActivity {
         tvCurrentAlarmTime = (YummyTextView) findViewById(R.id.tv_set_alarm_current_alarm_time);
         tvCurrentAlarmAMPM = (YummyTextView) findViewById(R.id.tv_set_alarm_current_alarm_ampm);
         btnSwitchOnOffAlarm = (ImageView) findViewById(R.id.iv_switch_on_off_alarm);
-        rlTopBar = (RelativeLayout) findViewById(R.id.rl_set_alarm_top_bar);
+        setAlarmTopBarView =  findViewById(R.id.rl_set_alarm_top_bar);
+        rippleBackgroundView  = (RippleBackgroundView) findViewById(R.id.rippleBackground);
 
-        if(isOn) {
+        maxRippleRadius = (int) Math.sqrt(UIUtils.getScreenWidth() * UIUtils.getScreenWidth() + UIUtils.dip2px(156) * UIUtils.dip2px(156));
+        ripplePivotY = UIUtils.dip2px(156);
+        ripplePivotX = UIUtils.getScreenWidth() - UIUtils.dip2px(100) / 2 - UIUtils.dip2px(16);
+        
+        
+        if (isOn) {
             btnSwitchOnOffAlarm.setImageResource(R.drawable.switch_off);
-            rlTopBar.setBackgroundResource(R.color.loopX_2);
+            rippleBackgroundView.setBackgroundResource(R.color.alarm_set_top_alarm_on);
+
         } else {
             btnSwitchOnOffAlarm.setImageResource(R.drawable.switch_on);
-            rlTopBar.setBackgroundResource(R.color.loopX_1);
+            rippleBackgroundView.setBackgroundResource(R.color.alarm_set_top_alarm_off);
         }
 
         if(is24hMode) {
@@ -178,17 +194,47 @@ public class SetAlarmActivity extends BaseActivity {
         tvFRI = (YummyTextView) findViewById(R.id.tv_friday);
         tvSAT = (YummyTextView) findViewById(R.id.tv_saturday);
         tvSUN = (YummyTextView) findViewById(R.id.tv_sunday);
-
+        
         btnAccept = (ImageView) findViewById(R.id.im_set_alarm_accept);
 
         initRepeat();
 
     }
 
+    
+
 
     @Override
     public void onRefreshData() {
 
+    }
+    
+    private void doAlarmOnRippleAnimation(){
+        rippleBackgroundView.startRipple(new RippleBackgroundView.RippleBuilder(this)
+                .setRippleColor(UIUtils.getColor(R.color.alarm_set_top_alarm_on))
+                .setStartRippleRadius(0)
+                .setFinishRippleRadius(maxRippleRadius)
+                .setRipplePivotX(ripplePivotX)
+                .setRipplePivotY(ripplePivotY)
+                .setBackgroundColor(UIUtils.getColor(R.color.alarm_set_top_alarm_off))
+                .setRippleDirection(RippleBackgroundView.RippleDirection.EXPAND)
+        );
+    }
+    
+    private void doAlarmOffRippleAnimation(){
+        rippleBackgroundView.startRipple(new RippleBackgroundView.RippleBuilder(this)
+                .setRippleColor(UIUtils.getColor(R.color.alarm_set_top_alarm_on))
+                .setStartRippleRadius(maxRippleRadius)
+                .setFinishRippleRadius(0)
+                .setRipplePivotX(ripplePivotX)
+                .setRipplePivotY(ripplePivotY)
+                .setBackgroundColor(UIUtils.getColor(R.color.alarm_set_top_alarm_off))
+                .setRippleDirection(RippleBackgroundView.RippleDirection.SHRINK)
+        );
+    }
+
+    protected float transition(float progress, float startValue, float endValue) {
+        return (float) SpringUtil.mapValueFromRangeToRange(progress, 0, 1, startValue, endValue);
     }
 
     public void onClick(View view) {
@@ -197,13 +243,15 @@ public class SetAlarmActivity extends BaseActivity {
             case R.id.iv_switch_on_off_alarm:
                 if(isOn) {
                     btnSwitchOnOffAlarm.setImageResource(R.drawable.switch_on);
-                    rlTopBar.setBackgroundResource(R.color.loopX_1);
+                    doAlarmOffRippleAnimation();
+
+                
                     Toast.makeText(this, R.string.turn_off_alarm, Toast.LENGTH_SHORT).show();
                     mAlarm.enabled = false;
                     isOn = false;
                 } else {
                     btnSwitchOnOffAlarm.setImageResource(R.drawable.switch_off);
-                    rlTopBar.setBackgroundResource(R.color.loopX_2);
+                    doAlarmOnRippleAnimation();
                     Toast.makeText(this, R.string.turn_on_alarm, Toast.LENGTH_SHORT).show();
                     mAlarm.enabled = true;
                     isOn = true;
