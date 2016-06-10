@@ -72,8 +72,8 @@
 
     <ImageView
         android:id="@+id/im_set_alarm"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         android:layout_below="@id/tv_alarm_time"
         android:layout_centerHorizontal="true"
         android:onClick="onClick"
