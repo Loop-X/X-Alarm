@@ -1,91 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<io.github.loop_x.yummywakeup.view.RightMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/loopX_1"
-    android:tag="rightMenu"
-    android:paddingLeft="160dp">
+    android:orientation="vertical"
+    android:paddingLeft="160dp"
+    android:tag="rightMenu">
 
-    <LinearLayout
+
+    <io.github.loop_x.yummywakeup.view.YummyTextView
+        android:layout_width="51.5dp"
+        android:layout_height="24.5dp"
+        android:layout_marginRight="213.5dp"
+        android:layout_marginTop="112dp"
+        android:background="@color/loopX_2"
+        android:gravity="center"
+        android:text="@string/volume"
+        android:textColor="@color/loopX_3" />
+
+    <SeekBar
+        android:id="@+id/sb_alarm_volume"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="10dp" />
 
-        <io.github.loop_x.yummywakeup.view.YummyTextView
-            android:layout_width="51.5dp"
-            android:layout_height="24.5dp"
-            android:layout_marginRight="213.5dp"
-            android:layout_marginTop="112dp"
-            android:background="@color/loopX_2"
-            android:gravity="center"
-            android:text="@string/volume"
-            android:textColor="@color/loopX_3" />
+    <io.github.loop_x.yummywakeup.view.YummyTextView
+        android:layout_width="51.5dp"
+        android:layout_height="24.5dp"
+        android:layout_marginRight="213.5dp"
+        android:background="@color/loopX_2"
+        android:gravity="center"
+        android:text="@string/vibration"
+        android:textColor="@color/loopX_3" />
 
-        <SeekBar
-            android:id="@+id/sb_alarm_volume"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="30dp"/>
+    <SeekBar
+        android:id="@+id/sb_alarm_Vibration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="10dp" />
 
-        <io.github.loop_x.yummywakeup.view.YummyTextView
-            android:layout_width="51.5dp"
-            android:layout_height="24.5dp"
-            android:layout_marginRight="213.5dp"
-            android:background="@color/loopX_2"
-            android:gravity="center"
-            android:text="@string/vibration"
-            android:textColor="@color/loopX_3" />
-
-        <ToggleButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="30dp"/>
-
-        <io.github.loop_x.yummywakeup.view.YummyTextView
-            android:layout_width="51.5dp"
-            android:layout_height="24.5dp"
-            android:background="@color/loopX_2"
-            android:gravity="center"
-            android:text="@string/Ringtone"
-            android:textColor="@color/loopX_3" />
+    <io.github.loop_x.yummywakeup.view.YummyTextView
+        android:layout_width="51.5dp"
+        android:layout_height="24.5dp"
+        android:background="@color/loopX_2"
+        android:gravity="center"
+        android:text="@string/Ringtone"
+        android:textColor="@color/loopX_3" />
 
 
-        <CheckedTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="29dp"
-            android:text="WARM BREEZE"
-            android:textColor="@color/loopX_3"
-            android:textSize="18sp" />
+    <CheckedTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="29dp"
+        android:text="WARM BREEZE"
+        android:textColor="@color/loopX_3"
+        android:textSize="18sp" />
 
 
-        <CheckedTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:text="FOREST GLADE"
-            android:textColor="@color/loopX_3_40_alpha"
-            android:textSize="18sp" />
+    <CheckedTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:text="FOREST GLADE"
+        android:textColor="@color/loopX_3_40_alpha"
+        android:textSize="18sp" />
 
 
-        <CheckedTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:text="MORNING MIST"
-            android:textColor="@color/loopX_3_40_alpha"
-            android:textSize="18sp" />
+    <CheckedTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:text="MORNING MIST"
+        android:textColor="@color/loopX_3_40_alpha"
+        android:textSize="18sp" />
 
-        <CheckedTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:text="SUNRISE"
-            android:textColor="@color/loopX_3_40_alpha"
-            android:textSize="18sp" />
+    <CheckedTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:text="SUNRISE"
+        android:textColor="@color/loopX_3_40_alpha"
+        android:textSize="18sp" />
 
-    </LinearLayout>
 
-</FrameLayout>
+</io.github.loop_x.yummywakeup.view.RightMenuLayout>

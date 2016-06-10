@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<io.github.loop_x.yummywakeup.view.LeftMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/loopX_2"
@@ -115,4 +115,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</io.github.loop_x.yummywakeup.view.LeftMenuLayout>

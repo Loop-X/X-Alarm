@@ -11,7 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import io.github.loop_x.yummywakeup.Utils;
+import io.github.loop_x.yummywakeup.UIUtils;
 
 public class LoopXDragMenuLayout extends FrameLayout {
     
@@ -200,7 +200,7 @@ public class LoopXDragMenuLayout extends FrameLayout {
                     mainContentView.setScaleX(f1);
                     mainContentView.setScaleY(f1);
 
-                    rightMenuView.layout(Utils.getScreenWidth(), 0, Utils.getScreenWidth() + rightMenuView.getWidth(), rightMenuView.getHeight());
+                    rightMenuView.layout(UIUtils.getScreenWidth(), 0, UIUtils.getScreenWidth() + rightMenuView.getWidth(), rightMenuView.getHeight());
                     leftMenuView.layout(0, 0, leftMenuWidth, leftMenuHeight);
                     leftMenuView.setTranslationX(-leftMenuView.getWidth() / 2.3f + leftMenuView.getWidth() / 2.3f * percent);
                     leftMenuView.setScaleX(0.5f + 0.5f * percent);
