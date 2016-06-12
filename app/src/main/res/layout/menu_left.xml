@@ -2,6 +2,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
+        android:id="@+id/normalLayout"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -30,6 +31,7 @@
         android:background="#4DFFFFFF" />
 
     <LinearLayout
+        android:id="@+id/mathLayout"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -57,6 +59,7 @@
         android:background="#4DFFFFFF" />
 
     <LinearLayout
+        android:id="@+id/paintLayout"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -85,6 +88,7 @@
         android:background="#4DFFFFFF" />
 
     <LinearLayout
+        android:id="@+id/shakeLayout"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"

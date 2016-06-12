@@ -27,7 +27,7 @@ import android.provider.BaseColumns;
 import java.util.Calendar;
 
 import io.github.loop_x.yummywakeup.R;
-import io.github.loop_x.yummywakeup.module.UnlockTypeModule.Model.UnlockTypeEnum;
+import io.github.loop_x.yummywakeup.module.UnlockTypeModule.UnlockTypeEnum;
 
 public final class Alarm implements Parcelable {
 

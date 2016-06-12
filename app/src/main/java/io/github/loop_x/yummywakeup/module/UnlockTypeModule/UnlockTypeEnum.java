@@ -1,4 +1,4 @@
-package io.github.loop_x.yummywakeup.module.UnlockTypeModule.Model;
+package io.github.loop_x.yummywakeup.module.UnlockTypeModule;
 
 /**
  * Enum about all unlock types

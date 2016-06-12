@@ -36,6 +36,10 @@
             android:name=".module.SetAlarmModule.SetAlarmActivity"
             android:theme="@style/AppTheme">
         </activity>
+        
+        <activity android:name=".module.UnlockTypeModule.UnlockTypeActivity"
+            android:theme="@style/AppTheme"
+            />
 
         <provider
             android:name=".service.AlarmProvider"
