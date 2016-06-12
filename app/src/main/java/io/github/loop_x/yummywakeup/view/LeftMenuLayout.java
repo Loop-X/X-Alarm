@@ -15,6 +15,7 @@ import io.github.loop_x.yummywakeup.module.UnlockTypeModule.UnlockTypeActivity;
  * Date : 2016 六月 10
  */
 public class LeftMenuLayout extends LinearLayout implements View.OnClickListener {
+
     private View normalLayout;
     private View mathLayout;
     private View paintLayout;

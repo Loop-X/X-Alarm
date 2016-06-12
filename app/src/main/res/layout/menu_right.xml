@@ -29,7 +29,7 @@
         android:textColor="@color/loopX_3" />
 
     <SeekBar
-        android:id="@+id/sb_alarm_Vibration"
+        android:id="@+id/sb_alarm_vibration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
