@@ -3,6 +3,7 @@ package io.github.loop_x.yummywakeup.view;
 import android.content.Context;
 import android.media.AudioManager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -10,7 +11,7 @@ import android.widget.SeekBar;
 
 import io.github.loop_x.yummywakeup.R;
 
-public class RightMenuLayout extends LinearLayout implements View.OnClickListener {
+public class RightMenuLayout extends LinearLayout {
 
     private Context mContext;
 
@@ -41,11 +42,7 @@ public class RightMenuLayout extends LinearLayout implements View.OnClickListene
         sbAlarmVibration = (SeekBar) findViewById(R.id.sb_alarm_vibration);
 
         initVolumeSeekBar();
-        
-    }
-
-    @Override
-    public void onClick(View view) {
+        initVibrationSeekBar();
 
     }
 
@@ -72,5 +69,9 @@ public class RightMenuLayout extends LinearLayout implements View.OnClickListene
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
+    }
+
+    public void initVibrationSeekBar() {
+        sbAlarmVolume.setMax(1);
     }
 }

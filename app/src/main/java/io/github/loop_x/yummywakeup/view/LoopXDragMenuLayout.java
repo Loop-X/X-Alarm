@@ -260,7 +260,6 @@ public class LoopXDragMenuLayout extends FrameLayout {
 
                 //手指在右菜单上滑动
 
-
                 rightMenuView.layout(0, 0, rightMenuWidth, rightMenuHeight);
                 mainContentView.layout(mainViewRelativeToMenu, 0, mainViewRelativeToMenu + leftMenuWidth, leftMenuHeight);
 
@@ -330,8 +329,6 @@ public class LoopXDragMenuLayout extends FrameLayout {
         // 屏幕宽度的 60%
         range = (int) (leftMenuWidth * 0.6f);
     }
-
-
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
