@@ -38,7 +38,7 @@ public class RippleBackgroundView extends View implements ViewTreeObserver.OnGlo
     }
 
     private void init(Context context) {
-        mPaint = new Paint();
+        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStrokeWidth(1);
         mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         getViewTreeObserver().addOnGlobalLayoutListener(this);
