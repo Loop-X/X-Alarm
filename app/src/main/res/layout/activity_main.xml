@@ -6,20 +6,33 @@
     android:background="@color/loopX_1"
     android:fitsSystemWindows="true">
 
-    <include
+    <io.github.loop_x.yummywakeup.view.LeftMenuLayout
         android:id="@+id/menuLeft"
-        layout="@layout/menu_left" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/loopX_2"
+        android:orientation="vertical"
+        android:paddingBottom="40dp"
+        android:paddingLeft="40dp"
+        android:paddingTop="40dp"
+        android:tag="leftMenu" />
+   
 
-    <include
+    <io.github.loop_x.yummywakeup.view.RightMenuLayout
         android:id="@+id/menuRight"
-        layout="@layout/menu_right" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/loopX_1"
+        android:orientation="vertical"
+        android:paddingLeft="160dp"
+        android:tag="rightMenu" />
 
     <ImageView
         android:id="@+id/bgShadowView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:tag="bgShadowView"
-        android:src="@drawable/bg_drag_shadow" />
+        android:src="@drawable/bg_drag_shadow"
+        android:tag="bgShadowView" />
 
     <include
         android:id="@+id/main_content"
@@ -27,5 +40,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    
+
 </io.github.loop_x.yummywakeup.view.LoopXDragMenuLayout>
