@@ -30,7 +30,6 @@ public class LoopXDragMenuLayout extends FrameLayout {
     private View shadowView;
     private int mainViewRelativeToMenu;
 
-
     public enum MenuStatus {
         Drag, Open, Close
     }
@@ -45,14 +44,19 @@ public class LoopXDragMenuLayout extends FrameLayout {
         }
     }
 
-
     private ViewDragHelper.Callback dragHelperCallback = new ViewDragHelper.Callback() {
-        
+
+        @Override
+        public boolean tryCaptureView(View child, int pointerId) {
+            return true;
+        }
+
         @Override
         public int clampViewPositionHorizontal(View child, int left, int dx) {
 
-            //dx 滑动的距离,  dx > 0 向右滑动, dx < 0 向左滑动
+            // dx > 0 to right. dx < 0 to left
             int result = mainViewRelativeToMenu + dx;
+
             if (result >= range) {
                 return range;
             } else if (result < -range) {
@@ -63,11 +67,6 @@ public class LoopXDragMenuLayout extends FrameLayout {
 
         }
 
-        @Override
-        public boolean tryCaptureView(View child, int pointerId) {
-            return true;
-        }
-
         /**
          * 设置水平方向滑动的最远距离,根据左右Menu的宽判断
          */
@@ -75,7 +74,6 @@ public class LoopXDragMenuLayout extends FrameLayout {
         public int getViewHorizontalDragRange(View child) {
             return child == leftMenuView ? leftMenuWidth : rightMenuWidth;
         }
-
 
         /**
          * 当拖拽的子View，手势释放的时候回调的方法， 然后根据左滑或者右滑的距离进行判断打开或者关闭
@@ -304,21 +302,22 @@ public class LoopXDragMenuLayout extends FrameLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        leftMenuView = findViewWithTag("leftMenu");
+
+        leftMenuView    = findViewWithTag("leftMenu");
         mainContentView = findViewWithTag("mainView");
-        rightMenuView = findViewWithTag("rightMenu");
-        shadowView = findViewWithTag("bgShadowView");
+        rightMenuView   = findViewWithTag("rightMenu");
+        shadowView      = findViewWithTag("bgShadowView");
 
         leftMenuView.setClickable(true);
         mainContentView.setClickable(true);
         rightMenuView.setClickable(true);
-
 
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
+
         leftMenuWidth = leftMenuView.getMeasuredWidth();
         leftMenuHeight = leftMenuView.getMeasuredHeight();
 
@@ -327,9 +326,12 @@ public class LoopXDragMenuLayout extends FrameLayout {
 
         shadowViewWidth  = shadowView.getMeasuredWidth();
         shadowViewHeight = shadowView.getMeasuredHeight();
-        //屏幕宽度的 60%
+
+        // 屏幕宽度的 60%
         range = (int) (leftMenuWidth * 0.6f);
     }
+
+
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
@@ -378,7 +380,6 @@ public class LoopXDragMenuLayout extends FrameLayout {
         }
     }
 
-   
     class YScrollDetector extends SimpleOnGestureListener {
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float dx, float dy) {

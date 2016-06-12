@@ -56,7 +56,6 @@ public class RippleBackgroundView extends View implements ViewTreeObserver.OnGlo
         canvas.drawCircle(mRipplePivotX, mRipplePivotY, mRippleRadius, mPaint);
     }
 
-
     public void setRippleRadius(float rippleRadius) {
         this.mRippleRadius = rippleRadius;
         invalidate();

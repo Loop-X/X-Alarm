@@ -109,7 +109,7 @@ public class DayOfWeekSelectorView extends FrameLayout implements View.OnClickLi
             case DaysOfWeek.MONDAY:
                 return "MON";
             case DaysOfWeek.TUESDAY:
-                    return "TUE";
+                return "TUE";
             case DaysOfWeek.WEDNESDAY:
                 return "WED";
             case DaysOfWeek.THURSDAY:
@@ -124,7 +124,7 @@ public class DayOfWeekSelectorView extends FrameLayout implements View.OnClickLi
                 return "NONE";
         }
     }
-    public  DayOfWeekSelectorListener dayOfWeekSelectorListener;
+    public DayOfWeekSelectorListener dayOfWeekSelectorListener;
 
     public void setDayOfWeekSelectorListener(DayOfWeekSelectorListener dayOfWeekSelectorListener) {
         this.dayOfWeekSelectorListener = dayOfWeekSelectorListener;

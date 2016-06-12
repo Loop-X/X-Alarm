@@ -26,7 +26,6 @@ public class SetAlarmActivity extends BaseActivity {
     private YummyTimePicker timePickerMinute;
     private YummyTimePicker timePickerAMPM;
 
-
     private DayOfWeekSelectorView mondaySelectorView;
     private DayOfWeekSelectorView tuesdaySelector;
     private DayOfWeekSelectorView wednesdaySelector;
@@ -67,7 +66,6 @@ public class SetAlarmActivity extends BaseActivity {
 
     @Override
     public void onViewInitial() {
-
 
         /** Check 12 or 24 hour mode **/
 
@@ -215,8 +213,6 @@ public class SetAlarmActivity extends BaseActivity {
             mAlarm.daysOfWeek.set(dayOfWeek,selected);
         }
     };
-    
-
 
     @Override
     public void onRefreshData() {
@@ -295,7 +291,6 @@ public class SetAlarmActivity extends BaseActivity {
             tvFRI.setTextColor(mAlarm.daysOfWeek.isSet(DaysOfWeek.FRIDAY) ? colorActiv : colorNoActiv);
             tvSAT.setTextColor(mAlarm.daysOfWeek.isSet(DaysOfWeek.SATURDAY) ? colorActiv : colorNoActiv);
             tvSUN.setTextColor(mAlarm.daysOfWeek.isSet(DaysOfWeek.SUNDAY) ? colorActiv : colorNoActiv);
-
 
             mondaySelectorView.setDay(DaysOfWeek.MONDAY,mAlarm.daysOfWeek.isSet(DaysOfWeek.MONDAY));
             tuesdaySelector.setDay(DaysOfWeek.TUESDAY,mAlarm.daysOfWeek.isSet(DaysOfWeek.TUESDAY));
