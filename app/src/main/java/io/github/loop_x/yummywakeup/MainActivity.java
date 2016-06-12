@@ -116,14 +116,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
-    /*   private void changeFragment(Fragment targetFragment) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_fragment, targetFragment, "fragment")
-                .setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .commit();
-    }*/
-
     /**
      * Init alarm
      */
