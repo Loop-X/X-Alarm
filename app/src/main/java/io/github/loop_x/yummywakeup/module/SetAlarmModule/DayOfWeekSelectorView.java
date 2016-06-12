@@ -42,18 +42,22 @@ public class DayOfWeekSelectorView extends FrameLayout implements View.OnClickLi
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+
         LayoutInflater.from(getContext()).inflate(R.layout.day_of_week_selector, this, true);
+
         rippleBackgroundView = (RippleBackgroundView) findViewById(R.id.rippleBackground);
         dayOfWeekView = (TextView) findViewById(R.id.dayOfWeek);
         selectedRippleColor = UIUtils.getColor(R.color.loopX_2);
         unSelectedRippleColor = Color.parseColor("#FF1B1A30");
         maxRippleRadius = UIUtils.dip2px(40) / 2f;
+
         setOnClickListener(this);
         
     }
 
     public void setDay(int daysOfWeek, boolean selected) {
         this.daysOfWeek = daysOfWeek;
+
         dayOfWeekView.setText(getStringForDayOfWeek(daysOfWeek));
         dayOfWeekView.setSelected(selected);
 

@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.DecelerateInterpolator;
 
-
 /**
  * Author UFreedom
  * Date : 2016 一月 13
@@ -62,19 +61,23 @@ public class RippleBackgroundView extends View implements ViewTreeObserver.OnGlo
     }
 
     public void startRipple(RippleBuilder rippleBuilder) {
+
         if (rippleBuilder == null) return;
 
-        if (rippleBuilder.backgroundDrawable !=null){
+        if (rippleBuilder.backgroundDrawable != null) {
             setBackgroundDrawable(rippleBuilder.backgroundDrawable);
-        }else if (rippleBuilder.backgroundColor != -1){
+        } else if (rippleBuilder.backgroundColor != -1) {
             setBackgroundDrawable(new ColorDrawable(rippleBuilder.backgroundColor));
         }
-        
+
+        // Set ripple pivot
         mRipplePivotX = rippleBuilder.ripplePivotX;
         mRipplePivotY = rippleBuilder.ripplePivotY;
 
         mPaint.setColor(rippleBuilder.rippleColor);
-        ObjectAnimator rippleAnimation = ObjectAnimator.ofFloat(this, "rippleRadius", rippleBuilder.startRippleRadius, rippleBuilder.finishRippleRadius);
+
+        ObjectAnimator rippleAnimation = ObjectAnimator.ofFloat(this, "rippleRadius",
+                rippleBuilder.startRippleRadius, rippleBuilder.finishRippleRadius);
         rippleAnimation.setDuration(350);
         rippleAnimation.setInterpolator(new DecelerateInterpolator());
         rippleAnimation.addListener(new AnimatorListenerAdapter() {
@@ -105,12 +108,13 @@ public class RippleBackgroundView extends View implements ViewTreeObserver.OnGlo
         });
         rippleAnimation.start();
 
-
     }
 
     @Override
     public void onGlobalLayout() {
+
         getViewTreeObserver().removeGlobalOnLayoutListener(this);
+
         if (mRipplePivotX == Float.MAX_VALUE) {
             mRipplePivotX = getMeasuredWidth() / 2;
         }
@@ -118,7 +122,6 @@ public class RippleBackgroundView extends View implements ViewTreeObserver.OnGlo
         if (mRipplePivotY == Float.MAX_VALUE) {
             mRipplePivotY = getMeasuredHeight() / 2;
         }
-
     }
 
     public void setRippleAnimationListener(RippleAnimationListener rippleAnimationListener) {
@@ -130,14 +133,15 @@ public class RippleBackgroundView extends View implements ViewTreeObserver.OnGlo
     }
 
     public interface RippleAnimationListener {
-        public void onRippleStart();
+        void onRippleStart();
 
-        public void onRippleUpdate(float radius);
+        void onRippleUpdate(float radius);
 
-        public void onRippleFinished();
+        void onRippleFinished();
     }
 
     public static class RippleBuilder {
+
         public Context context;
         private int rippleColor;
         private int backgroundColor;
