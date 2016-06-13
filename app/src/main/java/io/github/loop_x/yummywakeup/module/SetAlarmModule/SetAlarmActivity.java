@@ -227,7 +227,6 @@ public class SetAlarmActivity extends BaseActivity {
                 .setRipplePivotX(ripplePivotX)
                 .setRipplePivotY(ripplePivotY)
                 .setBackgroundColor(UIUtils.getColor(R.color.alarm_set_top_alarm_off))
-                .setRippleDirection(RippleBackgroundView.RippleDirection.EXPAND)
         );
     }
     
@@ -239,7 +238,6 @@ public class SetAlarmActivity extends BaseActivity {
                 .setRipplePivotX(ripplePivotX)
                 .setRipplePivotY(ripplePivotY)
                 .setBackgroundColor(UIUtils.getColor(R.color.alarm_set_top_alarm_off))
-                .setRippleDirection(RippleBackgroundView.RippleDirection.SHRINK)
         );
     }
 

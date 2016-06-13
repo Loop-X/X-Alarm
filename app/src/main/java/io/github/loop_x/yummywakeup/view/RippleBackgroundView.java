@@ -145,7 +145,6 @@ public class RippleBackgroundView extends View implements ViewTreeObserver.OnGlo
         public Context context;
         private int rippleColor;
         private int backgroundColor;
-        private RippleDirection rippleDirection;
         private float ripplePivotX;
         private float ripplePivotY;
         private float finishRippleRadius;
@@ -156,7 +155,6 @@ public class RippleBackgroundView extends View implements ViewTreeObserver.OnGlo
             this.context = context;
 
             backgroundColor = -1;
-            rippleDirection = RippleDirection.EXPAND;
             startRippleRadius = 0;
         }
 
@@ -170,10 +168,7 @@ public class RippleBackgroundView extends View implements ViewTreeObserver.OnGlo
             return this;
         }
 
-        public RippleBuilder setRippleDirection(RippleDirection rippleDirection) {
-            this.rippleDirection = rippleDirection;
-            return this;
-        }
+     
 
         public RippleBuilder setRipplePivotX(float ripplePivotX) {
             this.ripplePivotX = ripplePivotX;
