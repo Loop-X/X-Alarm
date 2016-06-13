@@ -46,10 +46,12 @@ import io.github.loop_x.yummywakeup.module.AlarmModule.model.Alarm;
  */
 public class AlarmKlaxon extends Service {
 
-    /** Play alarm up to 10 minutes before silencing */
+    /**
+     * Play alarm up to 10 minutes before silencing
+     */
     private static final int ALARM_TIMEOUT_SECONDS = 10 * 60;
 
-    private static final long[] sVibratePattern = new long[] { 500, 500 };
+    private static final long[] sVibratePattern = new long[]{500, 500};
 
     private boolean mPlaying = false;
     private boolean mCurrentStates = true;
@@ -80,31 +82,31 @@ public class AlarmKlaxon extends Service {
                 case FOCUSCHANGE:
                     switch (msg.arg1) {
                         case AudioManager.AUDIOFOCUS_LOSS:
-                            
-                            if(!mPlaying && mMediaPlayer != null) {
+
+                            if (!mPlaying && mMediaPlayer != null) {
                                 stop();
                             }
                             break;
                         case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
                         case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                            
-                            if(!mPlaying && mMediaPlayer != null) {
+
+                            if (!mPlaying && mMediaPlayer != null) {
                                 mMediaPlayer.pause();
                                 mCurrentStates = false;
                             }
                             break;
                         case AudioManager.AUDIOFOCUS_GAIN:
-                            
-                            if(mPlaying && !mCurrentStates) {
-                                play(mCurrentAlarm); 
-                            } 
+
+                            if (mPlaying && !mCurrentStates) {
+                                play(mCurrentAlarm);
+                            }
                             break;
                         default:
-                            
+
                             break;
-                    }                                    
-                  default:
-                          break;
+                    }
+                default:
+                    break;
 
             }
         }
@@ -145,9 +147,10 @@ public class AlarmKlaxon extends Service {
     /**
      * It runs after onCreate if service is called by startService(). On pre-2.0
      * platform, onStart will be called instead.
+     *
      * @param intent
-     * @param flags Additional data about request.
-     *              Currently either 0, START_FLAG_REDELIVERY, or START_FLAG_RETRY.
+     * @param flags   Additional data about request.
+     *                Currently either 0, START_FLAG_REDELIVERY, or START_FLAG_RETRY.
      * @param startId Unique int representing this specific request to start
      * @return
      */
@@ -196,6 +199,7 @@ public class AlarmKlaxon extends Service {
 
     /**
      * Send Boardcast to kill alarm
+     *
      * @param alarm Alarm to be killed
      */
     private void sendKillBroadcast(Alarm alarm) {
@@ -227,58 +231,57 @@ public class AlarmKlaxon extends Service {
 
         Log.v("yummywakeup", "AlarmKlaxon.play() " + alarm.id + " alert " + alarm.alert);
 
-        if (!alarm.silent) {
-            Uri alert = alarm.alert;
-            // Fall back on the default alarm if the database does not have an
-            // alarm stored.
-            if (alert == null) {
-                alert = RingtoneManager.getDefaultUri(
-                        RingtoneManager.TYPE_RINGTONE);
-                Log.v("yummywakeup", "Using default alarm: " + alert.toString());
+
+        Uri alert = alarm.alert;
+        // Fall back on the default alarm if the database does not have an
+        // alarm stored.
+        if (alert == null) {
+            alert = RingtoneManager.getDefaultUri(
+                    RingtoneManager.TYPE_RINGTONE);
+            Log.v("yummywakeup", "Using default alarm: " + alert.toString());
+        }
+
+        // TODO: Reuse mMediaPlayer instead of creating a new one and/or use
+        // RingtoneManager.
+        mMediaPlayer = new MediaPlayer();
+        mMediaPlayer.setOnErrorListener(new OnErrorListener() {
+            public boolean onError(MediaPlayer mp, int what, int extra) {
+                Log.v("yummywakeup", "Error occurred while playing audio.");
+                mp.stop();
+                mp.release();
+                mMediaPlayer = null;
+                return true;
             }
+        });
 
-            // TODO: Reuse mMediaPlayer instead of creating a new one and/or use
-            // RingtoneManager.
-            mMediaPlayer = new MediaPlayer();
-            mMediaPlayer.setOnErrorListener(new OnErrorListener() {
-                public boolean onError(MediaPlayer mp, int what, int extra) {
-                    Log.v("yummywakeup", "Error occurred while playing audio.");
-                    mp.stop();
-                    mp.release();
-                    mMediaPlayer = null;
-                    return true;
-                }
-            });
-
+        try {
+            // Check if we are in a call. If we are, use the in-call alarm
+            // resource at a low volume to not disrupt the call.
+            if (mTelephonyManager.getCallState() != TelephonyManager.CALL_STATE_IDLE) {
+                Log.v("yummywakeup", "Using the in-call alarm");
+                mMediaPlayer.setVolume(IN_CALL_VOLUME, IN_CALL_VOLUME);
+                setDataSourceFromResource(getResources(), mMediaPlayer,
+                        R.raw.in_call_alarm);
+            } else {
+                mMediaPlayer.setDataSource(this, alert);
+            }
+            startAlarm(mMediaPlayer);
+        } catch (Exception ex) {
+            Log.v("yummywakeup", "Using the fallback ringtone");
+            // The alert may be on the sd card which could be busy right
+            // now. Use the fallback ringtone.
             try {
-                // Check if we are in a call. If we are, use the in-call alarm
-                // resource at a low volume to not disrupt the call.
-                if (mTelephonyManager.getCallState()
-                        != TelephonyManager.CALL_STATE_IDLE) {
-                    Log.v("yummywakeup", "Using the in-call alarm");
-                    mMediaPlayer.setVolume(IN_CALL_VOLUME, IN_CALL_VOLUME);
-                    setDataSourceFromResource(getResources(), mMediaPlayer,
-                            R.raw.in_call_alarm);
-                } else {
-                    mMediaPlayer.setDataSource(this, alert);
-                }
+                // Must reset the media player to clear the error state.
+                mMediaPlayer.reset();
+                setDataSourceFromResource(getResources(), mMediaPlayer,
+                        R.raw.fallbackring);
                 startAlarm(mMediaPlayer);
-            } catch (Exception ex) {
-                Log.v("yummywakeup", "Using the fallback ringtone");
-                // The alert may be on the sd card which could be busy right
-                // now. Use the fallback ringtone.
-                try {
-                    // Must reset the media player to clear the error state.
-                    mMediaPlayer.reset();
-                    setDataSourceFromResource(getResources(), mMediaPlayer,
-                            R.raw.fallbackring);
-                    startAlarm(mMediaPlayer);
-                } catch (Exception ex2) {
-                    // At this point we just don't play anything.
-                    Log.v("yummywakeup", "Failed to play fallback ringtone" + ex2);
-                }
+            } catch (Exception ex2) {
+                // At this point we just don't play anything.
+                Log.v("yummywakeup", "Failed to play fallback ringtone" + ex2);
             }
         }
+
 
         /* Start the vibrator after everything is ok with the media player */
         if (alarm.vibrate) {
@@ -296,7 +299,7 @@ public class AlarmKlaxon extends Service {
     private void startAlarm(MediaPlayer player)
             throws java.io.IOException, IllegalArgumentException,
             IllegalStateException {
-        final AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        final AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         // do not play alarms if stream volume is 0
         // (typically because ringer mode is silent).
         if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != 0) {
@@ -308,7 +311,7 @@ public class AlarmKlaxon extends Service {
     }
 
     private void setDataSourceFromResource(Resources resources,
-            MediaPlayer player, int res) throws java.io.IOException {
+                                           MediaPlayer player, int res) throws java.io.IOException {
         AssetFileDescriptor afd = resources.openRawResourceFd(res);
         if (afd != null) {
             player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(),
@@ -341,7 +344,7 @@ public class AlarmKlaxon extends Service {
     /**
      * Kills alarm audio after ALARM_TIMEOUT_SECONDS, so the alarm
      * won't run all day.
-     *
+     * <p>
      * This just cancels the audio, but leaves the notification
      * popped, so the user will know that the alarm tripped.
      */

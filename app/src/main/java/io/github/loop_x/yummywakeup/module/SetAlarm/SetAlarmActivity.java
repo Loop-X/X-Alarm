@@ -42,6 +42,8 @@ public class SetAlarmActivity extends BaseActivity {
     @Override
     public void onViewInitial() {
 
+        /** Init Time Picker **/
+
         timePickerHour = (YummyTimePicker) findViewById(R.id.tp_set_alarm_hour);
         timePickerMinute = (YummyTimePicker) findViewById(R.id.tp_set_alarm_minute);
         timePickerAMPM = (YummyTimePicker) findViewById(R.id.tp_set_alarm_am_pm);
@@ -49,6 +51,27 @@ public class SetAlarmActivity extends BaseActivity {
         timePickerHour.setHour();
         timePickerMinute.setMinute();
         timePickerAMPM.setAMPM();
+
+        timePickerHour.setOnSelectListener(new YummyTimePicker.onSelectListener() {
+            @Override
+            public void onSelect(String text) {
+
+            }
+        });
+
+        timePickerMinute.setOnSelectListener(new YummyTimePicker.onSelectListener() {
+            @Override
+            public void onSelect(String text) {
+
+            }
+        });
+
+        timePickerAMPM.setOnSelectListener(new YummyTimePicker.onSelectListener() {
+            @Override
+            public void onSelect(String text) {
+
+            }
+        });
 
         btnMonday = (Button) findViewById(R.id.btn_monday);
         btnTuesday = (Button) findViewById(R.id.btn_tuesday);
