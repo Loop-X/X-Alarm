@@ -16,7 +16,7 @@ public enum UnlockTypeEnum {
         type = s;
     }
 
-    public int getId(String name) {
+    public int toID(String name) {
 
         if(name == Normal.toString()) {
             return 0;
@@ -31,7 +31,7 @@ public enum UnlockTypeEnum {
         return -1;
     }
 
-    public static String getName(int id) {
+    public static String toName(int id) {
 
         switch (id) {
             case 0:
@@ -51,8 +51,8 @@ public enum UnlockTypeEnum {
         return this.type;
     }
 
-    public int toInt() {
-        return getId(type);
+    public int getID() {
+        return toID(type);
     }
 
     public boolean equalsName(String otherName) {
