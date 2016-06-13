@@ -18,6 +18,7 @@ import io.github.loop_x.yummywakeup.R;
 import io.github.loop_x.yummywakeup.infrastructure.BaseActivity;
 import io.github.loop_x.yummywakeup.module.AlarmModule.Alarms;
 import io.github.loop_x.yummywakeup.module.AlarmModule.model.Alarm;
+import io.github.loop_x.yummywakeup.view.YummyTextView;
 import io.github.loop_x.yummywakeup.view.YummyTimePicker;
 
 public class SetAlarmActivity extends BaseActivity {
@@ -38,6 +39,8 @@ public class SetAlarmActivity extends BaseActivity {
 
     private ImageView btnAccept;
 
+    private YummyTextView tvCurrentAlarmTime;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_set_alarm;
@@ -45,6 +48,15 @@ public class SetAlarmActivity extends BaseActivity {
 
     @Override
     public void onViewInitial() {
+
+        /** Get alarm object from intent **/
+
+        mAlarm = getIntent().getParcelableExtra(Alarms.ALARM_INTENT_EXTRA);
+
+        /** Init top bar **/
+
+        tvCurrentAlarmTime = (YummyTextView) findViewById(R.id.tv_set_alarm_current_alarm_time);
+        tvCurrentAlarmTime.setText(mAlarm.hour + ":" + mAlarm.minutes);
 
         /** Init Time Picker **/
 
@@ -55,8 +67,6 @@ public class SetAlarmActivity extends BaseActivity {
         timePickerHour.setHour();
         timePickerMinute.setMinute();
         timePickerAMPM.setAMPM();
-
-        mAlarm = getIntent().getParcelableExtra(Alarms.ALARM_INTENT_EXTRA);
 
         timePickerHour.setSelected("" + mAlarm.hour);
         timePickerMinute.setSelected("" + mAlarm.minutes);
@@ -81,6 +91,7 @@ public class SetAlarmActivity extends BaseActivity {
 
             }
         });
+
 
         btnMonday = (Button) findViewById(R.id.btn_monday);
         btnTuesday = (Button) findViewById(R.id.btn_tuesday);
