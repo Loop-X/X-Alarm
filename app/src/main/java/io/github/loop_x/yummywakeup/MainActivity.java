@@ -90,6 +90,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             // Go to Set Alarm Activity
             case R.id.im_set_alarm:
                 Intent intent = new Intent(MainActivity.this, SetAlarmActivity.class);
+                intent.putExtra(Alarms.ALARM_INTENT_EXTRA, alarm);
                 startActivityForResult(intent, SET_ALARM_REQUEST_CODE);
                 break;
         }

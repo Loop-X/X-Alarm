@@ -16,9 +16,13 @@ import java.util.List;
 
 import io.github.loop_x.yummywakeup.R;
 import io.github.loop_x.yummywakeup.infrastructure.BaseActivity;
+import io.github.loop_x.yummywakeup.module.AlarmModule.Alarms;
+import io.github.loop_x.yummywakeup.module.AlarmModule.model.Alarm;
 import io.github.loop_x.yummywakeup.view.YummyTimePicker;
 
 public class SetAlarmActivity extends BaseActivity {
+
+    private Alarm mAlarm;
 
     private YummyTimePicker timePickerHour;
     private YummyTimePicker timePickerMinute;
@@ -51,6 +55,11 @@ public class SetAlarmActivity extends BaseActivity {
         timePickerHour.setHour();
         timePickerMinute.setMinute();
         timePickerAMPM.setAMPM();
+
+        mAlarm = getIntent().getParcelableExtra(Alarms.ALARM_INTENT_EXTRA);
+
+        timePickerHour.setSelected("" + mAlarm.hour);
+        timePickerMinute.setSelected("" + mAlarm.minutes);
 
         timePickerHour.setOnSelectListener(new YummyTimePicker.onSelectListener() {
             @Override
