@@ -42,8 +42,8 @@ public class AlarmProvider extends ContentProvider {
             UriMatcher.NO_MATCH);
 
     static {
-        sURLMatcher.addURI("com.capricorn.yummy.yummywakeup", "alarm", ALARMS);
-        sURLMatcher.addURI("com.capricorn.yummy.yummywakeup", "alarm/#", ALARMS_ID);
+        sURLMatcher.addURI("io.github.loop_x.yummywakeup", "alarm", ALARMS);
+        sURLMatcher.addURI("io.github.loop_x.yummywakeup", "alarm/#", ALARMS_ID);
     }
 
     private static class DatabaseHelper extends SQLiteOpenHelper {
