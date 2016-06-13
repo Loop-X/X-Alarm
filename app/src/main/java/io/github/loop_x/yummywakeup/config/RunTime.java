@@ -1,4 +1,4 @@
-package io.github.loop_x.yummywakeup.infrastructure;
+package io.github.loop_x.yummywakeup.config;
 
 import android.content.Context;
 

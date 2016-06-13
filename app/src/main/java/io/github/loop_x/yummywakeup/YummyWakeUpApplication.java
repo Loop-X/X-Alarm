@@ -2,7 +2,7 @@ package io.github.loop_x.yummywakeup;
 
 import android.app.Application;
 
-import io.github.loop_x.yummywakeup.infrastructure.RunTime;
+import io.github.loop_x.yummywakeup.config.RunTime;
 
 
 /**

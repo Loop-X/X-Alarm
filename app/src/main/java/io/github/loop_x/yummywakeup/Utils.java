@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
-import io.github.loop_x.yummywakeup.infrastructure.RunTime;
+import io.github.loop_x.yummywakeup.config.RunTime;
 
 /**
  * Author UFreedom
