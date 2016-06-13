@@ -1,5 +1,5 @@
 <resources xmlns:xliff="http://schemas.android.com/apk/res-auto">
-    
+
     <string name="app_name">Yummy Wake Up</string>
     <string name="wake_up_in">WAKE UP IN</string>
     <string name="volume">Volume</string>
