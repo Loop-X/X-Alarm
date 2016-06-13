@@ -27,7 +27,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Alarm alarm;
     private int alarmId;
 
-    private final static String M12 = "hh:mm";
+    private final static String M24 = "kk:mm";
     private final static String FORMAT_DATE = "MMM dd";
     private final static String FORMAT_WDAY = "EEEE";
     private final static String FORMAT_AMPM = "a";
@@ -153,7 +153,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         cal.set(Calendar.HOUR_OF_DAY, alarm.hour);
         cal.set(Calendar.MINUTE, alarm.minutes);
 
-        tvAlarmTime.setText(DateFormat.format(M12, cal));
+        tvAlarmTime.setText(DateFormat.format(M24, cal));
 
     }
 
