@@ -67,7 +67,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         switch (v.getId()) {
             // Go to Set Alarm Activity
-            case R.id.tv_alarm_time:
+            case R.id.im_set_alarm:
                 Intent intent = new Intent(MainActivity.this, SetAlarmActivity.class);
                 startActivityForResult(intent, SET_ALARM_REQUEST_CODE);
                 break;

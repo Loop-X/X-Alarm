@@ -66,16 +66,19 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_wake_up"
         android:clickable="true"
-        android:onClick="onClick"
         android:text="12:20"
         android:textAlignment="center"
         android:textColor="@color/loopX_2"
         android:textSize="50sp" />
 
-    <io.github.loop_x.yummywakeup.view.YummyTimePicker
-        android:id="@+id/test"
-        android:layout_width="80dp"
-        android:layout_height="160dp"
-        android:visibility="gone" />
+    <ImageView
+        android:id="@+id/im_set_alarm"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_below="@id/tv_alarm_time"
+        android:layout_centerHorizontal="true"
+        android:onClick="onClick"
+        android:scaleType="centerCrop"
+        android:src="@drawable/icon_set_alarm"/>
 
 </RelativeLayout>
