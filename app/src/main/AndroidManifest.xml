@@ -2,6 +2,22 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="io.github.loop_x.yummywakeup">
 
+    <!-- For details: http://developer.android.com/reference/android/Manifest.permission.html -->
+    <!-- Allows app to receive ACTION_BOOT_COMPLETED that is broadcast after the system finishes booting -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- Allows using PowerManager WakeLocks to keep processor from sleeping or screen from dimming -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- Allows access to the vibrator -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- Allows an application to read or write the system settings -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <!-- Allows app to disable the keyguard -->
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <!-- Allows read only access to phone state -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    
     <application
         android:name=".YummyWakeUpApplication"
         android:allowBackup="true"
