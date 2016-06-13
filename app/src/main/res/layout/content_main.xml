@@ -66,7 +66,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_wake_up"
         android:clickable="true"
-        android:text="12:20"
         android:textAlignment="center"
         android:textColor="@color/loopX_2"
         android:textSize="50sp" />

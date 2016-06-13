@@ -8,6 +8,7 @@ public class PreferenceKeys {
 
     // Share preference name
     public final static String SHARE_PREF_NAME = "yummywakeup_share_preference";
+
     // ID to save current alarm
     public final static String KEY_ALARM_ID = "alarm_id";
     public final static String KEY_ALARM_TIME = "alarm_time";
