@@ -3,9 +3,7 @@ package io.github.loop_x.yummywakeup.module.SettingModule;
 import android.content.Context;
 import android.media.AudioManager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SeekBar;
@@ -50,7 +48,6 @@ public class RightMenuLayout extends LinearLayout {
         initVibrationSeekBar();
 
         CustomAdapter customAdapter = new CustomAdapter(mContext, ringtoneNames);
-        lvRingtoneList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         lvRingtoneList.setAdapter(customAdapter);
 
     }
