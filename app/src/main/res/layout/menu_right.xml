@@ -43,40 +43,59 @@
         android:text="@string/Ringtone"
         android:textColor="@color/loopX_3" />
 
+    <ListView
+        android:id="@+id/lv_ringtone_list"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:choiceMode="singleChoice"/>
 
-    <CheckedTextView
+    <!--CheckedTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="29dp"
+        android:checkMark="@drawable/icon_choose_ringtone"
+        android:checked="true"
+        android:gravity="center_vertical"
+        android:paddingRight="5dp"
         android:text="WARM BREEZE"
         android:textColor="@color/loopX_3"
         android:textSize="18sp" />
 
-
     <CheckedTextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="22dp"
+        android:checkMark="@drawable/icon_choose_ringtone"
+        android:checked="false"
+        android:gravity="center_vertical"
+        android:paddingRight="5dp"
         android:text="FOREST GLADE"
         android:textColor="@color/loopX_3_40_alpha"
         android:textSize="18sp" />
 
-
     <CheckedTextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="22dp"
+        android:checkMark="@drawable/icon_choose_ringtone"
+        android:checked="false"
+        android:gravity="center_vertical"
+        android:paddingRight="5dp"
         android:text="MORNING MIST"
         android:textColor="@color/loopX_3_40_alpha"
         android:textSize="18sp" />
 
     <CheckedTextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="22dp"
+        android:checkMark="@drawable/icon_choose_ringtone"
+        android:checked="false"
+        android:gravity="center_vertical"
+        android:paddingRight="5dp"
         android:text="SUNRISE"
         android:textColor="@color/loopX_3_40_alpha"
-        android:textSize="18sp" />
+        android:textSize="18sp" / -->
 
 
 </merge>

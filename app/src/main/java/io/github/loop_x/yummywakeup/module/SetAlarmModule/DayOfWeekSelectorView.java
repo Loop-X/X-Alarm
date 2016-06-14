@@ -18,7 +18,7 @@ import io.github.loop_x.yummywakeup.view.RippleBackgroundView;
  * Author UFreedom
  * Date : 2016 六月 10
  */
-public class DayOfWeekSelectorView extends FrameLayout implements View.OnClickListener{
+public class DayOfWeekSelectorView extends FrameLayout implements View.OnClickListener {
 
     public int daysOfWeek;
     private RippleBackgroundView rippleBackgroundView;

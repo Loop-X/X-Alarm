@@ -1,4 +1,4 @@
-package io.github.loop_x.yummywakeup.view;
+package io.github.loop_x.yummywakeup.module.SettingModule;
 
 import android.content.Context;
 import android.media.AudioManager;
@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.SeekBar;
 
 import io.github.loop_x.yummywakeup.R;
@@ -19,6 +20,9 @@ public class RightMenuLayout extends LinearLayout {
 
     private SeekBar sbAlarmVolume;
     private SeekBar sbAlarmVibration;
+    private ListView lvRingtoneList;
+
+    String[] ringtoneNames = {"WARM BREEZE", "FOREST GLADE", "MORNING MIST", "SUNRISE"};
 
     public RightMenuLayout(Context context) {
         this(context, null);
@@ -40,9 +44,14 @@ public class RightMenuLayout extends LinearLayout {
 
         sbAlarmVolume = (SeekBar) findViewById(R.id.sb_alarm_volume);
         sbAlarmVibration = (SeekBar) findViewById(R.id.sb_alarm_vibration);
+        lvRingtoneList = (ListView) findViewById(R.id.lv_ringtone_list);
 
         initVolumeSeekBar();
         initVibrationSeekBar();
+
+        CustomAdapter customAdapter = new CustomAdapter(mContext, ringtoneNames);
+        lvRingtoneList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        lvRingtoneList.setAdapter(customAdapter);
 
     }
 
@@ -72,6 +81,6 @@ public class RightMenuLayout extends LinearLayout {
     }
 
     public void initVibrationSeekBar() {
-        sbAlarmVolume.setMax(1);
+        sbAlarmVibration.setMax(1);
     }
 }
