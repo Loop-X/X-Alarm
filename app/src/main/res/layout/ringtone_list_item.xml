@@ -22,6 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:button="@drawable/ringtone_item_selector"
-        android:checked="true"/>
+        android:focusable="false"
+        android:checked="false"/>
 
 </LinearLayout>

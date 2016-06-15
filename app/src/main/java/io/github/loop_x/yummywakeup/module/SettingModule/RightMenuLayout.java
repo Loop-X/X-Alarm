@@ -1,16 +1,22 @@
 package io.github.loop_x.yummywakeup.module.SettingModule;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.media.AudioManager;
+import android.media.RingtoneManager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SeekBar;
 
 import io.github.loop_x.yummywakeup.R;
+import io.github.loop_x.yummywakeup.module.AlarmModule.model.Alarm;
+import io.github.loop_x.yummywakeup.view.YummyTextView;
 
 public class RightMenuLayout extends LinearLayout {
 
@@ -21,6 +27,12 @@ public class RightMenuLayout extends LinearLayout {
     private SeekBar sbAlarmVolume;
     private SeekBar sbAlarmVibration;
     private ListView lvRingtoneList;
+    private YummyTextView tvRingtoneItem;
+    private CheckBox cbRingtoneItem;
+
+    private RingtoneManager mRingtoneManager;
+    private int mRingtonePosition;
+
 
     public RightMenuLayout(Context context) {
         this(context, null);
@@ -47,6 +59,9 @@ public class RightMenuLayout extends LinearLayout {
         initVolumeSeekBar();
         initVibrationSeekBar();
 
+        /** Init Ringtone **/
+        mRingtoneManager = new RingtoneManager(mContext);
+
         CustomAdapter customAdapter = new CustomAdapter(mContext, R.layout.ringtone_list_item);
         lvRingtoneList.setAdapter(customAdapter);
 
@@ -54,6 +69,11 @@ public class RightMenuLayout extends LinearLayout {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                tvRingtoneItem = (YummyTextView) view.findViewById(R.id.tv_ringtone_list_item);
+                cbRingtoneItem = (CheckBox) view.findViewById(R.id.cb_ringtone_list_item);
+
+                cbRingtoneItem.setChecked(true);
 
             }
         });
