@@ -398,9 +398,9 @@ public class LoopXDragMenuLayout extends FrameLayout {
         super.onLayout(changed, left, top, right, bottom);
 
         leftMenuView.layout(0, 0, leftMenuWidth, leftMenuHeight);
-        rightMenuView.layout(0,0,rightMenuWidth,rightMenuHeight);
-        mainContentView.layout(mainViewRelativeToMenu,0,mainViewRelativeToMenu + mainViewWidth,mainViewHeight);
-        shadowView.layout(mainViewRelativeToMenu,0,mainViewRelativeToMenu + shadowViewWidth,shadowViewHeight);
+        rightMenuView.layout(0, 0, rightMenuWidth, rightMenuHeight);
+        mainContentView.layout(mainViewRelativeToMenu, 0, mainViewRelativeToMenu + mainViewWidth, mainViewHeight);
+        shadowView.layout(mainViewRelativeToMenu, 0, mainViewRelativeToMenu + shadowViewWidth, shadowViewHeight);
 
     }
 
