@@ -22,6 +22,8 @@ public class LoopXDragMenuLayout extends FrameLayout {
     private int leftMenuHeight;
     private int rightMenuWidth;
     private int rightMenuHeight;
+    private int mainViewWidth;
+    private int mainViewHeight;
     private int shadowViewWidth;
     private int shadowViewHeight;
     private View leftMenuView;
@@ -46,6 +48,7 @@ public class LoopXDragMenuLayout extends FrameLayout {
 
     private ViewDragHelper.Callback dragHelperCallback = new ViewDragHelper.Callback() {
 
+        
         @Override
         public boolean tryCaptureView(View child, int pointerId) {
             return true;
@@ -326,9 +329,14 @@ public class LoopXDragMenuLayout extends FrameLayout {
         shadowViewWidth  = shadowView.getMeasuredWidth();
         shadowViewHeight = shadowView.getMeasuredHeight();
 
+        mainViewWidth = mainContentView.getMeasuredWidth();
+        mainViewHeight = mainContentView.getMeasuredHeight();
+        
         // 屏幕宽度的 60%
         range = (int) (leftMenuWidth * 0.6f);
     }
+    
+    
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
@@ -344,7 +352,17 @@ public class LoopXDragMenuLayout extends FrameLayout {
         }
         return false;
     }
-    
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+
+        leftMenuView.layout(0, 0, leftMenuWidth, leftMenuHeight);
+        rightMenuView.layout(0,0,rightMenuWidth,rightMenuHeight);
+        mainContentView.layout(mainViewRelativeToMenu,0,mainViewRelativeToMenu + mainViewWidth,mainViewHeight);
+        shadowView.layout(mainViewRelativeToMenu,0,mainViewRelativeToMenu + shadowViewWidth,shadowViewHeight);
+
+    }
 
     @Override
     public void computeScroll() {
@@ -382,6 +400,21 @@ public class LoopXDragMenuLayout extends FrameLayout {
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float dx, float dy) {
             return Math.abs(dy) <= Math.abs(dx);
         }
+    }
+    
+    private DragMenuStateListener dragMenuStateListener;
+
+    public void setDragMenuStateListener(DragMenuStateListener dragMenuStateListener) {
+        this.dragMenuStateListener = dragMenuStateListener;
+    }
+
+    public enum MenuDirection{
+        LEFT,RIGHT
+    }
+    
+    public interface DragMenuStateListener {
+        public void onMenuOpened(MenuDirection direction);
+        public void onMenuClosed(MenuDirection direction);
     }
 
 }
