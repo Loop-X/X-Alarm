@@ -31,6 +31,9 @@ public class LoopXDragMenuLayout extends FrameLayout {
     private View rightMenuView;
     private View shadowView;
     private int mainViewRelativeToMenu;
+    
+    private boolean releaseToCloseMenu;
+    private int lastMainViewRelativeToMenu;
 
     public enum MenuStatus {
         Drag, Open, Close
@@ -161,6 +164,8 @@ public class LoopXDragMenuLayout extends FrameLayout {
         public void onViewPositionChanged(View changedView, int left, int top,
                                           int dx, int dy) {
 
+            Log.e("ViewDragHelper","------- onViewPositionChanged : dx: "+dx);
+            
             if (changedView == mainContentView) {
                 mainViewRelativeToMenu = left;
 
@@ -188,6 +193,7 @@ public class LoopXDragMenuLayout extends FrameLayout {
                     mainViewRelativeToMenu = -range;
                 }
             }
+
            
             //layout shadow view
             shadowView.layout(mainViewRelativeToMenu, 0, mainViewRelativeToMenu + shadowViewWidth, shadowViewHeight);
@@ -283,6 +289,27 @@ public class LoopXDragMenuLayout extends FrameLayout {
                 shadowView.setAlpha(percent);
             }
 
+            if (releaseToCloseMenu) {
+                if (mainViewRelativeToMenu == 0) {
+                    if (lastMainViewRelativeToMenu > 0) {
+                        Log.e("ViewDragHelper","左菜单关闭");
+                        if (dragMenuStateListener != null){
+                            dragMenuStateListener.onMenuClosed(MenuDirection.LEFT);
+                        }
+                        
+                    } else if (lastMainViewRelativeToMenu < 0) {
+                        Log.e("ViewDragHelper","右菜单关闭");
+
+                        if (dragMenuStateListener != null){
+                            dragMenuStateListener.onMenuClosed(MenuDirection.RIGHT);
+                        }
+                    }
+                }
+
+            }
+            
+            
+            lastMainViewRelativeToMenu = mainViewRelativeToMenu;
 
         }
     };
@@ -378,6 +405,8 @@ public class LoopXDragMenuLayout extends FrameLayout {
     }
 
     public void closeRightMenuWithAnimation() {
+        releaseToCloseMenu = true;
+
         if (dragHelper.smoothSlideViewTo(mainContentView, 0, 0)) {
             ViewCompat.postInvalidateOnAnimation(this);
         }
@@ -390,6 +419,8 @@ public class LoopXDragMenuLayout extends FrameLayout {
     }
 
     public void closeLeftMenuWithAnimation() {
+        releaseToCloseMenu = true;
+
         if (dragHelper.smoothSlideViewTo(mainContentView, 0, 0)) {
             ViewCompat.postInvalidateOnAnimation(this);
         }
