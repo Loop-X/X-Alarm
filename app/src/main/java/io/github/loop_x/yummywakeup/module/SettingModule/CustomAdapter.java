@@ -1,30 +1,35 @@
 package io.github.loop_x.yummywakeup.module.SettingModule;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.CheckedTextView;
+import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.TextView;
 
 import io.github.loop_x.yummywakeup.R;
 
-public class CustomAdapter extends BaseAdapter {
+public class CustomAdapter extends ArrayAdapter<Object> {
 
-    String[] mStringList;
+    String[] mRingtoneNames = {"WARM BREEZE", "FOREST GLADE", "MORNING MIST", "SUNRISE"};
+
     Context mContext;
-    LayoutInflater mInflater;
+    int mResourceId;
 
-    public CustomAdapter(Context context, String[] names) {
+    public CustomAdapter(Context context, int resource) {
+        this(context, resource, 0);
+    }
+
+    public CustomAdapter(Context context, int resource, int textViewResourceId) {
+        super(context, resource, textViewResourceId);
         mContext = context;
-        mStringList = names;
-        mInflater = (LayoutInflater.from(context));
+        mResourceId = resource;
     }
 
     @Override
     public int getCount() {
-        return mStringList.length;
+        return mRingtoneNames.length;
     }
 
     @Override
@@ -34,31 +39,38 @@ public class CustomAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
 
-        view = mInflater.inflate(R.layout.ringtone_list_item, null);
+        ViewHolder holder;
 
-        final CheckedTextView ctvItem = (CheckedTextView) view.findViewById(R.id.ctv_ringtone_list_item);
-        ctvItem.setText(mStringList[position]);
-        ctvItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (ctvItem.isChecked()) {
-                    ctvItem.setCheckMarkDrawable(null);
-                    ctvItem.setTextColor(ContextCompat.getColor(mContext, R.color.loopX_3_40_alpha));
-                    ctvItem.setChecked(false);
-                } else {
-                    ctvItem.setCheckMarkDrawable(R.drawable.icon_choose_ringtone);
-                    ctvItem.setTextColor(ContextCompat.getColor(mContext, R.color.loopX_3));
-                    ctvItem.setChecked(true);
-                }
-            }
-        });
+        LayoutInflater inflater = (LayoutInflater)mContext.getSystemService
+                (Context.LAYOUT_INFLATER_SERVICE);
+
+        if (view == null) {
+
+            view = inflater.inflate(R.layout.ringtone_list_item, parent, false);
+
+            holder = new ViewHolder();
+            holder.tvRingtoneTitle = (TextView) view.findViewById(R.id.tv_ringtone_list_item);
+            holder.cbRingtoneSelect = (CheckBox) view.findViewById(R.id.cb_ringtone_list_item);
+
+            view.setTag(holder);
+        }
+        else {
+            holder = (ViewHolder) view.getTag();
+        }
+
+        holder.tvRingtoneTitle.setText(mRingtoneNames[position]);
 
         return view;
+    }
+
+    static class ViewHolder {
+        TextView tvRingtoneTitle;
+        CheckBox cbRingtoneSelect;
     }
 }

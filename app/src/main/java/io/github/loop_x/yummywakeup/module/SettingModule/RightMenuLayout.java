@@ -4,6 +4,8 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SeekBar;
@@ -19,8 +21,6 @@ public class RightMenuLayout extends LinearLayout {
     private SeekBar sbAlarmVolume;
     private SeekBar sbAlarmVibration;
     private ListView lvRingtoneList;
-
-    String[] ringtoneNames = {"WARM BREEZE", "FOREST GLADE", "MORNING MIST", "SUNRISE"};
 
     public RightMenuLayout(Context context) {
         this(context, null);
@@ -47,8 +47,16 @@ public class RightMenuLayout extends LinearLayout {
         initVolumeSeekBar();
         initVibrationSeekBar();
 
-        CustomAdapter customAdapter = new CustomAdapter(mContext, ringtoneNames);
+        CustomAdapter customAdapter = new CustomAdapter(mContext, R.layout.ringtone_list_item);
         lvRingtoneList.setAdapter(customAdapter);
+
+        lvRingtoneList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+        });
 
     }
 
@@ -80,4 +88,5 @@ public class RightMenuLayout extends LinearLayout {
     public void initVibrationSeekBar() {
         sbAlarmVibration.setMax(1);
     }
+
 }
