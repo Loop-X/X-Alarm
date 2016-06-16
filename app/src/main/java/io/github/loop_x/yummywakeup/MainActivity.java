@@ -3,9 +3,13 @@ package io.github.loop_x.yummywakeup;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.text.format.DateFormat;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Toast;
+
+import com.facebook.rebound.Spring;
 
 import java.util.Calendar;
 
@@ -16,6 +20,8 @@ import io.github.loop_x.yummywakeup.module.AlarmModule.model.Alarm;
 import io.github.loop_x.yummywakeup.module.SetAlarmModule.SetAlarmActivity;
 import io.github.loop_x.yummywakeup.module.UnlockTypeModule.UnlockTypeActivity;
 import io.github.loop_x.yummywakeup.module.UnlockTypeModule.UnlockTypeEnum;
+import io.github.loop_x.yummywakeup.tools.BaseSpringListener;
+import io.github.loop_x.yummywakeup.tools.ReboundAnimation;
 import io.github.loop_x.yummywakeup.view.LoopXDragMenuLayout;
 import io.github.loop_x.yummywakeup.view.UnlockTypeMenuLayout;
 import io.github.loop_x.yummywakeup.view.YummyTextView;
@@ -37,7 +43,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private LoopXDragMenuLayout loopXDragMenuLayout;
 
     private YummyTextView tvAlarmTime;
-
+    private View setAlarmView;
+    protected Handler mHandler;
+    private Spring translationYSpring;
+    private int translationYEndValue;
+    
     @Override
     public int getLayoutId() {
         return R.layout.activity_main;
@@ -45,9 +55,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onViewInitial() {
+        mHandler = new Handler();
 
         tvAlarmTime = (YummyTextView) findViewById(R.id.tv_alarm_time);
-
+        setAlarmView = findViewById(R.id.im_set_alarm);
+        
         loopXDragMenuLayout = (LoopXDragMenuLayout) findViewById(R.id.dragMenuLayout);
         openRightDrawerView = findViewById(R.id.openRightDrawer);
         openLeftDrawerView = findViewById(R.id.openLeftDrawer);
@@ -86,7 +98,33 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 startActivityForResult(intent,UNLOCK_TYPE_REQUEST_CODE);        
             }
         });
+
+        translationYSpring = ReboundAnimation.getInstance().createSpringFromBouncinessAndSpeed(12,9,new BaseSpringListener(){
+            @Override
+            public void onSpringUpdate(Spring spring) {
+                int translationY = (int) transition((float) spring.getCurrentValue(),translationYEndValue,0);
+                setAlarmView.setTranslationY(translationY);            }
+        });
+     
         
+        
+        setAlarmView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                setAlarmView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                int[] location = new int[2];
+                setAlarmView.getLocationOnScreen(location);
+                translationYEndValue = UIUtils.getScreenHeight() -  location[1];
+                
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        translationYSpring.setEndValue(1f);
+                    }
+                },100);
+            }
+        });
+
     }
 
     @Override
