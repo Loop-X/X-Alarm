@@ -7,13 +7,11 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SeekBar;
 
 import io.github.loop_x.yummywakeup.R;
-import io.github.loop_x.yummywakeup.view.YummyTextView;
 
 public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
 
@@ -24,12 +22,8 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
     private SeekBar sbAlarmVolume;
     private SeekBar sbAlarmVibration;
     private ListView lvRingtoneList;
-    private YummyTextView tvRingtoneItem;
-    private CheckBox cbRingtoneItem;
 
     private RingtoneManager mRingtoneManager;
-    private int mRingtonePosition;
-
 
     public AlarmPreferenceSettingsMenuLayout(Context context) {
         this(context, null);
@@ -59,7 +53,7 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
         /** Init Ringtone **/
         mRingtoneManager = new RingtoneManager(mContext);
 
-        CustomAdapter customAdapter = new CustomAdapter(mContext, R.layout.ringtone_list_item);
+        final CustomAdapter customAdapter = new CustomAdapter(mContext, R.layout.ringtone_list_item);
         lvRingtoneList.setAdapter(customAdapter);
 
         lvRingtoneList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -67,10 +61,8 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                tvRingtoneItem = (YummyTextView) view.findViewById(R.id.tv_ringtone_list_item);
-                cbRingtoneItem = (CheckBox) view.findViewById(R.id.cb_ringtone_list_item);
-
-                cbRingtoneItem.setChecked(true);
+                CustomAdapter.mLastSelectPosition = i;
+                customAdapter.notifyDataSetChanged();
 
             }
         });

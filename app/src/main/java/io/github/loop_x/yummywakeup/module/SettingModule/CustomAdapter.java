@@ -1,12 +1,12 @@
 package io.github.loop_x.yummywakeup.module.SettingModule;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import io.github.loop_x.yummywakeup.R;
 import io.github.loop_x.yummywakeup.view.YummyTextView;
@@ -14,10 +14,10 @@ import io.github.loop_x.yummywakeup.view.YummyTextView;
 public class CustomAdapter extends ArrayAdapter<Object> {
 
     String[] mRingtoneNames = {"WARM BREEZE", "FOREST GLADE", "MORNING MIST", "SUNRISE"};
-    Integer selected_position = -1;
 
     Context mContext;
     int mResourceId;
+    public static int mLastSelectPosition = -1;
 
     public CustomAdapter(Context context, int resource) {
         this(context, resource, 0);
@@ -35,16 +35,6 @@ public class CustomAdapter extends ArrayAdapter<Object> {
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
     public View getView(int position, View view, ViewGroup parent) {
 
         ViewHolder holder;
@@ -58,7 +48,7 @@ public class CustomAdapter extends ArrayAdapter<Object> {
 
             holder = new ViewHolder();
             holder.tvRingtoneTitle = (YummyTextView) view.findViewById(R.id.tv_ringtone_list_item);
-            holder.cbRingtoneSelect = (CheckBox) view.findViewById(R.id.cb_ringtone_list_item);
+            holder.imRingtoneSelect = (ImageView) view.findViewById(R.id.iv_ringtone_list_item);
 
             view.setTag(holder);
         }
@@ -68,28 +58,19 @@ public class CustomAdapter extends ArrayAdapter<Object> {
 
         holder.tvRingtoneTitle.setText(mRingtoneNames[position]);
 
-        //holder.cbRingtoneSelect.setChecked(position == selected_position);
-        //holder.cbRingtoneSelect.setOnClickListener(onStateChangedListener(holder.cbRingtoneSelect, position));
+        if(mLastSelectPosition != position) {
+            holder.tvRingtoneTitle.setTextColor(ContextCompat.getColor(mContext, R.color.loopX_3_40_alpha));
+            holder.imRingtoneSelect.setImageDrawable(null);
+        } else {
+            holder.tvRingtoneTitle.setTextColor(ContextCompat.getColor(mContext, R.color.loopX_3));
+            holder.imRingtoneSelect.setImageResource(R.drawable.icon_choose_ringtone);
+        }
 
         return view;
     }
 
-    private View.OnClickListener onStateChangedListener(final CheckBox checkBox, final int position) {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkBox.isChecked()) {
-                    selected_position = position;
-                } else {
-                    selected_position = -1;
-                }
-                notifyDataSetChanged();
-            }
-        };
-    }
-
     static class ViewHolder {
         YummyTextView tvRingtoneTitle;
-        CheckBox cbRingtoneSelect;
+        ImageView imRingtoneSelect;
     }
 }

@@ -17,12 +17,9 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <CheckBox
-        android:id="@+id/cb_ringtone_list_item"
+    <ImageView
+        android:id="@+id/iv_ringtone_list_item"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:button="@drawable/ringtone_item_selector"
-        android:focusable="false"
-        android:checked="false"/>
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

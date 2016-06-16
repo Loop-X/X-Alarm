@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
-
     <io.github.loop_x.yummywakeup.view.YummyTextView
         android:layout_width="51.5dp"
         android:layout_height="24.5dp"
