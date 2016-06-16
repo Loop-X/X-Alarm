@@ -304,20 +304,26 @@ public class LoopXDragMenuLayout extends FrameLayout {
                             dragMenuStateListener.onMenuClosed(MenuDirection.RIGHT);
                         }
                     }
+
                     releaseMenu = false;
+
                 }else if (mainViewRelativeToMenu == range){
                     Log.e("ViewDragHelper","左菜单打开");
 
                     if (dragMenuStateListener != null){
                         dragMenuStateListener.onMenuOpened(MenuDirection.LEFT);
                     }
+                    releaseMenu = false;
+
                 }else if (mainViewRelativeToMenu == -range){
                     Log.e("ViewDragHelper","右菜单打开");
 
                     if (dragMenuStateListener != null){
                         dragMenuStateListener.onMenuOpened(MenuDirection.RIGHT);
                     }
+                    releaseMenu = false;
                 }
+
 
             }
             
