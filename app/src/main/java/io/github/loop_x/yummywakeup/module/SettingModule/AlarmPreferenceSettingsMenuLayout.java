@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import io.github.loop_x.yummywakeup.R;
 
@@ -43,14 +44,17 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
         super.onFinishInflate();
         LayoutInflater.from(getContext()).inflate(R.layout.menu_right, this, true);
 
+        /** Init Seekbar **/
+
         sbAlarmVolume = (SeekBar) findViewById(R.id.sb_alarm_volume);
         sbAlarmVibration = (SeekBar) findViewById(R.id.sb_alarm_vibration);
-        lvRingtoneList = (ListView) findViewById(R.id.lv_ringtone_list);
 
         initVolumeSeekBar();
         initVibrationSeekBar();
 
         /** Init Ringtone **/
+
+        lvRingtoneList = (ListView) findViewById(R.id.lv_ringtone_list);
         mRingtoneManager = new RingtoneManager(mContext);
 
         final CustomAdapter customAdapter = new CustomAdapter(mContext, R.layout.ringtone_list_item);

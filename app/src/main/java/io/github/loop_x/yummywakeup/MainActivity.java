@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.facebook.rebound.Spring;
@@ -26,7 +27,7 @@ import io.github.loop_x.yummywakeup.view.DragMenuLayout;
 import io.github.loop_x.yummywakeup.view.UnlockTypeMenuLayout;
 import io.github.loop_x.yummywakeup.view.YummyTextView;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener, DragMenuLayout.DragMenuStateListener {
 
     private static final String TAG = "yummywakeup.MainActivity";
 
@@ -47,6 +48,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected Handler mHandler;
     private Spring translationYSpring;
     private int translationYEndValue;
+
+    private SeekBar sbAlarmVibration;
     
     @Override
     public int getLayoutId() {
@@ -64,6 +67,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         openRightDrawerView = findViewById(R.id.openRightDrawer);
         openLeftDrawerView = findViewById(R.id.openLeftDrawer);
 
+        sbAlarmVibration = (SeekBar) loopXDragMenuLayout.findViewById(R.id.sb_alarm_vibration);
+
+        loopXDragMenuLayout.setDragMenuStateListener(this);
+
         openLeftDrawerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +81,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 }
             }
         });
-        
 
         openRightDrawerView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -234,5 +240,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         return sharedPreferences.getInt(PreferenceKeys.KEY_ALARM_ID, -1);
     }
 
-   
+    @Override
+    public void onMenuOpened(DragMenuLayout.MenuDirection direction) {
+        if(direction == DragMenuLayout.MenuDirection.RIGHT) {
+            sbAlarmVibration.setProgress(mAlarm.vibrate? 1 : 0);
+        }
+    }
+
+    @Override
+    public void onMenuClosed(DragMenuLayout.MenuDirection direction) {
+        if(direction == DragMenuLayout.MenuDirection.RIGHT) {
+
+        }
+    }
+
 }
