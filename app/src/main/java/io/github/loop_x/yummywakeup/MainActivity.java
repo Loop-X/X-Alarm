@@ -14,7 +14,10 @@ import io.github.loop_x.yummywakeup.infrastructure.BaseActivity;
 import io.github.loop_x.yummywakeup.module.AlarmModule.Alarms;
 import io.github.loop_x.yummywakeup.module.AlarmModule.model.Alarm;
 import io.github.loop_x.yummywakeup.module.SetAlarmModule.SetAlarmActivity;
+import io.github.loop_x.yummywakeup.module.UnlockTypeModule.UnlockTypeActivity;
+import io.github.loop_x.yummywakeup.module.UnlockTypeModule.UnlockTypeEnum;
 import io.github.loop_x.yummywakeup.view.LoopXDragMenuLayout;
+import io.github.loop_x.yummywakeup.view.UnlockTypeMenuLayout;
 import io.github.loop_x.yummywakeup.view.YummyTextView;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
@@ -22,6 +25,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = "yummywakeup.MainActivity";
 
     private static final int SET_ALARM_REQUEST_CODE = 1;
+    public static final int UNLOCK_TYPE_REQUEST_CODE = 2;
 
     private Alarm mAlarm;
     private int alarmId;
@@ -58,6 +62,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 }
             }
         });
+        
 
         openRightDrawerView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +77,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
         });
 
+        UnlockTypeMenuLayout unlockTypeMenuLayout = (UnlockTypeMenuLayout) loopXDragMenuLayout.getMenuView(LoopXDragMenuLayout.MenuDirection.LEFT);
+        unlockTypeMenuLayout.setOnUnlockTypeMenuClickListener(new UnlockTypeMenuLayout.OnUnlockTypeMenuClickListener() {
+            @Override
+            public void onClick(UnlockTypeEnum unlockTypeEnum) {
+                Intent intent = new Intent(MainActivity.this,UnlockTypeActivity.class);
+                intent.putExtra("unlockType",unlockTypeEnum.getID());
+                startActivityForResult(intent,UNLOCK_TYPE_REQUEST_CODE);        
+            }
+        });
+        
     }
 
     @Override
@@ -95,22 +110,24 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        
+        if (resultCode != RESULT_OK) return;
 
         switch (requestCode) {
             case SET_ALARM_REQUEST_CODE:
-                if (resultCode == RESULT_OK) {
-                    mAlarm = data.getParcelableExtra(Alarms.ALARM_INTENT_EXTRA);
+                mAlarm = data.getParcelableExtra(Alarms.ALARM_INTENT_EXTRA);
 
-                    long newTime = Alarms.setAlarm(MainActivity.this, mAlarm);
-                    setAlarmTimeOnTextView(mAlarm);
+                long newTime = Alarms.setAlarm(MainActivity.this, mAlarm);
+                setAlarmTimeOnTextView(mAlarm);
 
-                    saveAlarm();
+                saveAlarm();
 
-                    Toast.makeText(MainActivity.this,
-                            Alarms.formatToast(MainActivity.this, newTime),
-                            Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(MainActivity.this,
+                        Alarms.formatToast(MainActivity.this, newTime),
+                        Toast.LENGTH_SHORT).show();
                 break;
+            case UNLOCK_TYPE_REQUEST_CODE:
+
             default:
                 break;
         }

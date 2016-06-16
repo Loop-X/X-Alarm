@@ -1,6 +1,7 @@
 package io.github.loop_x.yummywakeup.module.UnlockTypeModule;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -20,11 +21,69 @@ public class UnlockTypeActivity extends BaseActivity {
     private static final int PAGE_CONTENT = 4;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private View saveLayout;
+    
+    public static final int MODE_NORMAL = 0;
+    public static final int MODE_MATH = 1;
+    public static final int MODE_PAINT = 2;
+    public static final int MODE_SHAKE = 3;
 
     @Override
     public void onViewInitial() {
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
+        saveLayout = findViewById(R.id.saveLayout);
+        saveLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               int current =  viewPager.getCurrentItem();
+
+                Intent intent  = new Intent(UnlockTypeActivity.this,UnlockTypeActivity.class);
+                int returnValue = convertItemPositionToUnlockTypeId(current);
+                intent.putExtra("unlockType",returnValue);
+                setResult(RESULT_OK,intent);
+                finish();
+            }
+        });
+    }
+
+    private int convertItemPositionToUnlockTypeId(int current) {
+        int returnValue;
+        switch (current){
+            case MODE_NORMAL:
+                returnValue = UnlockTypeEnum.Normal.getID();
+                break;
+            case MODE_MATH:
+                returnValue = UnlockTypeEnum.Math.getID();
+                break;
+            case MODE_PAINT:
+                returnValue = UnlockTypeEnum.Puzzle.getID();
+                break;
+            case MODE_SHAKE:
+                returnValue = UnlockTypeEnum.Shake.getID();
+                break;
+            default:
+                returnValue = UnlockTypeEnum.Normal.getID();
+                break;
+            
+        }
+        return returnValue;
+    }
+    
+    private int convertUnlockTypeIdToItemPosition(int id){
+
+        if (id == UnlockTypeEnum.Normal.getID()) {
+            return MODE_NORMAL;
+        } else if (id == UnlockTypeEnum.Math.getID()) {
+            return MODE_MATH;
+        } else if (id == UnlockTypeEnum.Puzzle.getID()) {
+            return MODE_PAINT;
+        } else if (id == UnlockTypeEnum.Shake.getID()) {
+            return MODE_SHAKE;
+        } else {
+            return MODE_NORMAL;
+        }
+
     }
 
     @Override
@@ -33,7 +92,15 @@ public class UnlockTypeActivity extends BaseActivity {
         viewPager.setOffscreenPageLimit(4);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(new TabSelectedListener(viewPager));
-        viewPager.setCurrentItem(0, false);
+        
+        int currentItem  = MODE_NORMAL;
+        Intent intent = getIntent();
+        
+        if (intent != null){
+            int unlockType = intent.getIntExtra("unlockType",UnlockTypeEnum.Normal.getID());
+            currentItem = convertUnlockTypeIdToItemPosition(unlockType);
+        }
+        viewPager.setCurrentItem(currentItem, false);
 
     }
 
@@ -71,16 +138,16 @@ public class UnlockTypeActivity extends BaseActivity {
         public Object instantiateItem(ViewGroup container, int position) {
             int layoutResId = 0;
             switch (position) {
-                case 0:
+                case MODE_NORMAL:
                     layoutResId = R.layout.unlock_mode_page_item_normal;
                     break;
-                case 1:
+                case MODE_MATH:
                     layoutResId = R.layout.unlock_mode_page_item_math;
                     break;
-                case 2:
+                case MODE_PAINT:
                     layoutResId = R.layout.unlock_mode_page_item_paint;
                     break;
-                case 3:
+                case MODE_SHAKE:
                     layoutResId = R.layout.unlock_mode_page_item_shake;
                     break;
             }
@@ -104,16 +171,16 @@ public class UnlockTypeActivity extends BaseActivity {
             super.onTabSelected(tab);
             int resId = 0;
             switch (tab.getPosition()) {
-                case 0:
+                case MODE_NORMAL:
                     resId = R.drawable.model_normal;
                     break;
-                case 1:
+                case MODE_MATH:
                     resId = R.drawable.model_math;
                     break;
-                case 2:
+                case MODE_PAINT:
                     resId = R.drawable.model_paint;
                     break;
-                case 3:
+                case MODE_SHAKE:
                     resId = R.drawable.model_shake;
                     break;
             }
@@ -125,16 +192,16 @@ public class UnlockTypeActivity extends BaseActivity {
             super.onTabUnselected(tab);
             int resId = 0;
             switch (tab.getPosition()) {
-                case 0:
+                case MODE_NORMAL:
                     resId = R.drawable.model_normal_grey;
                     break;
-                case 1:
+                case MODE_MATH:
                     resId = R.drawable.model_math_grey;
                     break;
-                case 2:
+                case MODE_PAINT:
                     resId = R.drawable.model_paint_grey;
                     break;
-                case 3:
+                case MODE_SHAKE:
                     resId = R.drawable.model_shake_grey;
                     break;
             }

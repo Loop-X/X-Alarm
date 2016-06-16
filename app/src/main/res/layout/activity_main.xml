@@ -6,7 +6,7 @@
     android:background="@color/loopX_1"
     android:fitsSystemWindows="true">
 
-    <io.github.loop_x.yummywakeup.view.LeftMenuLayout
+    <io.github.loop_x.yummywakeup.view.UnlockTypeMenuLayout
         android:id="@+id/menuLeft"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
