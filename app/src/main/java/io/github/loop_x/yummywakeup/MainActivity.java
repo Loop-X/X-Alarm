@@ -3,10 +3,12 @@ package io.github.loop_x.yummywakeup;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Handler;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
@@ -19,6 +21,8 @@ import io.github.loop_x.yummywakeup.infrastructure.BaseActivity;
 import io.github.loop_x.yummywakeup.module.AlarmModule.Alarms;
 import io.github.loop_x.yummywakeup.module.AlarmModule.model.Alarm;
 import io.github.loop_x.yummywakeup.module.SetAlarmModule.SetAlarmActivity;
+import io.github.loop_x.yummywakeup.module.SettingModule.AlarmPreferenceSettingsMenuLayout;
+import io.github.loop_x.yummywakeup.module.SettingModule.CustomAdapter;
 import io.github.loop_x.yummywakeup.module.UnlockTypeModule.UnlockTypeActivity;
 import io.github.loop_x.yummywakeup.module.UnlockTypeModule.UnlockTypeEnum;
 import io.github.loop_x.yummywakeup.tools.BaseSpringListener;
@@ -48,7 +52,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     protected Handler mHandler;
     private Spring translationYSpring;
     private int translationYEndValue;
-
+    private AlarmPreferenceSettingsMenuLayout rightMenu;
+    private ListView lvRingtoneList;
     private SeekBar sbAlarmVibration;
     
     @Override
@@ -67,7 +72,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         openRightDrawerView = findViewById(R.id.openRightDrawer);
         openLeftDrawerView = findViewById(R.id.openLeftDrawer);
 
+        rightMenu = (AlarmPreferenceSettingsMenuLayout) loopXDragMenuLayout.findViewById(R.id.menuRight);
         sbAlarmVibration = (SeekBar) loopXDragMenuLayout.findViewById(R.id.sb_alarm_vibration);
+        lvRingtoneList = (ListView) loopXDragMenuLayout.findViewById(R.id.lv_ringtone_list);
 
         loopXDragMenuLayout.setDragMenuStateListener(this);
 
@@ -244,13 +251,31 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     public void onMenuOpened(DragMenuLayout.MenuDirection direction) {
         if(direction == DragMenuLayout.MenuDirection.RIGHT) {
             sbAlarmVibration.setProgress(mAlarm.vibrate? 1 : 0);
+
+            String[] tmp = mAlarm.alert.toString().split("ringtone_");
+
+            if(tmp.length == 2) {
+                String ringtoneId = mAlarm.alert.toString().split("ringtone_")[1];
+                rightMenu.setInitRingtone(Integer.valueOf(ringtoneId));
+            } else {
+                // ToDo whether to force the alarm url
+                rightMenu.setInitRingtone(0);
+            }
         }
     }
 
     @Override
     public void onMenuClosed(DragMenuLayout.MenuDirection direction) {
         if(direction == DragMenuLayout.MenuDirection.RIGHT) {
+            rightMenu.stopRingtone();
+            mAlarm.vibrate = rightMenu.getVibrationSetting();
+            mAlarm.alert =
+                    Uri.parse("android.resource://io.github.loop_x.yummywakeup/raw/ringtone_"
+                            + rightMenu.getRingtone());
 
+            // Save alarm
+            Alarms.setAlarm(MainActivity.this, mAlarm);
+            saveAlarm();
         }
     }
 

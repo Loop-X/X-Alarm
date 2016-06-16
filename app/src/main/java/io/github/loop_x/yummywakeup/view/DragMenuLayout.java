@@ -336,10 +336,7 @@ public class DragMenuLayout extends FrameLayout {
                     }
                     releaseMenu = false;
                 }
-
-
             }
-            
             
             lastMainViewRelativeToMenu = mainViewRelativeToMenu;
 

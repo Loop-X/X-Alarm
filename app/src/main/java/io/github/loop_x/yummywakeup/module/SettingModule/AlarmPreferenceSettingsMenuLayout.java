@@ -6,6 +6,7 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,6 +26,7 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
     private SeekBar sbAlarmVolume;
     private SeekBar sbAlarmVibration;
     private ListView lvRingtoneList;
+    private CustomAdapter mAdapter;
 
     private RingtoneManager mRingtoneManager;
     private Ringtone mRingtone;
@@ -65,16 +67,15 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
 
         lvRingtoneList = (ListView) findViewById(R.id.lv_ringtone_list);
 
-        final CustomAdapter customAdapter = new CustomAdapter(mContext, R.layout.ringtone_list_item);
-        lvRingtoneList.setAdapter(customAdapter);
-
+        mAdapter = new CustomAdapter(mContext, R.layout.ringtone_list_item);
+        lvRingtoneList.setAdapter(mAdapter);
         lvRingtoneList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 CustomAdapter.mLastSelectPosition = i;
-                customAdapter.notifyDataSetChanged();
+                mAdapter.notifyDataSetChanged();
 
                 stopRingtone();
                 mRingtone = RingtoneManager.getRingtone(mContext,
@@ -115,11 +116,24 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
         sbAlarmVibration.setMax(1);
     }
 
-    private void stopRingtone() {
+    public void stopRingtone() {
         if(mRingtone != null) {
             mRingtone.stop();
             mRingtone = null;
         }
+    }
+
+    public void setInitRingtone(int i) {
+        CustomAdapter.mLastSelectPosition = i;
+        mAdapter.notifyDataSetChanged();
+    }
+
+    public boolean getVibrationSetting() {
+        return sbAlarmVibration.getProgress() == 1;
+    }
+
+    public int getRingtone() {
+        return CustomAdapter.mLastSelectPosition;
     }
 
 }
