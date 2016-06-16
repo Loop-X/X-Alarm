@@ -128,6 +128,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case UNLOCK_TYPE_REQUEST_CODE:
 
+                int unlockTypeId = data.getIntExtra("unlockType",UnlockTypeEnum.Normal.getID());
+                
+                
             default:
                 break;
         }
