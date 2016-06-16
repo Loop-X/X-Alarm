@@ -2,7 +2,9 @@ package io.github.loop_x.yummywakeup.module.SettingModule;
 
 import android.content.Context;
 import android.media.AudioManager;
+import android.media.Ringtone;
 import android.media.RingtoneManager;
+import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +27,7 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
     private ListView lvRingtoneList;
 
     private RingtoneManager mRingtoneManager;
+    private Ringtone mRingtone;
 
     public AlarmPreferenceSettingsMenuLayout(Context context) {
         this(context, null);
@@ -54,8 +57,13 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
 
         /** Init Ringtone **/
 
-        lvRingtoneList = (ListView) findViewById(R.id.lv_ringtone_list);
         mRingtoneManager = new RingtoneManager(mContext);
+        for(int i = 0; i < 4; i++) {
+            RingtoneManager.setActualDefaultRingtoneUri(mContext, RingtoneManager.TYPE_RINGTONE,
+                    Uri.parse("android.resource://io.github.loop_x.yummywakeup/raw/ringtone_" + i));
+        }
+
+        lvRingtoneList = (ListView) findViewById(R.id.lv_ringtone_list);
 
         final CustomAdapter customAdapter = new CustomAdapter(mContext, R.layout.ringtone_list_item);
         lvRingtoneList.setAdapter(customAdapter);
@@ -67,6 +75,11 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
 
                 CustomAdapter.mLastSelectPosition = i;
                 customAdapter.notifyDataSetChanged();
+
+                stopRingtone();
+                mRingtone = RingtoneManager.getRingtone(mContext,
+                        Uri.parse("android.resource://io.github.loop_x.yummywakeup/raw/ringtone_" + i));
+                mRingtone.play();
 
             }
         });
@@ -100,6 +113,13 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
 
     public void initVibrationSeekBar() {
         sbAlarmVibration.setMax(1);
+    }
+
+    private void stopRingtone() {
+        if(mRingtone != null) {
+            mRingtone.stop();
+            mRingtone = null;
+        }
     }
 
 }
