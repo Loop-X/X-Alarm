@@ -27,6 +27,7 @@ import io.github.loop_x.yummywakeup.module.UnlockTypeModule.UnlockTypeActivity;
 import io.github.loop_x.yummywakeup.module.UnlockTypeModule.UnlockTypeEnum;
 import io.github.loop_x.yummywakeup.tools.BaseSpringListener;
 import io.github.loop_x.yummywakeup.tools.ReboundAnimation;
+import io.github.loop_x.yummywakeup.tools.ToastMaster;
 import io.github.loop_x.yummywakeup.view.DragMenuLayout;
 import io.github.loop_x.yummywakeup.view.UnlockTypeMenuLayout;
 import io.github.loop_x.yummywakeup.view.YummyTextView;
@@ -173,9 +174,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
                 saveAlarm();
 
-                Toast.makeText(MainActivity.this,
+                Toast toast = Toast.makeText(MainActivity.this,
                         Alarms.formatToast(MainActivity.this, newTime),
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_SHORT);
+                ToastMaster.setToast(toast);
+                ToastMaster.showToast();
                 break;
             case UNLOCK_TYPE_REQUEST_CODE:
 
@@ -250,6 +253,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void onMenuOpened(DragMenuLayout.MenuDirection direction) {
         if(direction == DragMenuLayout.MenuDirection.RIGHT) {
+
             sbAlarmVibration.setProgress(mAlarm.vibrate? 1 : 0);
 
             String[] tmp = mAlarm.alert.toString().split("ringtone_");
@@ -276,6 +280,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             // Save alarm
             Alarms.setAlarm(MainActivity.this, mAlarm);
             saveAlarm();
+
+            ToastMaster.setToast(Toast.makeText(this, "Setting Updated", Toast.LENGTH_SHORT));
+            ToastMaster.showToast();
         }
     }
 
