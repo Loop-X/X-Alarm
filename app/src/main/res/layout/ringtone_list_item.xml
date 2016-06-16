@@ -1,19 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="40dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
 
-    <CheckedTextView
-        android:id="@+id/ctv_ringtone_list_item"
-        android:layout_width="match_parent"
+    <io.github.loop_x.yummywakeup.view.YummyTextView
+        android:id="@+id/tv_ringtone_list_item"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
-        android:checked="false"
-        android:gravity="center_vertical"
-        android:paddingRight="5dp"
-        android:text="MORNING MIST"
         android:textColor="@color/loopX_3_40_alpha"
         android:textSize="18sp" />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <CheckBox
+        android:id="@+id/cb_ringtone_list_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@drawable/ringtone_item_selector"
+        android:focusable="false"
+        android:checked="false"/>
 
 </LinearLayout>
