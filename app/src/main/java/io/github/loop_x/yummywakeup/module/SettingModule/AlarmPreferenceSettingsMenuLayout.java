@@ -1,11 +1,9 @@
 package io.github.loop_x.yummywakeup.module.SettingModule;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.media.AudioManager;
 import android.media.RingtoneManager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,10 +13,9 @@ import android.widget.ListView;
 import android.widget.SeekBar;
 
 import io.github.loop_x.yummywakeup.R;
-import io.github.loop_x.yummywakeup.module.AlarmModule.model.Alarm;
 import io.github.loop_x.yummywakeup.view.YummyTextView;
 
-public class RightMenuLayout extends LinearLayout {
+public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
 
     private Context mContext;
 
@@ -34,15 +31,15 @@ public class RightMenuLayout extends LinearLayout {
     private int mRingtonePosition;
 
 
-    public RightMenuLayout(Context context) {
+    public AlarmPreferenceSettingsMenuLayout(Context context) {
         this(context, null);
     }
 
-    public RightMenuLayout(Context context, AttributeSet attrs) {
+    public AlarmPreferenceSettingsMenuLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public RightMenuLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public AlarmPreferenceSettingsMenuLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mContext = context;
     }

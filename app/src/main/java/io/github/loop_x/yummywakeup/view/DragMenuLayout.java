@@ -13,7 +13,7 @@ import android.widget.FrameLayout;
 
 import io.github.loop_x.yummywakeup.UIUtils;
 
-public class LoopXDragMenuLayout extends FrameLayout {
+public class DragMenuLayout extends FrameLayout {
     
     private GestureDetectorCompat gestureDetector;
     private ViewDragHelper dragHelper;
@@ -346,15 +346,15 @@ public class LoopXDragMenuLayout extends FrameLayout {
         }
     };
 
-    public LoopXDragMenuLayout(Context context) {
+    public DragMenuLayout(Context context) {
         this(context, null);
     }
 
-    public LoopXDragMenuLayout(Context context, AttributeSet attrs) {
+    public DragMenuLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public LoopXDragMenuLayout(Context context, AttributeSet attrs, int defStyle) {
+    public DragMenuLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         gestureDetector = new GestureDetectorCompat(context, new YScrollDetector());
         dragHelper = ViewDragHelper.create(this, dragHelperCallback);

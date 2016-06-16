@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
  */
 public class TouchEventProcessLayout extends RelativeLayout{
 
-    private LoopXDragMenuLayout loopXDragMenuLayout;
+    private DragMenuLayout loopXDragMenuLayout;
 
 
     public TouchEventProcessLayout(Context context) {
@@ -26,13 +26,13 @@ public class TouchEventProcessLayout extends RelativeLayout{
         super(context, attrs, defStyleAttr);
     }
 
-    public void setDragMenuLayout(LoopXDragMenuLayout loopXDragMenuLayout) {
+    public void setDragMenuLayout(DragMenuLayout loopXDragMenuLayout) {
         this.loopXDragMenuLayout = loopXDragMenuLayout;
     }
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
-        if (loopXDragMenuLayout.getMenuStatus() != LoopXDragMenuLayout.MenuStatus.Close) {
+        if (loopXDragMenuLayout.getMenuStatus() != DragMenuLayout.MenuStatus.Close) {
             return true;
         }
         return super.onInterceptTouchEvent(event);
@@ -40,7 +40,7 @@ public class TouchEventProcessLayout extends RelativeLayout{
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (loopXDragMenuLayout.getMenuStatus() != LoopXDragMenuLayout.MenuStatus.Close.Close) {
+        if (loopXDragMenuLayout.getMenuStatus() != DragMenuLayout.MenuStatus.Close.Close) {
             if (event.getAction() == MotionEvent.ACTION_UP) {
                 loopXDragMenuLayout.openLeftMenuWithAnimation();
             }

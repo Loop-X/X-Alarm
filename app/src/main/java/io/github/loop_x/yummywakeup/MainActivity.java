@@ -22,7 +22,7 @@ import io.github.loop_x.yummywakeup.module.UnlockTypeModule.UnlockTypeActivity;
 import io.github.loop_x.yummywakeup.module.UnlockTypeModule.UnlockTypeEnum;
 import io.github.loop_x.yummywakeup.tools.BaseSpringListener;
 import io.github.loop_x.yummywakeup.tools.ReboundAnimation;
-import io.github.loop_x.yummywakeup.view.LoopXDragMenuLayout;
+import io.github.loop_x.yummywakeup.view.DragMenuLayout;
 import io.github.loop_x.yummywakeup.view.UnlockTypeMenuLayout;
 import io.github.loop_x.yummywakeup.view.YummyTextView;
 
@@ -40,7 +40,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private View openRightDrawerView;
     private View openLeftDrawerView;
-    private LoopXDragMenuLayout loopXDragMenuLayout;
+    private DragMenuLayout loopXDragMenuLayout;
 
     private YummyTextView tvAlarmTime;
     private View setAlarmView;
@@ -60,14 +60,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         tvAlarmTime = (YummyTextView) findViewById(R.id.tv_alarm_time);
         setAlarmView = findViewById(R.id.im_set_alarm);
         
-        loopXDragMenuLayout = (LoopXDragMenuLayout) findViewById(R.id.dragMenuLayout);
+        loopXDragMenuLayout = (DragMenuLayout) findViewById(R.id.dragMenuLayout);
         openRightDrawerView = findViewById(R.id.openRightDrawer);
         openLeftDrawerView = findViewById(R.id.openLeftDrawer);
 
         openLeftDrawerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (loopXDragMenuLayout.getMenuStatus() == LoopXDragMenuLayout.MenuStatus.Close){
+                if (loopXDragMenuLayout.getMenuStatus() == DragMenuLayout.MenuStatus.Close){
                     loopXDragMenuLayout.openLeftMenuWithAnimation();
                 }else {
                     loopXDragMenuLayout.closeLeftMenuWithAnimation();
@@ -80,7 +80,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 
-                if (loopXDragMenuLayout.getMenuStatus() == LoopXDragMenuLayout.MenuStatus.Close){
+                if (loopXDragMenuLayout.getMenuStatus() == DragMenuLayout.MenuStatus.Close){
                     loopXDragMenuLayout.openRightMenuWithAnimation();
                 }else {
                     loopXDragMenuLayout.closeRightMenuWithAnimation();
@@ -89,7 +89,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
         });
 
-        UnlockTypeMenuLayout unlockTypeMenuLayout = (UnlockTypeMenuLayout) loopXDragMenuLayout.getMenuView(LoopXDragMenuLayout.MenuDirection.LEFT);
+        UnlockTypeMenuLayout unlockTypeMenuLayout = (UnlockTypeMenuLayout) loopXDragMenuLayout.getMenuView(DragMenuLayout.MenuDirection.LEFT);
         unlockTypeMenuLayout.setOnUnlockTypeMenuClickListener(new UnlockTypeMenuLayout.OnUnlockTypeMenuClickListener() {
             @Override
             public void onClick(UnlockTypeEnum unlockTypeEnum) {
