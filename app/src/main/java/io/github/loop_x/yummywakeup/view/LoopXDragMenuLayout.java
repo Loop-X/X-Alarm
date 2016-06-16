@@ -48,6 +48,19 @@ public class LoopXDragMenuLayout extends FrameLayout {
             return MenuStatus.Drag;
         }
     }
+    
+    public View getMenuView(MenuDirection direction){
+        
+        if (direction == MenuDirection.LEFT){
+            return leftMenuView;
+        }
+        
+        if (direction == MenuDirection.RIGHT){
+            return rightMenuView;
+        }
+        
+        return null;
+    }
 
     private ViewDragHelper.Callback dragHelperCallback = new ViewDragHelper.Callback() {
 
