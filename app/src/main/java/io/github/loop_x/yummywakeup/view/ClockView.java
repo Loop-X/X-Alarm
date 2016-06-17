@@ -19,7 +19,6 @@ import io.github.loop_x.yummywakeup.UIUtils;
  */
 public class ClockView extends View {
 
-
     private int defaultWidth;
     private int defaultHeight;
     private int bgColor;
