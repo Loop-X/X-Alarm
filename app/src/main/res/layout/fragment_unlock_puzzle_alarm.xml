@@ -34,7 +34,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_centerInParent="true"
-                custom:diffLvl="0"
                 android:padding="3dp" />
 
             <Button
