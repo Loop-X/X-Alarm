@@ -98,6 +98,7 @@ public class SetAlarmActivity extends BaseActivity {
             rippleBackgroundView.setBackgroundResource(R.color.alarm_set_top_alarm_off);
         }
 
+        // ToDo show time 00:00 instead of 0:0
         if(is24hMode) {
             tvCurrentAlarmTime.setText(mAlarm.hour + ":" + mAlarm.minutes);
             tvCurrentAlarmAMPM.setText("");
