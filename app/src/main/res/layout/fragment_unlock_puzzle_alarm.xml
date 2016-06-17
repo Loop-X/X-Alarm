@@ -3,7 +3,7 @@
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_white">
+    android:background="@color/loopX_3">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,8 +27,7 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@color/windowBackground">
+            android:layout_weight="1">
 
             <com.capricorn.yummy.yummywakeup.view.PuzzleLayout
                 android:id="@+id/rl_puzzle"
@@ -46,10 +45,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="20dp"
                 android:enabled="false"
-                android:background="@drawable/btn_close_alarm_selector"
                 android:text="@string/turn_off_alarm"
-                android:textSize="20sp"
-                android:textColor="@color/textColorPrimary"/>
+                android:textSize="20sp"/>
 
         </RelativeLayout>
 
