@@ -1,5 +1,10 @@
 package io.github.loop_x.yummywakeup.view;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,13 +15,21 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
+
+import com.facebook.rebound.Spring;
 
 import java.util.Calendar;
 import java.util.TimeZone;
 
 import io.github.loop_x.yummywakeup.R;
 import io.github.loop_x.yummywakeup.UIUtils;
+import io.github.loop_x.yummywakeup.tools.BaseSpringListener;
+import io.github.loop_x.yummywakeup.tools.ReboundAnimation;
 
 /**
  * Author UFreedom
@@ -38,7 +51,9 @@ public class ClockView extends View {
     private boolean mAttached;
     private Calendar mCalendar;
     private final Handler mHandler = new Handler();
-
+    private Spring mScaleAnimation;
+    private Spring mTranslateAnimationSpring;
+    private ValueAnimator mAlphaAnimation;
 
     public ClockView(Context context) {
         this(context, null);
@@ -55,6 +70,15 @@ public class ClockView extends View {
         defaultHeight = UIUtils.dip2px(200);
 
         initClockDraw();
+        
+        getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                Log.e("ClockView","OnGlobalLayoutListener");
+                doTimeIndicatorAnimation();
+            }
+        });
     }
 
     
@@ -62,6 +86,34 @@ public class ClockView extends View {
         clockBackgroundDraw = new ClockBackgroundDraw();
         clockMainDraw = new ClockMainDraw();
         clockTimeIndicatorDraw = new ClockTimeIndicatorDraw();
+
+        mScaleAnimation = ReboundAnimation.getInstance().createSpringFromBouncinessAndSpeed(12, 12,new BaseSpringListener() {
+            @Override
+            public void onSpringUpdate(Spring spring) {
+                float value = transition((float) spring.getCurrentValue(),0f,1f);
+                setScaleY(value);
+                setScaleY(value);
+            }
+        });
+
+        mTranslateAnimationSpring = ReboundAnimation.getInstance().createSpringFromBouncinessAndSpeed(12, 16,new BaseSpringListener() {
+            @Override
+            public void onSpringUpdate(Spring spring) {
+                float  mTranslateY = (UIUtils.getScreenHeight() - mClockHeight) / 2 + mClockHeight;
+                float value =   transition((float) spring.getCurrentValue(),-mTranslateY,0);   
+                setTranslationY(value);
+            }
+        });
+        
+
+        mAlphaAnimation = ObjectAnimator.ofFloat(0.0f,1.0f);
+        mAlphaAnimation.setDuration(100);
+        mAlphaAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                setAlpha((Float) animation.getAnimatedValue());
+            }
+        });
     }
 
     @Override
@@ -108,10 +160,7 @@ public class ClockView extends View {
 
     /**
      * Draw clock view element step:
-     * 
-     * 
-     * 
-     * 
+     *
      * 1.prepareDraw() : 
      *  
      *  any numerical calculation should be there.If the clock view size was changed ,this method
@@ -248,12 +297,36 @@ public class ClockView extends View {
         }
         
         public void updateTime(int hour,int minute,int seconds){
-            hourAngle =  hour / 12.0f * 360.0f;
-            minuteAngle = minute / 60.0f * 360.0f;
-            secondsAngle = seconds / 60.0f * 360.0f;
+            hourAngle =  getHourAngleByHour(hour);
+            minuteAngle = getMinuteAngleByMinute(minute);
+            secondsAngle = getSecondAngleBySecond(seconds);
+        }
+        
+        public void updateHourAngle(float hour ){
+            hourAngle =  hour;
+        }
+
+        public void updateMinuteAngle(float minute){
+            minuteAngle = minute;
+        }
+
+        public void updateSecondAngle(float seconds ){
+            secondsAngle = seconds;
         }
 
 
+    }
+    
+    private float getHourAngleByHour(int hour){
+     return  hour / 12.0f * 360.0f;
+    }
+
+    private float getMinuteAngleByMinute(int minute){
+        return minute / 60.0f * 360.0f;
+    }
+    
+    private float getSecondAngleBySecond(int seconds ){
+        return seconds / 60.0f * 360.0f;
     }
 
 
@@ -274,11 +347,83 @@ public class ClockView extends View {
         // NOTE: It's safe to do these after registering the receiver since the receiver always runs
         // in the main thread, therefore the receiver can't run before this method returns.
         // The time zone may have changed while the receiver wasn't registered, so update the Time
-        mCalendar = Calendar.getInstance();
+       /* mCalendar = Calendar.getInstance();
         // Make sure we update to the current time
         onTimeChanged();
+        doTimeIndicatorAnimation();
         // tick the seconds
-        post(mClockTick);
+        postDelayed(mClockTick,1000);*/
+
+        Log.e("ClockView","onAttachedToWindow");
+    }
+    
+
+    private void doTimeIndicatorAnimation() {
+        mCalendar = Calendar.getInstance();
+        
+        final float hourAngle = getHourAngleByHour(mCalendar.get(Calendar.HOUR));
+        final float minuteAngle = getMinuteAngleByMinute(mCalendar.get(Calendar.MINUTE));
+        final float secondsAngle = getSecondAngleBySecond(mCalendar.get(Calendar.SECOND));
+        
+
+        ValueAnimator hourAnimator = ValueAnimator.ofInt(-35,0);
+        hourAnimator.setInterpolator(new DecelerateInterpolator());
+        hourAnimator.setDuration(700);
+        hourAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int value = (int) animation.getAnimatedValue();
+                clockTimeIndicatorDraw.updateHourAngle(hourAngle + value);
+                invalidate();
+            }
+        });
+
+
+        ValueAnimator minuteAnimator = ValueAnimator.ofInt(-35,0);
+        minuteAnimator.setInterpolator(new LinearInterpolator());
+        minuteAnimator.setDuration(900);
+        minuteAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                post(mClockTick);
+            }
+        });
+        minuteAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int value = (int) animation.getAnimatedValue();
+                clockTimeIndicatorDraw.updateMinuteAngle( minuteAngle + value);
+                invalidate();
+            }
+        });
+
+
+        ValueAnimator secondAnimator = ValueAnimator.ofInt(-35,0);
+        secondAnimator.setInterpolator(new DecelerateInterpolator());
+        secondAnimator.setDuration(1100);
+        secondAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                post(mClockTick);
+            }
+        });
+        secondAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int value = (int) animation.getAnimatedValue();
+                clockTimeIndicatorDraw.updateSecondAngle( secondsAngle + value);
+                invalidate();
+            }
+        });
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(hourAnimator,minuteAnimator,secondAnimator);
+        animatorSet.start();
+        mAlphaAnimation.start();
+        mTranslateAnimationSpring.setEndValue(1f);
+        mScaleAnimation.setEndValue(1f);
     }
 
     @Override
@@ -333,7 +478,6 @@ public class ClockView extends View {
     private void onTimeChanged() {
         mCalendar = Calendar.getInstance();
         clockTimeIndicatorDraw.updateTime(mCalendar.get(Calendar.HOUR),mCalendar.get(Calendar.MINUTE),mCalendar.get(Calendar.SECOND));
-        
     }
 
 
