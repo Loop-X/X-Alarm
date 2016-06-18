@@ -35,6 +35,7 @@ import io.github.loop_x.yummywakeup.R;
 import io.github.loop_x.yummywakeup.config.PreferenceKeys;
 import io.github.loop_x.yummywakeup.module.AlarmModule.model.Alarm;
 import io.github.loop_x.yummywakeup.module.UnlockTypeModule.alarmType.UnlockFragment;
+import io.github.loop_x.yummywakeup.module.UnlockTypeModule.alarmType.UnlockFragmentFactory;
 
 
 /**
@@ -84,8 +85,8 @@ public class AlarmAlertFullScreen extends FragmentActivity implements UnlockFrag
         Log.d("yummywakeup", "Alarm will infalte fragment " + mAlarm.unlockType);
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = manager.beginTransaction();
-        //Todo UnlockFragment unlockFragment = UnlockFragmentFactory.create(mAlarm.unlockType, mAlarm.unlockDiffLevel);
-        //Todo fragmentTransaction.replace(R.id.fg_alarm, unlockFragment);
+        UnlockFragment unlockFragment = UnlockFragmentFactory.create(mAlarm.unlockType);
+        fragmentTransaction.replace(R.id.fg_alarm, unlockFragment);
         fragmentTransaction.commit();
 
         // Get the volume/camera button behavior setting
