@@ -181,10 +181,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 ToastMaster.showToast();
                 break;
             case UNLOCK_TYPE_REQUEST_CODE:
+                int unlockTypeId = data.getIntExtra("unlockType", UnlockTypeEnum.Normal.getID());
+                mAlarm.unlockType = unlockTypeId;
+                Alarms.setAlarm(MainActivity.this, mAlarm);
+                saveAlarm();
 
-                int unlockTypeId = data.getIntExtra("unlockType",UnlockTypeEnum.Normal.getID());
-                
-                
+                // ToDo 更新左边栏
+                ToastMaster.setToast(Toast.makeText(MainActivity.this,
+                        "解锁方式已更新",
+                        Toast.LENGTH_SHORT));
+                ToastMaster.showToast();
             default:
                 break;
         }

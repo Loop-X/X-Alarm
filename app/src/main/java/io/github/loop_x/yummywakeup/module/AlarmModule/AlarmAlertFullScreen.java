@@ -34,6 +34,7 @@ import android.view.WindowManager;
 import io.github.loop_x.yummywakeup.R;
 import io.github.loop_x.yummywakeup.config.PreferenceKeys;
 import io.github.loop_x.yummywakeup.module.AlarmModule.model.Alarm;
+import io.github.loop_x.yummywakeup.module.UnlockTypeModule.alarmType.UnlockFragment;
 
 
 /**
@@ -41,7 +42,7 @@ import io.github.loop_x.yummywakeup.module.AlarmModule.model.Alarm;
  * tone. This activity is the full screen version which shows over the lock
  * screen with the wallpaper as the background.
  */
-public class AlarmAlertFullScreen extends FragmentActivity /*implements UnlockFragment.OnAlarmAction*/ {
+public class AlarmAlertFullScreen extends FragmentActivity implements UnlockFragment.OnAlarmAction {
 
     private static final String DEFAULT_VOLUME_BEHAVIOR = "2";
     protected static final String SCREEN_OFF = "screen_off";
@@ -70,6 +71,7 @@ public class AlarmAlertFullScreen extends FragmentActivity /*implements UnlockFr
     protected void onCreate(Bundle icicle) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(icicle);
+        setContentView(R.layout.framelayout_alarm_unlock);
 
         mAlarm = getIntent().getParcelableExtra(Alarms.ALARM_INTENT_EXTRA);
         //sign changed by reason
@@ -180,10 +182,9 @@ public class AlarmAlertFullScreen extends FragmentActivity /*implements UnlockFr
         return;
     }
 
-    /*
     @Override
     public void closeAlarm() {
         dismiss(false);
-    }*/
+    }
 
 }
