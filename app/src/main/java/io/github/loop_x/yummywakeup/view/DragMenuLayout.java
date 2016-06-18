@@ -412,9 +412,12 @@ public class DragMenuLayout extends FrameLayout {
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
+        
+        if(mainViewRelativeToMenu >0){
+            rightMenuView.layout(UIUtils.getScreenWidth(), 0, UIUtils.getScreenWidth() + rightMenuView.getWidth(), rightMenuView.getHeight());
+        }
 
         leftMenuView.layout(0, 0, leftMenuWidth, leftMenuHeight);
-        rightMenuView.layout(0, 0, rightMenuWidth, rightMenuHeight);
         mainContentView.layout(mainViewRelativeToMenu, 0, mainViewRelativeToMenu + mainViewWidth, mainViewHeight);
         shadowView.layout(mainViewRelativeToMenu, 0, mainViewRelativeToMenu + shadowViewWidth, shadowViewHeight);
 

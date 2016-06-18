@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ListView;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.rebound.Spring;
@@ -22,7 +23,6 @@ import io.github.loop_x.yummywakeup.module.AlarmModule.Alarms;
 import io.github.loop_x.yummywakeup.module.AlarmModule.model.Alarm;
 import io.github.loop_x.yummywakeup.module.SetAlarmModule.SetAlarmActivity;
 import io.github.loop_x.yummywakeup.module.SettingModule.AlarmPreferenceSettingsMenuLayout;
-import io.github.loop_x.yummywakeup.module.SettingModule.CustomAdapter;
 import io.github.loop_x.yummywakeup.module.UnlockTypeModule.UnlockTypeActivity;
 import io.github.loop_x.yummywakeup.module.UnlockTypeModule.UnlockTypeEnum;
 import io.github.loop_x.yummywakeup.tools.BaseSpringListener;
@@ -49,6 +49,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private DragMenuLayout loopXDragMenuLayout;
 
     private YummyTextView tvAlarmTime;
+    private TextView tvWakeUp;
     private View setAlarmView;
     protected Handler mHandler;
     private Spring translationYSpring;
@@ -68,7 +69,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         tvAlarmTime = (YummyTextView) findViewById(R.id.tv_alarm_time);
         setAlarmView = findViewById(R.id.im_set_alarm);
-        
+        tvWakeUp = (TextView) findViewById(R.id.tv_wake_up);
         loopXDragMenuLayout = (DragMenuLayout) findViewById(R.id.dragMenuLayout);
         openRightDrawerView = findViewById(R.id.openRightDrawer);
         openLeftDrawerView = findViewById(R.id.openLeftDrawer);
@@ -117,7 +118,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             @Override
             public void onSpringUpdate(Spring spring) {
                 int translationY = (int) transition((float) spring.getCurrentValue(),translationYEndValue,0);
-                setAlarmView.setTranslationY(translationY);            }
+                setAlarmView.setTranslationY(translationY);
+                tvAlarmTime.setTranslationY(translationY);
+                tvWakeUp.setTranslationY(translationY);
+            }
         });
      
         
