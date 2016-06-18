@@ -124,8 +124,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 tvWakeUp.setTranslationY(translationY);
             }
         });
-     
-        
         
         setAlarmView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
