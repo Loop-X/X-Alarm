@@ -51,7 +51,8 @@
         android:layout_centerInParent="true"
         android:visibility="invisible"
         />
-    <io.github.loop_x.yummywakeup.view.AnalogClock
+    
+    <io.github.loop_x.yummywakeup.view.ClockView
         android:id="@+id/analog_clock"
         android:layout_width="300dp"
         android:layout_height="300dp"
