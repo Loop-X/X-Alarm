@@ -98,19 +98,24 @@ public class SetAlarmActivity extends BaseActivity {
             rippleBackgroundView.setBackgroundResource(R.color.alarm_set_top_alarm_off);
         }
 
-        // ToDo show time 00:00 instead of 0:0
-        if(is24hMode) {
-            tvCurrentAlarmTime.setText(mAlarm.hour + ":" + mAlarm.minutes);
-            tvCurrentAlarmAMPM.setText("");
+        String hour = "";
+        String min  = (mAlarm.minutes < 10 ? "0" : "") + mAlarm.minutes;
+        String ampn = "";
+
+        if (is24hMode) {
+            hour = (mAlarm.hour < 10 ? "0" : "") + mAlarm.hour;
         } else {
             if(mAlarm.hour > 12) {
-                tvCurrentAlarmTime.setText((mAlarm.hour - 12) + ":" + mAlarm.minutes);
-                tvCurrentAlarmAMPM.setText("PM");
+                hour = "0" + (mAlarm.hour - 12);
+                ampn = "PM";
             } else {
-                tvCurrentAlarmTime.setText(mAlarm.hour + ":" + mAlarm.minutes);
-                tvCurrentAlarmAMPM.setText("AM");
+                hour = "" + mAlarm.hour;
+                ampn = "AM";
             }
         }
+
+        tvCurrentAlarmTime.setText(hour + ":" + min);
+        tvCurrentAlarmAMPM.setText(ampn);
 
         /** Init Time Picker **/
 
