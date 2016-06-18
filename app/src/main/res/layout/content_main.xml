@@ -57,14 +57,14 @@
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="-20dp"
+        android:layout_marginTop="-40dp"
         android:layout_alignTop="@id/centerView"/>
 
     <io.github.loop_x.yummywakeup.view.YummyTextView
         android:id="@+id/tv_wake_up"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/analog_clock"
+        android:layout_above="@+id/tv_alarm_time"
         android:text="@string/wake_up_in"
         android:textAlignment="center"
         android:textColor="@color/loopX_2_50_alpha"
@@ -75,7 +75,7 @@
         android:id="@+id/tv_alarm_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_wake_up"
+        android:layout_above="@+id/im_set_alarm"
         android:clickable="true"
         android:textAlignment="center"
         android:textColor="@color/loopX_2"
@@ -86,8 +86,9 @@
         android:id="@+id/im_set_alarm"
         android:layout_width="90dp"
         android:layout_height="90dp"
-        android:layout_below="@id/tv_alarm_time"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
         android:onClick="onClick"
         android:scaleType="centerCrop"
         android:src="@drawable/icon_set_alarm"/>
