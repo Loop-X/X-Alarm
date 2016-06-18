@@ -60,7 +60,6 @@ public final class Alarm implements Parcelable {
         p.writeString(label);
         p.writeParcelable(alert, flags);
         p.writeInt(unlockType);
-        p.writeInt(unlockDiffLevel);
     }
     //////////////////////////////
     // by end
@@ -124,11 +123,6 @@ public final class Alarm implements Parcelable {
         public static final String UNLOCK_TYPE = "unlock_type";
 
         /**
-         * Difficult of unlock type
-         */
-        public static final String UNLOCK_DIFF_LEVEL  = "unlock_diff_lvl";
-
-        /**
          * The default sort order for this table
          */
         public static final String DEFAULT_SORT_ORDER =
@@ -139,7 +133,7 @@ public final class Alarm implements Parcelable {
 
         public static final String[] ALARM_QUERY_COLUMNS = {
             _ID, HOUR, MINUTES, DAYS_OF_WEEK, ALARM_TIME,
-            ENABLED, VIBRATE, MESSAGE, ALERT ,UNLOCK_TYPE, UNLOCK_DIFF_LEVEL};
+            ENABLED, VIBRATE, MESSAGE, ALERT ,UNLOCK_TYPE};
 
         /**
          * These save calls to cursor.getColumnIndexOrThrow()
@@ -155,7 +149,6 @@ public final class Alarm implements Parcelable {
         public static final int ALARM_MESSAGE_INDEX = 7;
         public static final int ALARM_ALERT_INDEX = 8;
         public static final int ALARM_UNLOCK_TYPE = 9;
-        public static final int ALARM_UNLOCK_DIFF_LEVEL = 10;
 
     }
     //////////////////////////////
@@ -173,7 +166,6 @@ public final class Alarm implements Parcelable {
     public String     label;
     public Uri        alert;
     public int        unlockType;
-    public int        unlockDiffLevel;
 
     public Alarm(Cursor c) {
 
@@ -187,8 +179,6 @@ public final class Alarm implements Parcelable {
         label      = c.getString(Columns.ALARM_MESSAGE_INDEX);
         String alertString = c.getString(Columns.ALARM_ALERT_INDEX);
         unlockType = c.getInt(Columns.ALARM_UNLOCK_TYPE);
-        unlockDiffLevel = c.getInt(Columns.ALARM_UNLOCK_DIFF_LEVEL);
-
 
         if (alertString != null && alertString.length() != 0) {
             alert = Uri.parse(alertString);
@@ -213,7 +203,6 @@ public final class Alarm implements Parcelable {
         label = p.readString();
         alert = (Uri) p.readParcelable(null);
         unlockType = p.readInt();
-        unlockDiffLevel = p.readInt();
     }
 
     /**
@@ -230,7 +219,6 @@ public final class Alarm implements Parcelable {
         daysOfWeek = new DaysOfWeek(0x7f); // By default, it will repeat every day
         alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
         unlockType = UnlockTypeEnum.Normal.getID();
-        unlockDiffLevel = 1;
     }
 
     /**

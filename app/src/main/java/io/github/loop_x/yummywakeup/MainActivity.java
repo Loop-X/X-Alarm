@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Handler;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ListView;
@@ -212,7 +213,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             // If no alarm available, set a default alarm with current time
             mAlarm = new Alarm();
             alarmId = Alarms.addAlarm(this, mAlarm);
-
             saveAlarm();
         } else {
             // ToDo 之前闹钟不灵 可不可能是CONTEXT的问题？
@@ -281,11 +281,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void onMenuClosed(DragMenuLayout.MenuDirection direction) {
         if(direction == DragMenuLayout.MenuDirection.RIGHT) {
+
             rightMenu.stopRingtone();
+
+            /** Update Vibration **/
             mAlarm.vibrate = rightMenu.getVibrationSetting();
             mAlarm.alert =
                     Uri.parse("android.resource://io.github.loop_x.yummywakeup/raw/ringtone_"
                             + rightMenu.getRingtone());
+
 
             // Save alarm
             Alarms.setAlarm(MainActivity.this, mAlarm);
