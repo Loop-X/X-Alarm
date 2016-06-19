@@ -217,7 +217,7 @@ public final class Alarm implements Parcelable {
         vibrate = true;
         enabled = true;
         daysOfWeek = new DaysOfWeek(0x7f); // By default, it will repeat every day
-        alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+        alert = Uri.parse("android.resource://io.github.loop_x.yummywakeup/raw/ringtone_0");
         unlockType = UnlockTypeEnum.Normal.getID();
     }
 

@@ -194,8 +194,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 saveAlarm();
 
                 // Update left menu with chosen unlock type
-                leftMenu.resetChosenStatus();
-                leftMenu.setChosenStatue(mAlarm.unlockType);
+                setLeftMenuStatus();
 
                 ToastMaster.setToast(Toast.makeText(MainActivity.this,
                         "解锁方式已更新",
@@ -228,7 +227,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         setAlarmTimeOnTextView(mAlarm);
 
         // Set unlock type on left menu
-        leftMenu.setChosenStatue(mAlarm.unlockType);
+        setLeftMenuStatus();
+
+        // Set Right Menu Status
+        setRightMenuStatus();
     }
 
     /**
@@ -270,20 +272,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public void onMenuOpened(DragMenuLayout.MenuDirection direction) {
-        if(direction == DragMenuLayout.MenuDirection.RIGHT) {
 
-            sbAlarmVibration.setProgress(mAlarm.vibrate? 1 : 0);
-
-            String[] tmp = mAlarm.alert.toString().split("ringtone_");
-
-            if(tmp.length == 2) {
-                String ringtoneId = mAlarm.alert.toString().split("ringtone_")[1];
-                rightMenu.setInitRingtone(Integer.valueOf(ringtoneId));
-            } else {
-                // ToDo whether to force the alarm url
-                rightMenu.setInitRingtone(0);
-            }
-        }
     }
 
     @Override
@@ -303,9 +292,27 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             Alarms.setAlarm(MainActivity.this, mAlarm);
             saveAlarm();
 
+            // Update right menu
+            setRightMenuStatus();
+
             ToastMaster.setToast(Toast.makeText(this, "Setting Updated", Toast.LENGTH_SHORT));
             ToastMaster.showToast();
         }
+    }
+
+    private void setRightMenuStatus() {
+        // Set vibration status
+        sbAlarmVibration.setProgress(mAlarm.vibrate? 1 : 0);
+
+        // Set ringtone status
+        rightMenu.setInitRingtone(
+                Integer.valueOf(mAlarm.alert.toString().split("ringtone_")[1]));
+    }
+
+    private void setLeftMenuStatus() {
+        // Set unlock type on left menu
+        leftMenu.resetChosenStatus();
+        leftMenu.setChosenStatue(mAlarm.unlockType);
     }
 
 }
