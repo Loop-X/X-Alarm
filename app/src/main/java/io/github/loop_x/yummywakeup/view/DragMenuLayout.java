@@ -266,7 +266,7 @@ public class DragMenuLayout extends FrameLayout {
 
                 float percent = mainViewRelativeToMenu / (float) range;
                 float f1 = 1 - percent * 0.3f;
-                mainContentView.setScaleX( f1);
+                mainContentView.setScaleX(f1);
                 mainContentView.setScaleY(f1);
                 leftMenuView.setTranslationX(-leftMenuView.getWidth() / 2.3f + leftMenuView.getWidth() / 2.3f * percent);
                 leftMenuView.setScaleX(0.5f + 0.5f * percent);
@@ -413,7 +413,7 @@ public class DragMenuLayout extends FrameLayout {
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
         
-        if(mainViewRelativeToMenu >0){
+        if(mainViewRelativeToMenu > 0){
             rightMenuView.layout(UIUtils.getScreenWidth(), 0, UIUtils.getScreenWidth() + rightMenuView.getWidth(), rightMenuView.getHeight());
         }
 
@@ -458,6 +458,28 @@ public class DragMenuLayout extends FrameLayout {
         if (dragHelper.smoothSlideViewTo(mainContentView, 0, 0)) {
             ViewCompat.postInvalidateOnAnimation(this);
         }
+    }
+
+    public void restoreToMainContentView() {
+
+        mainViewRelativeToMenu = 0;
+
+        leftMenuView.layout(0, 0, leftMenuWidth, leftMenuHeight);
+        mainContentView.layout(0, 0, leftMenuWidth, leftMenuHeight);
+
+        mainContentView.setScaleX(1);
+        mainContentView.setScaleY(1);
+        leftMenuView.setTranslationX(-leftMenuView.getWidth() / 2.3f);
+        leftMenuView.setScaleX(0.5f);
+        leftMenuView.setScaleY(0.5f);
+        leftMenuView.setAlpha(0);
+
+        shadowView.setScaleX(1.4f);
+        shadowView.setScaleY(1.85f);
+        shadowView.setAlpha(0);
+
+        lastMainViewRelativeToMenu = 0;
+
     }
 
     class YScrollDetector extends SimpleOnGestureListener {

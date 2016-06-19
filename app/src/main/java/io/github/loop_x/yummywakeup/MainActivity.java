@@ -165,7 +165,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        
+
         if (resultCode != RESULT_OK) return;
 
         switch (requestCode) {
@@ -184,6 +184,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 ToastMaster.showToast();
                 break;
             case UNLOCK_TYPE_REQUEST_CODE:
+
+                // Show content view instead of left menu
+                loopXDragMenuLayout.restoreToMainContentView();
+
                 int unlockTypeId = data.getIntExtra("unlockType", UnlockTypeEnum.Normal.getID());
                 mAlarm.unlockType = unlockTypeId;
                 Alarms.setAlarm(MainActivity.this, mAlarm);
@@ -274,6 +278,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 rightMenu.setInitRingtone(0);
             }
         }
+
     }
 
     @Override
