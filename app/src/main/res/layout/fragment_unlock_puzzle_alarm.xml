@@ -29,7 +29,7 @@
             android:layout_height="0dp"
             android:layout_weight="1">
 
-            <com.capricorn.yummy.yummywakeup.view.PuzzleLayout
+            <io.github.loop_x.yummywakeup.view.PuzzleLayout
                 android:id="@+id/rl_puzzle"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
