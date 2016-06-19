@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Handler;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ListView;
@@ -56,6 +55,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private Spring translationYSpring;
     private int translationYEndValue;
     private AlarmPreferenceSettingsMenuLayout rightMenu;
+    private UnlockTypeMenuLayout leftMenu;
     private ListView lvRingtoneList;
     private SeekBar sbAlarmVibration;
     
@@ -76,6 +76,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         openLeftDrawerView = findViewById(R.id.openLeftDrawer);
 
         rightMenu = (AlarmPreferenceSettingsMenuLayout) loopXDragMenuLayout.findViewById(R.id.menuRight);
+        leftMenu =  (UnlockTypeMenuLayout) loopXDragMenuLayout.findViewById(R.id.menuLeft);
         sbAlarmVibration = (SeekBar) loopXDragMenuLayout.findViewById(R.id.sb_alarm_vibration);
         lvRingtoneList = (ListView) loopXDragMenuLayout.findViewById(R.id.lv_ringtone_list);
 
@@ -105,8 +106,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             }
         });
 
-        UnlockTypeMenuLayout unlockTypeMenuLayout = (UnlockTypeMenuLayout) loopXDragMenuLayout.getMenuView(DragMenuLayout.MenuDirection.LEFT);
-        unlockTypeMenuLayout.setOnUnlockTypeMenuClickListener(new UnlockTypeMenuLayout.OnUnlockTypeMenuClickListener() {
+        leftMenu.setOnUnlockTypeMenuClickListener(new UnlockTypeMenuLayout.OnUnlockTypeMenuClickListener() {
             @Override
             public void onClick(UnlockTypeEnum unlockTypeEnum) {
                 Intent intent = new Intent(MainActivity.this,UnlockTypeActivity.class);
@@ -193,7 +193,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 Alarms.setAlarm(MainActivity.this, mAlarm);
                 saveAlarm();
 
-                // ToDo 更新左边栏
+                // Update left menu with chosen unlock type
+                leftMenu.resetChosenStatus();
+                leftMenu.setChosenStatue(mAlarm.unlockType);
+
                 ToastMaster.setToast(Toast.makeText(MainActivity.this,
                         "解锁方式已更新",
                         Toast.LENGTH_SHORT));
@@ -223,6 +226,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         // Set alarm time on TextView
         setAlarmTimeOnTextView(mAlarm);
+
+        // Set unlock type on left menu
+        leftMenu.setChosenStatue(mAlarm.unlockType);
     }
 
     /**
@@ -278,7 +284,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 rightMenu.setInitRingtone(0);
             }
         }
-
     }
 
     @Override
