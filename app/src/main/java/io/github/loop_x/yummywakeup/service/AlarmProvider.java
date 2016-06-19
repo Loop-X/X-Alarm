@@ -47,7 +47,7 @@ public class AlarmProvider extends ContentProvider {
     }
 
     private static class DatabaseHelper extends SQLiteOpenHelper {
-        private static final String DATABASE_NAME = "alarms.db";
+        private static final String DATABASE_NAME = "yummywakeup.alarms.db";
         private static final int DATABASE_VERSION = 5;
 
         public DatabaseHelper(Context context) {
