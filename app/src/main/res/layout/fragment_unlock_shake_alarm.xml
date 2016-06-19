@@ -4,46 +4,18 @@
     android:layout_height="match_parent"
     android:background="@color/loopX_3">
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
         <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/iv_shake_flag_result"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/icon_inactive" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-
-            <ImageView
-                android:id="@+id/iv_shake"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"/>
-
-            <TextView
-                android:id="@+id/tv_shake_time"
+            <io.github.loop_x.yummywakeup.view.YummyTextView
+                android:id="@+id/tv_shake_progress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/iv_shake"
-                android:layout_centerHorizontal="true"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="20sp"
+                android:layout_centerInParent="true"
+                android:text="0%"
+                android:textColor="@color/loopX_1"
+                android:textSize="100sp"
                 android:gravity="center" />
 
             <Button
@@ -53,11 +25,18 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="30dp"
                 android:layout_centerHorizontal="true"
+                android:visibility="gone"
                 android:enabled="false"
                 android:text="@string/turn_off_alarm"
                 android:textSize="20sp"/>
 
+            <ImageView
+                android:id="@+id/iv_water"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/water"
+                android:layout_alignParentBottom="true"/>
+
         </RelativeLayout>
 
-    </LinearLayout>
 </FrameLayout>

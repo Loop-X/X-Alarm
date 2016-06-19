@@ -41,6 +41,15 @@
             android:theme="@style/AppTheme"
             />
 
+        <!-- 闹钟执行时弹出一个全屏的Activity -->
+        <activity
+            android:name=".module.AlarmModule.AlarmAlertFullScreen"
+            android:configChanges="orientation|keyboardHidden|keyboard|navigation"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.Wallpaper.NoTitleBar" />
+
         <provider
             android:name=".service.AlarmProvider"
             android:authorities="io.github.loop_x.yummywakeup"

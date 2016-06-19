@@ -155,7 +155,7 @@ public class Alarms {
         values.put(Alarm.Columns.VIBRATE, alarm.vibrate);
         values.put(Alarm.Columns.MESSAGE, alarm.label);
         values.put(Alarm.Columns.UNLOCK_TYPE, alarm.unlockType);
-        values.put(Alarm.Columns.UNLOCK_DIFF_LEVEL, alarm.unlockDiffLevel);
+        values.put(Alarm.Columns.ALERT, alarm.alert.toString());
 
         return values;
     }

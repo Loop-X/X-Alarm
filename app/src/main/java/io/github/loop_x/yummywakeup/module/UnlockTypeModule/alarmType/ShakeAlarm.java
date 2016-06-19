@@ -1,40 +1,41 @@
 package io.github.loop_x.yummywakeup.module.UnlockTypeModule.alarmType;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.view.View;
+import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import io.github.loop_x.yummywakeup.R;
 import io.github.loop_x.yummywakeup.module.AlarmModule.AlarmAlertFullScreen;
+import io.github.loop_x.yummywakeup.view.YummyTextView;
 
 public class ShakeAlarm extends UnlockFragment implements SensorEventListener{
 
-    private TextView tvShakeTime;
-    private ImageView ivFlagResult;
+    private YummyTextView tvShakeProgress;
     private Button btnCloseAlarm;
+    private ImageView ivWater;
 
     private OnAlarmAction mListener;
     private SensorManager mSensorManager;
-    private int shakeTimes;
 
     private int mShakeCount;
     private long mShakeTimestamp;
-    private static final float SHAKE_THRESHOLD_GRAVITY = 2.7F;
-    private static final int SHAKE_STOP_TIME_MS = 500;
-    private static final int SHAKE_COUNT_RESET_TIME_MS = 3000;
+    private static final float SHAKE_THRESHOLD_GRAVITY = 2.5F;
+    private static final int SHAKE_STOP_TIME_MS = 300;
 
     public ShakeAlarm() {}
 
     public static ShakeAlarm newInstance() {
         return new ShakeAlarm();
     }
-
 
     @Override
     public void onAttach(Activity activity) {
@@ -54,12 +55,10 @@ public class ShakeAlarm extends UnlockFragment implements SensorEventListener{
 
     @Override
     public void onViewInitial() {
-        tvShakeTime = (TextView) findViewById(R.id.tv_shake_time);
-        ivFlagResult = (ImageView) findViewById(R.id.iv_shake_flag_result);
+
+        tvShakeProgress = (YummyTextView) findViewById(R.id.tv_shake_progress);
         btnCloseAlarm = (Button) findViewById(R.id.btn_shake_close_alarm);
-        btnCloseAlarm.setVisibility(View.GONE);
-        shakeTimes = 10;
-        tvShakeTime.setText("Please shake " + shakeTimes + " times");
+        ivWater = (ImageView) findViewById(R.id.iv_water);
 
         mSensorManager = (SensorManager) getActivity().getSystemService(getActivity().SENSOR_SERVICE);
         mSensorManager.registerListener(this,
@@ -112,18 +111,24 @@ public class ShakeAlarm extends UnlockFragment implements SensorEventListener{
             if (mShakeTimestamp + SHAKE_STOP_TIME_MS > currentTime ) {
                 return;
             }
-            // reset the shake count after 3 seconds of no shakes
-            if (mShakeTimestamp + SHAKE_COUNT_RESET_TIME_MS < currentTime ) {
-                mShakeCount = 0;
-            }
 
             mShakeTimestamp = currentTime;
-            mShakeCount++;
+            mShakeCount += (int) gForce * 2;
 
-            if(mShakeCount == shakeTimes) {
+            TranslateAnimation animation = new TranslateAnimation(0, 0, ivWater.getY(), -100 );
+            animation.setDuration(SHAKE_STOP_TIME_MS);
+            animation.setFillAfter(true);
+            ivWater.startAnimation(animation);
+
+            if(mShakeCount >= 100) {
+                mShakeCount = 100;
+            }
+
+            tvShakeProgress.setText(mShakeCount + "%");
+
+            if(mShakeCount == 100) {
                 btnCloseAlarm.setVisibility(View.VISIBLE);
                 btnCloseAlarm.setEnabled(true);
-                ivFlagResult.setBackgroundResource(R.drawable.icon_active);
             }
         }
     }

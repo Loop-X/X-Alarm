@@ -66,12 +66,11 @@ public class AlarmProvider extends ContentProvider {
                        "vibrate INTEGER, " +
                        "message TEXT, " +
                        "unlock_type INTEGER,"+
-                       "unlock_diff_lvl INTEGER,"+
                        "alert TEXT);");
 
             // insert default alarms
             String insertMe = "INSERT INTO alarms " +
-                    "(hour, minutes, daysofweek, alarmtime, enabled, vibrate, message, unlock_type, unlock_diff_lvl, alert) " +
+                    "(hour, minutes, daysofweek, alarmtime, enabled, vibrate, message, unlock_type, alert) " +
                     "VALUES ";
         }
 

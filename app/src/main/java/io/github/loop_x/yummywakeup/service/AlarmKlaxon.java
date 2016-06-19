@@ -231,7 +231,6 @@ public class AlarmKlaxon extends Service {
 
         Log.v("yummywakeup", "AlarmKlaxon.play() " + alarm.id + " alert " + alarm.alert);
 
-
         Uri alert = alarm.alert;
         // Fall back on the default alarm if the database does not have an
         // alarm stored.
