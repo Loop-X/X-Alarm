@@ -109,7 +109,7 @@ public class DragMenuLayout extends FrameLayout {
             if (xvel > 0) {
                 if (mainViewRelativeToMenu < 0) {
                     if (mainViewRelativeToMenu > -range) {
-                        closeRightMenuWithAnimation();
+                        closeMenuWithAnimation();
                     } else {
                         openRightMenuWithAnimation();
                     }
@@ -120,7 +120,7 @@ public class DragMenuLayout extends FrameLayout {
 
                 if (mainViewRelativeToMenu > 0) {
                     if (mainViewRelativeToMenu < range) {
-                        closeLeftMenuWithAnimation();
+                        closeMenuWithAnimation();
                     } else {
                         openLeftMenuWithAnimation();
                     }
@@ -136,7 +136,7 @@ public class DragMenuLayout extends FrameLayout {
                         if (mainViewRelativeToMenu > range * 0.3) {
                             openLeftMenuWithAnimation();
                         } else {
-                            closeLeftMenuWithAnimation();
+                            closeMenuWithAnimation();
                         }
 
                     } else {
@@ -145,20 +145,20 @@ public class DragMenuLayout extends FrameLayout {
                         if (mainViewRelativeToMenu < -range * 0.3) {
                             openRightMenuWithAnimation();
                         } else {
-                            closeRightMenuWithAnimation();
+                            closeMenuWithAnimation();
                         }
                     }
                 } else if (releasedChild == leftMenuView) {
                     if (mainViewRelativeToMenu > range * 0.3) {
                         openLeftMenuWithAnimation();
                     } else {
-                        closeLeftMenuWithAnimation();
+                        closeMenuWithAnimation();
                     }
                 } else if (releasedChild == rightMenuView) {
                     if (mainViewRelativeToMenu < -range * 0.3) {
                         openRightMenuWithAnimation();
                     } else {
-                        closeRightMenuWithAnimation();
+                        closeMenuWithAnimation();
                     }
                 }
             }
@@ -437,7 +437,7 @@ public class DragMenuLayout extends FrameLayout {
         }
     }
 
-    public void closeRightMenuWithAnimation() {
+    public void closeMenuWithAnimation() {
         releaseMenu = true;
 
         if (dragHelper.smoothSlideViewTo(mainContentView, 0, 0)) {
@@ -451,14 +451,7 @@ public class DragMenuLayout extends FrameLayout {
             ViewCompat.postInvalidateOnAnimation(this);
         }
     }
-
-    public void closeLeftMenuWithAnimation() {
-        releaseMenu = true;
-
-        if (dragHelper.smoothSlideViewTo(mainContentView, 0, 0)) {
-            ViewCompat.postInvalidateOnAnimation(this);
-        }
-    }
+    
 
     public void restoreToMainContentView() {
 

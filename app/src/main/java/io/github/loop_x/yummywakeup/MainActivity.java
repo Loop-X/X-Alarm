@@ -88,7 +88,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 if (loopXDragMenuLayout.getMenuStatus() == DragMenuLayout.MenuStatus.Close){
                     loopXDragMenuLayout.openLeftMenuWithAnimation();
                 }else {
-                    loopXDragMenuLayout.closeLeftMenuWithAnimation();
+                    loopXDragMenuLayout.closeMenuWithAnimation();
                 }
             }
         });
@@ -100,7 +100,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 if (loopXDragMenuLayout.getMenuStatus() == DragMenuLayout.MenuStatus.Close){
                     loopXDragMenuLayout.openRightMenuWithAnimation();
                 }else {
-                    loopXDragMenuLayout.closeRightMenuWithAnimation();
+                    loopXDragMenuLayout.closeMenuWithAnimation();
                 }
                 
             }
