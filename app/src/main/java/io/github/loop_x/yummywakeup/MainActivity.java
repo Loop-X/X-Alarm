@@ -186,7 +186,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             case UNLOCK_TYPE_REQUEST_CODE:
 
                 // Show content view instead of left menu
-                loopXDragMenuLayout.restoreToMainContentView();
+                loopXDragMenuLayout.closeMenuWithoutAnimation();
 
                 int unlockTypeId = data.getIntExtra("unlockType", UnlockTypeEnum.Normal.getID());
                 mAlarm.unlockType = unlockTypeId;

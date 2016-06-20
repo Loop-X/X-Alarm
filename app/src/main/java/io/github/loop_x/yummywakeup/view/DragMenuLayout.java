@@ -453,8 +453,8 @@ public class DragMenuLayout extends FrameLayout {
     }
     
 
-    public void restoreToMainContentView() {
-
+    public void closeMenuWithoutAnimation() {
+        
         mainViewRelativeToMenu = 0;
 
         leftMenuView.layout(0, 0, leftMenuWidth, leftMenuHeight);
