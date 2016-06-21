@@ -1,5 +1,7 @@
 package io.github.loop_x.yummywakeup.view;
 
+import android.animation.TimeInterpolator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -13,6 +15,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +27,8 @@ import io.github.loop_x.yummywakeup.R;
 public class YummyTimePicker extends View {
 
     public static final float MARGIN_ALPHA = 1.3f; // Margin / TextSize
-    public static final float SPEED = 2; // Scroll speed
+
+    float SPEED = 1000f; // Scroll speed
 
     private List<String> mDataList;
     private int mCurrentSelected;
@@ -41,15 +45,19 @@ public class YummyTimePicker extends View {
     private onSelectListener mSelectListener;
     private Timer timer;
     private MyTimerTask mTask;
+    private int period;
 
     Handler updateHandler = new Handler() {
         public void handleMessage(Message msg) {
-            if (Math.abs(mMoveLen) < SPEED) {
+
+            if (Math.abs(mMoveLen) <= SPEED) {
                 mMoveLen = 0;
                 if (mTask != null) {
                     mTask.cancel();
                     mTask = null;
-                    performSelect();
+                    if (mSelectListener != null) {
+                        mSelectListener.onSelect(mDataList.get(mCurrentSelected));
+                    }
                 }
             } else {
                 // mMoveLen / Math.abs(mMoveLen) is to get +/- of mMoveLen which indicates top/bottom
@@ -241,12 +249,6 @@ public class YummyTimePicker extends View {
                 mPaintDividerLine);
     }
 
-    private void performSelect() {
-        if (mSelectListener != null) {
-            mSelectListener.onSelect(mDataList.get(mCurrentSelected));
-        }
-    }
-
     /**
      * Selected given item
      * @param selected
@@ -307,6 +309,10 @@ public class YummyTimePicker extends View {
         return true;
     }
 
+    /**
+     * When ACTION_DOWN
+     * @param event
+     */
     private void doDown(MotionEvent event) {
         if (mTask != null) {
             mTask.cancel();
@@ -315,6 +321,10 @@ public class YummyTimePicker extends View {
         mLastDownY = event.getY();
     }
 
+    /**
+     * When ACTION_MOVE
+     * @param event
+     */
     private void doMove(MotionEvent event) {
 
         mMoveLen += (event.getY() - mLastDownY);
@@ -335,6 +345,10 @@ public class YummyTimePicker extends View {
         invalidate();
     }
 
+    /**
+     * When ACTION_UP
+     * @param event
+     */
     private void doUp(MotionEvent event) {
 
         if (Math.abs(mMoveLen) < 0.0001) {
@@ -348,10 +362,23 @@ public class YummyTimePicker extends View {
         }
 
         mTask = new MyTimerTask(updateHandler);
+
         timer.schedule(mTask, 0, 10);
+
+        ValueAnimator animation = ValueAnimator.ofInt(1000, 1);
+        animation.setInterpolator(new DecelerateInterpolator());
+        animation.setDuration(1000);
+        animation.start();
+
+        animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            public void onAnimationUpdate(ValueAnimator animation) {
+                SPEED = (float) animation.getAnimatedValue();
+            }
+        });
     }
 
     class MyTimerTask extends TimerTask {
+
         Handler handler;
 
         public MyTimerTask(Handler handler) {
