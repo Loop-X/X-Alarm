@@ -11,8 +11,8 @@
 
         <io.github.loop_x.yummywakeup.view.PuzzleLayout
             android:id="@+id/rl_puzzle"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:padding="3dp" />
 
@@ -22,6 +22,7 @@
             android:layout_centerHorizontal="true"
             android:text="@string/puzzle_alarm"
             android:textSize="40sp"
+            android:textColor="@color/loopX_3_40_alpha"
             android:layout_below="@id/rl_puzzle"/>
 
     </RelativeLayout>
