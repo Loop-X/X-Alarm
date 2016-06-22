@@ -28,8 +28,6 @@ public class YummyTimePicker extends View {
 
     public static final float MARGIN_ALPHA = 1.3f; // Margin / TextSize
 
-    float SPEED = 1000f; // Scroll speed
-
     private VelocityTracker mVelocityTracker;
     private int mMinimumFlingVelocity;
     private int mMaximumFlingVelocity;
@@ -48,31 +46,6 @@ public class YummyTimePicker extends View {
     private float mMoveLen = 0;
     private boolean isInit = false;
     private onSelectListener mSelectListener;
-/*    private Timer timer;
-    private MyTimerTask mTask;*/
-    private int period;
-
-    /*Handler updateHandler = new Handler() {
-        public void handleMessage(Message msg) {
-
-            if (Math.abs(mMoveLen) <= SPEED) {
-                mMoveLen = 0;
-                if (mTask != null) {
-                    mTask.cancel();
-                    mTask = null;
-                    if (mSelectListener != null) {
-                        mSelectListener.onSelect(mDataList.get(mCurrentSelected));
-                    }
-                }
-            } else {
-                // mMoveLen / Math.abs(mMoveLen) is to get +/- of mMoveLen which indicates top/bottom
-                mMoveLen = mMoveLen - mMoveLen / Math.abs(mMoveLen) * SPEED;
-            }
-
-            invalidate();
-        }
-
-    };*/
 
     /*
     Constructors
@@ -89,7 +62,7 @@ public class YummyTimePicker extends View {
     }
 
     private void init(Context context) {
-     //   timer = new Timer();
+
         mDataList = new ArrayList<>();
 
         Typeface tf = Typeface.createFromAsset(context.getAssets(),
@@ -269,14 +242,12 @@ public class YummyTimePicker extends View {
         int distance = mDataList.size() / 2 - mCurrentSelected;
 
         if (distance < 0) {
-            for (int i = 0; i < -distance; i++)
-            {
+            for (int i = 0; i < -distance; i++) {
                 moveHeadToTail();
                 mCurrentSelected --;
             }
         } else if (distance > 0) {
-            for (int i = 0; i < distance; i++)
-            {
+            for (int i = 0; i < distance; i++) {
                 moveTailToHead();
                 mCurrentSelected ++;
             }
@@ -304,33 +275,44 @@ public class YummyTimePicker extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (mVelocityTracker == null) {
-            mVelocityTracker = VelocityTracker.obtain();
-        }
-        mVelocityTracker.addMovement(event);
-
         
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
-                doDown(event);
+
+                if (mVelocityTracker == null) {
+                    mVelocityTracker = VelocityTracker.obtain();
+                } else {
+                    mVelocityTracker.clear(); // Reset tracker back to its initial state.
+                }
+
+                mVelocityTracker.addMovement(event);
+                mLastDownY = event.getY();
+
                 break;
             case MotionEvent.ACTION_MOVE:
-                doMove(event);
+                mVelocityTracker.addMovement(event);
                 break;
             case MotionEvent.ACTION_UP:
+                mVelocityTracker.addMovement(event);
+
                 doUp(event);
 
-                float velocityY ;
+                float velocityY;
 
                 mVelocityTracker.computeCurrentVelocity(1000, mMaximumFlingVelocity);
                 velocityY = mVelocityTracker.getYVelocity();
+
                 if ((Math.abs(velocityY) > mMinimumFlingVelocity)) {
-                    mScroller.fling(0,(int)mLastDownY,(int)mVelocityTracker.getXVelocity(),(int)velocityY,0,0,0,300);
+                    mScroller.fling(0, (int)mLastDownY,
+                            (int)mVelocityTracker.getXVelocity(), (int)velocityY,
+                            0, 0,
+                            0, 300);
                     ViewCompat.postInvalidateOnAnimation(this);
                 }
-             /*   if (mVelocityTracker != null) {
+            case MotionEvent.ACTION_CANCEL:
+                if (mVelocityTracker != null) {
                     mVelocityTracker.recycle();
-                }*/
+                }
 
         }
         return true;
@@ -339,9 +321,11 @@ public class YummyTimePicker extends View {
     @Override
     public void computeScroll() {
         super.computeScroll();
-        
+
+        // If scroll in progress
         if (mScroller.computeScrollOffset()){
-            Log.e("YummyTimePicker","---------> computeScrollOffset");
+            Log.e("YummyTimePicker", "---------> computeScrollOffset");
+
             int y = mScroller.getCurrY();
             
             mMoveLen += (y - mLastDownY);
@@ -351,11 +335,13 @@ public class YummyTimePicker extends View {
                 // If direction is to bottom
                 moveTailToHead();
                 mMoveLen = mMoveLen - MARGIN_ALPHA * mTextSize;
+
             } else if (mMoveLen < -MARGIN_ALPHA * mTextSize / 2) {
 
                 // If direction is to top
                 moveHeadToTail();
                 mMoveLen = mMoveLen + MARGIN_ALPHA * mTextSize;
+
             }
 
             mLastDownY = y;
@@ -363,43 +349,6 @@ public class YummyTimePicker extends View {
         }
 
         Log.e("YummyTimePicker","---------> computeScroll");
-    }
-    
-
-    /**
-     * When ACTION_DOWN
-     * @param event
-     */
-    private void doDown(MotionEvent event) {
-       /* if (mTask != null) {
-            mTask.cancel();
-            mTask = null;
-        }*/
-        mLastDownY = event.getY();
-    }
-
-    /**
-     * When ACTION_MOVE
-     * @param event
-     */
-    private void doMove(MotionEvent event) {
-
-        mMoveLen += (event.getY() - mLastDownY);
-
-        if (mMoveLen > MARGIN_ALPHA * mTextSize / 2) {
-
-            // If direction is to bottom
-            moveTailToHead();
-            mMoveLen = mMoveLen - MARGIN_ALPHA * mTextSize;
-        } else if (mMoveLen < -MARGIN_ALPHA * mTextSize / 2) {
-
-            // If direction is to top
-            moveHeadToTail();
-            mMoveLen = mMoveLen + MARGIN_ALPHA * mTextSize;
-        }
-
-        mLastDownY = event.getY();
-        invalidate();
     }
 
     /**
@@ -411,40 +360,6 @@ public class YummyTimePicker extends View {
         if (Math.abs(mMoveLen) < 0.0001) {
             mMoveLen = 0;
             return;
-        }
-
-       /* if (mTask != null) {
-            mTask.cancel();
-            mTask = null;
-        }
-
-        mTask = new MyTimerTask(updateHandler);
-
-        timer.schedule(mTask, 0, 10);*/
-
-     /*   ValueAnimator animation = ValueAnimator.ofFloat(1000f, 1f);
-        animation.setInterpolator(new DecelerateInterpolator());
-        animation.setDuration(1000);
-        animation.start();
-
-        animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            public void onAnimationUpdate(ValueAnimator animation) {
-                SPEED = (float) animation.getAnimatedValue();
-            }
-        });*/
-    }
-
-    class MyTimerTask extends TimerTask {
-
-        Handler handler;
-
-        public MyTimerTask(Handler handler) {
-            this.handler = handler;
-        }
-
-        @Override
-        public void run() {
-            handler.sendMessage(handler.obtainMessage());
         }
 
     }
