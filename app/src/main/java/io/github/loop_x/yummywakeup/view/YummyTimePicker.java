@@ -1,6 +1,5 @@
 package io.github.loop_x.yummywakeup.view;
 
-import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -365,7 +364,7 @@ public class YummyTimePicker extends View {
 
         timer.schedule(mTask, 0, 10);
 
-        ValueAnimator animation = ValueAnimator.ofInt(1000, 1);
+        ValueAnimator animation = ValueAnimator.ofFloat(1000f, 1f);
         animation.setInterpolator(new DecelerateInterpolator());
         animation.setDuration(1000);
         animation.start();
