@@ -5,49 +5,25 @@
     android:layout_height="match_parent"
     android:background="@color/loopX_3">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
+        <io.github.loop_x.yummywakeup.view.PuzzleLayout
+            android:id="@+id/rl_puzzle"
             android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center">
+            android:layout_height="fill_parent"
+            android:layout_centerInParent="true"
+            android:padding="3dp" />
 
-            <ImageView
-                android:id="@+id/iv_puzzle_flag_result"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/icon_inactive" />
+        <io.github.loop_x.yummywakeup.view.YummyTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/puzzle_alarm"
+            android:textSize="40sp"
+            android:layout_below="@id/rl_puzzle"/>
 
-        </RelativeLayout>
+    </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-
-            <io.github.loop_x.yummywakeup.view.PuzzleLayout
-                android:id="@+id/rl_puzzle"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_centerInParent="true"
-                android:padding="3dp" />
-
-            <Button
-                android:id="@+id/btn_puzzle_close_alarm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="20dp"
-                android:enabled="false"
-                android:text="@string/turn_off_alarm"
-                android:textSize="20sp"/>
-
-        </RelativeLayout>
-
-    </LinearLayout>
 </FrameLayout>

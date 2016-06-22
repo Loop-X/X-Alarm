@@ -4,35 +4,35 @@
     android:layout_height="match_parent"
     android:background="@color/loopX_3">
 
-        <RelativeLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <io.github.loop_x.yummywakeup.view.YummyTextView
+            android:id="@+id/tv_shake_progress"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="0%"
+            android:textColor="@color/loopX_1"
+            android:textSize="100sp"
+            android:gravity="center" />
 
-            <io.github.loop_x.yummywakeup.view.YummyTextView
-                android:id="@+id/tv_shake_progress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="0%"
-                android:textColor="@color/loopX_1"
-                android:textSize="100sp"
-                android:gravity="center" />
+        <io.github.loop_x.yummywakeup.view.YummyTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/shake_your_phone"
+            android:textSize="40sp"
+            android:layout_below="@id/tv_shake_progress"/>
 
-            <io.github.loop_x.yummywakeup.view.YummyTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="@string/shake_your_phone"
-                android:textSize="40sp"
-                android:layout_below="@id/tv_shake_progress"/>
+        <ImageView
+            android:id="@+id/iv_water"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/water"
+            android:layout_alignParentBottom="true"/>
 
-            <ImageView
-                android:id="@+id/iv_water"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/water"
-                android:layout_alignParentBottom="true"/>
-
-        </RelativeLayout>
+    </RelativeLayout>
 
 </FrameLayout>

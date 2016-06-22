@@ -43,5 +43,6 @@
     <string name="set_vibrate">Set Vibrate</string>
     <string name="set_ringtone">Set Ringtone</string>
     <string name="shake_your_phone">Shake Your Phone!</string>
+    <string name="puzzle_alarm">Puzzle Alarm</string>
 
 </resources>
