@@ -1,6 +1,5 @@
 package io.github.loop_x.yummywakeup.view;
 
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -9,16 +8,18 @@ import android.graphics.Paint;
 import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.os.Handler;
-import android.os.Message;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
+import android.view.VelocityTracker;
 import android.view.View;
-import android.view.animation.DecelerateInterpolator;
+import android.view.ViewConfiguration;
+import android.widget.Scroller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
 import java.util.TimerTask;
 
 import io.github.loop_x.yummywakeup.R;
@@ -28,6 +29,11 @@ public class YummyTimePicker extends View {
     public static final float MARGIN_ALPHA = 1.3f; // Margin / TextSize
 
     float SPEED = 1000f; // Scroll speed
+
+    private VelocityTracker mVelocityTracker;
+    private int mMinimumFlingVelocity;
+    private int mMaximumFlingVelocity;
+    private Scroller mScroller;
 
     private List<String> mDataList;
     private int mCurrentSelected;
@@ -42,11 +48,11 @@ public class YummyTimePicker extends View {
     private float mMoveLen = 0;
     private boolean isInit = false;
     private onSelectListener mSelectListener;
-    private Timer timer;
-    private MyTimerTask mTask;
+/*    private Timer timer;
+    private MyTimerTask mTask;*/
     private int period;
 
-    Handler updateHandler = new Handler() {
+    /*Handler updateHandler = new Handler() {
         public void handleMessage(Message msg) {
 
             if (Math.abs(mMoveLen) <= SPEED) {
@@ -66,7 +72,7 @@ public class YummyTimePicker extends View {
             invalidate();
         }
 
-    };
+    };*/
 
     /*
     Constructors
@@ -83,7 +89,7 @@ public class YummyTimePicker extends View {
     }
 
     private void init(Context context) {
-        timer = new Timer();
+     //   timer = new Timer();
         mDataList = new ArrayList<>();
 
         Typeface tf = Typeface.createFromAsset(context.getAssets(),
@@ -98,7 +104,11 @@ public class YummyTimePicker extends View {
         mPaintDividerLine = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintDividerLine.setStyle(Paint.Style.FILL);
         mPaintDividerLine.setColor(ContextCompat.getColor(getContext(), R.color.loopX_6));
-
+        
+        ViewConfiguration viewConfiguration = ViewConfiguration.get(context);
+        mMinimumFlingVelocity = viewConfiguration.getScaledMinimumFlingVelocity();
+        mMaximumFlingVelocity = viewConfiguration.getScaledMaximumFlingVelocity();
+        mScroller = new Scroller(context);
     }
 
     /*
@@ -294,6 +304,12 @@ public class YummyTimePicker extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (mVelocityTracker == null) {
+            mVelocityTracker = VelocityTracker.obtain();
+        }
+        mVelocityTracker.addMovement(event);
+
+        
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
                 doDown(event);
@@ -303,20 +319,62 @@ public class YummyTimePicker extends View {
                 break;
             case MotionEvent.ACTION_UP:
                 doUp(event);
-                break;
+
+                float velocityY ;
+
+                mVelocityTracker.computeCurrentVelocity(1000, mMaximumFlingVelocity);
+                velocityY = mVelocityTracker.getYVelocity();
+                if ((Math.abs(velocityY) > mMinimumFlingVelocity)) {
+                    mScroller.fling(0,(int)mLastDownY,(int)mVelocityTracker.getXVelocity(),(int)velocityY,0,0,0,300);
+                    ViewCompat.postInvalidateOnAnimation(this);
+                }
+             /*   if (mVelocityTracker != null) {
+                    mVelocityTracker.recycle();
+                }*/
+
         }
         return true;
     }
+
+    @Override
+    public void computeScroll() {
+        super.computeScroll();
+        
+        if (mScroller.computeScrollOffset()){
+            Log.e("YummyTimePicker","---------> computeScrollOffset");
+            int y = mScroller.getCurrY();
+            
+            mMoveLen += (y - mLastDownY);
+
+            if (mMoveLen > MARGIN_ALPHA * mTextSize / 2) {
+
+                // If direction is to bottom
+                moveTailToHead();
+                mMoveLen = mMoveLen - MARGIN_ALPHA * mTextSize;
+            } else if (mMoveLen < -MARGIN_ALPHA * mTextSize / 2) {
+
+                // If direction is to top
+                moveHeadToTail();
+                mMoveLen = mMoveLen + MARGIN_ALPHA * mTextSize;
+            }
+
+            mLastDownY = y;
+            ViewCompat.postInvalidateOnAnimation(this);
+        }
+
+        Log.e("YummyTimePicker","---------> computeScroll");
+    }
+    
 
     /**
      * When ACTION_DOWN
      * @param event
      */
     private void doDown(MotionEvent event) {
-        if (mTask != null) {
+       /* if (mTask != null) {
             mTask.cancel();
             mTask = null;
-        }
+        }*/
         mLastDownY = event.getY();
     }
 
@@ -355,16 +413,16 @@ public class YummyTimePicker extends View {
             return;
         }
 
-        if (mTask != null) {
+       /* if (mTask != null) {
             mTask.cancel();
             mTask = null;
         }
 
         mTask = new MyTimerTask(updateHandler);
 
-        timer.schedule(mTask, 0, 10);
+        timer.schedule(mTask, 0, 10);*/
 
-        ValueAnimator animation = ValueAnimator.ofFloat(1000f, 1f);
+     /*   ValueAnimator animation = ValueAnimator.ofFloat(1000f, 1f);
         animation.setInterpolator(new DecelerateInterpolator());
         animation.setDuration(1000);
         animation.start();
@@ -373,7 +431,7 @@ public class YummyTimePicker extends View {
             public void onAnimationUpdate(ValueAnimator animation) {
                 SPEED = (float) animation.getAnimatedValue();
             }
-        });
+        });*/
     }
 
     class MyTimerTask extends TimerTask {
