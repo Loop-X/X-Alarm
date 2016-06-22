@@ -291,27 +291,33 @@ public class YummyTimePicker extends View {
                 break;
             case MotionEvent.ACTION_MOVE:
                 mVelocityTracker.addMovement(event);
+                doMove(event);
                 break;
             case MotionEvent.ACTION_UP:
                 mVelocityTracker.addMovement(event);
 
-                doUp(event);
+                //doUp(event);
 
                 float velocityY;
 
                 mVelocityTracker.computeCurrentVelocity(1000, mMaximumFlingVelocity);
                 velocityY = mVelocityTracker.getYVelocity();
 
+                // ToDo 如果不加这个的话 用户滑动太快会有奇怪的现象
+                if(velocityY >= 2000) {
+                    velocityY = 2000;
+                }
+
                 if ((Math.abs(velocityY) > mMinimumFlingVelocity)) {
                     mScroller.fling(0, (int)mLastDownY,
                             (int)mVelocityTracker.getXVelocity(), (int)velocityY,
                             0, 0,
-                            0, 300);
+                            0, 2000);
                     ViewCompat.postInvalidateOnAnimation(this);
                 }
             case MotionEvent.ACTION_CANCEL:
                 if (mVelocityTracker != null) {
-                    mVelocityTracker.recycle();
+                    //mVelocityTracker.recycle();
                 }
 
         }
@@ -346,6 +352,11 @@ public class YummyTimePicker extends View {
 
             mLastDownY = y;
             ViewCompat.postInvalidateOnAnimation(this);
+        } else {
+            // If scroll stops
+            if (mSelectListener != null) {
+                mSelectListener.onSelect(mDataList.get(mCurrentSelected));
+            }
         }
 
         Log.e("YummyTimePicker","---------> computeScroll");
@@ -362,6 +373,30 @@ public class YummyTimePicker extends View {
             return;
         }
 
+    }
+
+    /**
+     * When ACTION_MOVE
+     * @param event
+     */
+    private void doMove(MotionEvent event) {
+
+        mMoveLen += (event.getY() - mLastDownY);
+
+        if (mMoveLen > MARGIN_ALPHA * mTextSize / 2) {
+
+            // If direction is to bottom
+            moveTailToHead();
+            mMoveLen = mMoveLen - MARGIN_ALPHA * mTextSize;
+        } else if (mMoveLen < -MARGIN_ALPHA * mTextSize / 2) {
+
+            // If direction is to top
+            moveHeadToTail();
+            mMoveLen = mMoveLen + MARGIN_ALPHA * mTextSize;
+        }
+
+        mLastDownY = event.getY();
+        invalidate();
     }
 
     public interface onSelectListener {
