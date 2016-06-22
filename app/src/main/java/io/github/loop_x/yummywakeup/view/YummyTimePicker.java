@@ -290,6 +290,7 @@ public class YummyTimePicker extends View {
 
                 break;
             case MotionEvent.ACTION_MOVE:
+                // FUCK YOU!! WHY???
                 mVelocityTracker.addMovement(event);
                 doMove(event);
                 break;
@@ -313,6 +314,7 @@ public class YummyTimePicker extends View {
                             (int)mVelocityTracker.getXVelocity(), (int)velocityY,
                             0, 0,
                             0, 2000);
+
                     ViewCompat.postInvalidateOnAnimation(this);
                 }
             case MotionEvent.ACTION_CANCEL:
@@ -351,9 +353,9 @@ public class YummyTimePicker extends View {
             }
 
             mLastDownY = y;
+
             ViewCompat.postInvalidateOnAnimation(this);
         } else {
-            // If scroll stops
             if (mSelectListener != null) {
                 mSelectListener.onSelect(mDataList.get(mCurrentSelected));
             }
