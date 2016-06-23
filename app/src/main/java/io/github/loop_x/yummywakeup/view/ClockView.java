@@ -165,10 +165,7 @@ public class ClockView extends View {
             bgColor = Color.parseColor("#1A000000");
         }
 
-        @Override
-        public void onInitial() {
-            
-        }
+       
 
         @Override
         public void onPrepareDraw() {
@@ -191,10 +188,6 @@ public class ClockView extends View {
             clockMainDrawable =  ContextCompat.getDrawable(getContext(),R.drawable.clock_main_bg); 
         }
 
-        @Override
-        public void onInitial() {
-            
-        }
 
         @Override
         public void onPrepareDraw() {
@@ -233,11 +226,7 @@ public class ClockView extends View {
             dayAndNightIndicatorDrawable = ContextCompat.getDrawable(getContext(),R.drawable.clock_night);
         }
 
-        @Override
-        public void onInitial() {
-            
-        }
-
+    
         @Override
         public void onPrepareDraw() {
             int rightAndBottom = (int) (mClockWidth * 0.6f);

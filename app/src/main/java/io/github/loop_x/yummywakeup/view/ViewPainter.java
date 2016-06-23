@@ -6,9 +6,9 @@ import android.graphics.Canvas;
  * The  step to  draw view:
  * 
  * 
- * 1.onInitial()
+ * 
  *
- * 2.onPrepareDraw() : 
+ * 1.onPrepareDraw() : 
  *  
  *  any numerical calculation should be there.If the clock view size was changed ,this method
  *  will be invoke in order to do numerical calculation .
@@ -19,8 +19,6 @@ import android.graphics.Canvas;
  */
 public interface ViewPainter {
 
-    
-    public void onInitial();
     
     public void onPrepareDraw();
 
