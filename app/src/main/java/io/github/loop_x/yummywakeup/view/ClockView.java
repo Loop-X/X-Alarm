@@ -143,18 +143,18 @@ public class ClockView extends View {
         mClockHeight = getMeasuredHeight();
         mClockRadius = mClockWidth * 1.0f / 2;
 
-        clockBackgroundDraw.onPreDraw();
-        clockMainDraw.onPreDraw();
-        clockTimeIndicatorDraw.onPreDraw();
+        clockBackgroundDraw.onPrepareDraw();
+        clockMainDraw.onPrepareDraw();
+        clockTimeIndicatorDraw.onPrepareDraw();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        clockBackgroundDraw.onDraw(canvas);
-        clockMainDraw.onDraw(canvas);
-        clockTimeIndicatorDraw.onDraw(canvas);
+        clockBackgroundDraw.draw(canvas);
+        clockMainDraw.draw(canvas);
+        clockTimeIndicatorDraw.draw(canvas);
     }
 
 
@@ -166,12 +166,17 @@ public class ClockView extends View {
         }
 
         @Override
-        public void onPreDraw() {
+        public void onInitial() {
             
         }
 
         @Override
-        public void onDraw(Canvas canvas) {
+        public void onPrepareDraw() {
+            
+        }
+
+        @Override
+        public void draw(Canvas canvas) {
             canvas.drawColor(bgColor);
         }
     }
@@ -187,12 +192,17 @@ public class ClockView extends View {
         }
 
         @Override
-        public void onPreDraw() {
+        public void onInitial() {
+            
+        }
+
+        @Override
+        public void onPrepareDraw() {
             clockMainDrawable.setBounds(0,0,mClockWidth,mClockHeight);
         }
 
         @Override
-        public void onDraw(Canvas canvas) {
+        public void draw(Canvas canvas) {
             clockMainDrawable.draw(canvas);
         }
     }
@@ -224,7 +234,12 @@ public class ClockView extends View {
         }
 
         @Override
-        public void onPreDraw() {
+        public void onInitial() {
+            
+        }
+
+        @Override
+        public void onPrepareDraw() {
             int rightAndBottom = (int) (mClockWidth * 0.6f);
             hourIndicatorDrawable.setBounds(0,0,rightAndBottom,rightAndBottom);
             minuteIndicatorDrawable.setBounds(0,0,rightAndBottom,rightAndBottom);
@@ -248,7 +263,7 @@ public class ClockView extends View {
 
         
         @Override
-        public void onDraw(Canvas canvas) {
+        public void draw(Canvas canvas) {
             canvas.save();
             canvas.rotate(hourAngle,mClockRadius,mClockRadius);
             canvas.translate(translate,translate);
