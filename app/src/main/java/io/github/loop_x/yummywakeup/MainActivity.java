@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.facebook.rebound.Spring;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 import io.github.loop_x.yummywakeup.config.PreferenceKeys;
 import io.github.loop_x.yummywakeup.infrastructure.BaseActivity;
@@ -50,6 +51,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private DragMenuLayout loopXDragMenuLayout;
 
     private YummyTextView tvAlarmTime;
+    private YummyTextView tvAlarmAMPM;
+
     private TextView tvWakeUp;
     private View setAlarmView;
     protected Handler mHandler;
@@ -70,8 +73,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mHandler = new Handler();
 
         tvAlarmTime = (YummyTextView) findViewById(R.id.tv_alarm_time);
+        tvAlarmAMPM = (YummyTextView) findViewById(R.id.tv_alarm_am_pm);
+        tvWakeUp = (YummyTextView) findViewById(R.id.tv_wake_up);
         setAlarmView = findViewById(R.id.im_set_alarm);
-        tvWakeUp = (TextView) findViewById(R.id.tv_wake_up);
         loopXDragMenuLayout = (DragMenuLayout) findViewById(R.id.dragMenuLayout);
         openRightDrawerView = findViewById(R.id.openRightDrawer);
         openLeftDrawerView = findViewById(R.id.openLeftDrawer);
@@ -245,9 +249,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         cal.set(Calendar.HOUR_OF_DAY, alarm.hour);
         cal.set(Calendar.MINUTE, alarm.minutes);
+        
+        tvAlarmTime.setText(
+                DateFormat.format(Alarms.get24HourMode(this) ? M24 : M12, cal));
 
-        // ToDo Support also M12
-        tvAlarmTime.setText(DateFormat.format(M24, cal));
+        tvAlarmAMPM.setText(
+                DateFormat.format(Alarms.get24HourMode(this) ? "" : "a", cal));
 
     }
 

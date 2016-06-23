@@ -103,10 +103,6 @@ public class SetAlarmActivity extends BaseActivity {
             rippleBackgroundView.setBackgroundResource(R.color.alarm_set_top_alarm_off);
         }
 
-        String hour = "";
-        String min  = (mAlarm.minutes < 10 ? "0" : "") + mAlarm.minutes;
-        String ampn = "";
-
         final Calendar cal = Calendar.getInstance();
 
         cal.set(Calendar.HOUR_OF_DAY, mAlarm.hour);

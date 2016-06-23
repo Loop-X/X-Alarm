@@ -73,14 +73,26 @@
 
     <io.github.loop_x.yummywakeup.view.YummyTextView
         android:id="@+id/tv_alarm_time"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/im_set_alarm"
+        android:layout_centerHorizontal="true"
         android:clickable="true"
         android:textAlignment="center"
         android:textColor="@color/loopX_2"
         tools:text="10:20"
         android:textSize="50sp" />
+
+    <io.github.loop_x.yummywakeup.view.YummyTextView
+        android:id="@+id/tv_alarm_am_pm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/tv_alarm_time"
+        android:layout_alignBaseline="@id/tv_alarm_time"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/loopX_2"
+        tools:text="AM"
+        android:textSize="25sp"/>
 
     <ImageView
         android:id="@+id/im_set_alarm"
