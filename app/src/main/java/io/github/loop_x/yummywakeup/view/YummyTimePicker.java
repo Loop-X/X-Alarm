@@ -43,6 +43,10 @@ public class YummyTimePicker extends View {
     private float mLastDownY;
     private float mMoveLen = 0;
     private onSelectListener mSelectListener;
+    private float baseline;
+    private float xPos;
+    private float yPos;
+    private float yOffset;
 
     /*
     Constructors
@@ -124,6 +128,13 @@ public class YummyTimePicker extends View {
         mViewHeight = getMeasuredHeight();
         mViewWidth = getMeasuredWidth();
         mTextSize = mViewHeight / 4.0f;
+        mPaint.setTextSize(mTextSize);
+
+        xPos =  (float) (mViewWidth / 2);
+
+        // http://www.open-open.com/lib/view/open1459931221098.html
+        Paint.FontMetricsInt fontMetricsInt = mPaint.getFontMetricsInt();
+        yOffset = (fontMetricsInt.top / 2 + fontMetricsInt.bottom / 2);
     }
     
 
@@ -131,18 +142,12 @@ public class YummyTimePicker extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        mPaint.setTextSize(mTextSize);
-
-        float x = (float) (mViewWidth / 2);
-        float y = mViewHeight / 2 + mMoveLen;
-
-        // http://www.open-open.com/lib/view/open1459931221098.html
-        Paint.FontMetricsInt fontMetricsInt = mPaint.getFontMetricsInt();
-        float baseline = y - (fontMetricsInt.top / 2 + fontMetricsInt.bottom / 2);
-
+        yPos = mViewHeight / 2 + mMoveLen;
+        baseline = yPos - yOffset;
+        
         // Draw item selected (the item in the middle of picker)
         if (mCurrentSelected < mDataList.size()){
-            canvas.drawText(mDataList.get(mCurrentSelected), x, baseline, mPaint);
+            canvas.drawText(mDataList.get(mCurrentSelected), xPos, baseline, mPaint);
         }
 
         // Draw Divider Line
