@@ -4,71 +4,34 @@
     android:layout_height="match_parent"
     android:background="@color/loopX_3">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center">
+        <io.github.loop_x.yummywakeup.view.YummyTextView
+            android:id="@+id/tv_formula"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/loopX_1"
+            android:textSize="50sp"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
-            <ImageView
-                android:id="@+id/iv_flag_result"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/icon_inactive" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@color/loopX_2">
-
-            <LinearLayout
-                android:id="@+id/ly_formule"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal"
-                android:gravity="center">
-
-                <TextView
-                    android:id="@+id/tv_formula"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
-
-                <EditText
-                    android:id="@+id/et_calcul_result"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:digits="-0123456789"
-                    android:inputType="numberSigned"
-                    android:textSize="20sp"
-                    android:singleLine="true" />
-
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/btn_calcul_close_alarm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="20dp"
-                android:enabled="false"
-                android:text="@string/turn_off_alarm"
-                android:textSize="20sp" />
+        <EditText
+            android:id="@+id/et_calcul_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_formula"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:digits="-0123456789"
+            android:inputType="numberSigned"
+            android:maxLength="5"
+            android:maxLines="1"
+            android:textSize="50sp"
+            android:textColor="@color/loopX_1"
+            android:singleLine="true" />
 
         </RelativeLayout>
-
-    </LinearLayout>
 
 </FrameLayout>

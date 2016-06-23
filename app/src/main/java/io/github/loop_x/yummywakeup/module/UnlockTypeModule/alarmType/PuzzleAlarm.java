@@ -39,7 +39,6 @@ public class PuzzleAlarm extends UnlockFragment {
 
     }
 
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
