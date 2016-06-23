@@ -44,8 +44,8 @@ public class ClockView extends View {
     private int mClockHeight;
     private float mClockRadius;
     
-    private ClockElementDraw clockBackgroundDraw;
-    private ClockElementDraw clockMainDraw;
+    private ViewPainter clockBackgroundDraw;
+    private ViewPainter clockMainDraw;
     private ClockTimeIndicatorDraw  clockTimeIndicatorDraw;
 
     private boolean mAttached;
@@ -143,43 +143,22 @@ public class ClockView extends View {
         mClockHeight = getMeasuredHeight();
         mClockRadius = mClockWidth * 1.0f / 2;
 
-        clockBackgroundDraw.prepareDraw();
-        clockMainDraw.prepareDraw();
-        clockTimeIndicatorDraw.prepareDraw();
+        clockBackgroundDraw.onPreDraw();
+        clockMainDraw.onPreDraw();
+        clockTimeIndicatorDraw.onPreDraw();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        clockBackgroundDraw.drawSelf(canvas);
-        clockMainDraw.drawSelf(canvas);
-        clockTimeIndicatorDraw.drawSelf(canvas);
+        clockBackgroundDraw.onDraw(canvas);
+        clockMainDraw.onDraw(canvas);
+        clockTimeIndicatorDraw.onDraw(canvas);
     }
 
 
-    /**
-     * Draw clock view element step:
-     *
-     * 1.prepareDraw() : 
-     *  
-     *  any numerical calculation should be there.If the clock view size was changed ,this method
-     *  will be invoke in order to do numerical calculation .
-     *                
-     * 
-     * 2.drawSelf(Canvas canvas) : this can draw element
-     * 
-     */
-    public interface ClockElementDraw{
-
-        public void prepareDraw();
-
-        public void drawSelf(Canvas canvas);
-
-    }
-    
-
-    public class ClockBackgroundDraw implements ClockElementDraw{
+    public class ClockBackgroundDraw implements ViewPainter {
         private int bgColor;
 
         public ClockBackgroundDraw() {
@@ -187,12 +166,12 @@ public class ClockView extends View {
         }
 
         @Override
-        public void prepareDraw() {
+        public void onPreDraw() {
             
         }
 
         @Override
-        public void drawSelf(Canvas canvas) {
+        public void onDraw(Canvas canvas) {
             canvas.drawColor(bgColor);
         }
     }
@@ -200,7 +179,7 @@ public class ClockView extends View {
     
     
     
-    public  class ClockMainDraw implements ClockElementDraw{
+    public  class ClockMainDraw implements ViewPainter {
         private Drawable clockMainDrawable;
 
         public ClockMainDraw() {
@@ -208,19 +187,19 @@ public class ClockView extends View {
         }
 
         @Override
-        public void prepareDraw() {
+        public void onPreDraw() {
             clockMainDrawable.setBounds(0,0,mClockWidth,mClockHeight);
         }
 
         @Override
-        public void drawSelf(Canvas canvas) {
+        public void onDraw(Canvas canvas) {
             clockMainDrawable.draw(canvas);
         }
     }
     
 
 
-    public class ClockTimeIndicatorDraw implements ClockElementDraw{
+    public class ClockTimeIndicatorDraw implements ViewPainter {
 
         private Drawable hourIndicatorDrawable;
         private Drawable minuteIndicatorDrawable;
@@ -245,7 +224,7 @@ public class ClockView extends View {
         }
 
         @Override
-        public void prepareDraw() {
+        public void onPreDraw() {
             int rightAndBottom = (int) (mClockWidth * 0.6f);
             hourIndicatorDrawable.setBounds(0,0,rightAndBottom,rightAndBottom);
             minuteIndicatorDrawable.setBounds(0,0,rightAndBottom,rightAndBottom);
@@ -269,7 +248,7 @@ public class ClockView extends View {
 
         
         @Override
-        public void drawSelf(Canvas canvas) {
+        public void onDraw(Canvas canvas) {
             canvas.save();
             canvas.rotate(hourAngle,mClockRadius,mClockRadius);
             canvas.translate(translate,translate);
