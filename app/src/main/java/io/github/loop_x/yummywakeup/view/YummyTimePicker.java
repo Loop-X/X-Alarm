@@ -7,7 +7,6 @@ import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Shader;
 import android.graphics.Typeface;
-import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
@@ -20,7 +19,6 @@ import android.widget.Scroller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimerTask;
 
 import io.github.loop_x.yummywakeup.R;
 
@@ -44,7 +42,6 @@ public class YummyTimePicker extends View {
     private int mViewWidth;
     private float mLastDownY;
     private float mMoveLen = 0;
-    private boolean isInit = false;
     private onSelectListener mSelectListener;
 
     /*
@@ -121,58 +118,46 @@ public class YummyTimePicker extends View {
         }
     }
 
-    /*
-    Functions
-     */
-
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
         mViewHeight = getMeasuredHeight();
         mViewWidth = getMeasuredWidth();
-
         mTextSize = mViewHeight / 4.0f;
-
-        isInit = true;
-
-        invalidate();
     }
+    
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if (isInit) {
+        mPaint.setTextSize(mTextSize);
 
-            mPaint.setTextSize(mTextSize);
+        float x = (float) (mViewWidth / 2);
+        float y = mViewHeight / 2 + mMoveLen;
 
-            float x = (float) (mViewWidth / 2);
-            float y = mViewHeight / 2 + mMoveLen;
+        // http://www.open-open.com/lib/view/open1459931221098.html
+        Paint.FontMetricsInt fontMetricsInt = mPaint.getFontMetricsInt();
+        float baseline = y - (fontMetricsInt.top / 2 + fontMetricsInt.bottom / 2);
 
-            // http://www.open-open.com/lib/view/open1459931221098.html
-            Paint.FontMetricsInt fontMetricsInt = mPaint.getFontMetricsInt();
-            float baseline = y - (fontMetricsInt.top / 2 + fontMetricsInt.bottom / 2);
+        // Draw item selected (the item in the middle of picker)
+        if (mCurrentSelected < mDataList.size()){
+            canvas.drawText(mDataList.get(mCurrentSelected), x, baseline, mPaint);
+        }
 
-            // Draw item selected (the item in the middle of picker)
-            if (mCurrentSelected < mDataList.size()){
-                canvas.drawText(mDataList.get(mCurrentSelected), x, baseline, mPaint);
-            }
+        // Draw Divider Line
+        drawDividerLine(canvas);
 
-            // Draw Divider Line
-            drawDividerLine(canvas);
+        // Draw items above mCurrentSelected
+        for (int i = 1; i <= mCurrentSelected; i++)
+        {
+            drawOtherText(canvas, i, -1);
+        }
 
-            // Draw items above mCurrentSelected
-            for (int i = 1; i <= mCurrentSelected; i++)
-            {
-                drawOtherText(canvas, i, -1);
-            }
-
-            // Draw items below mCurrentSelected
-            for (int i = 1; (mCurrentSelected + i) < mDataList.size(); i++)
-            {
-                drawOtherText(canvas, i, 1);
-            }
+        // Draw items below mCurrentSelected
+        for (int i = 1; (mCurrentSelected + i) < mDataList.size(); i++)
+        {
+            drawOtherText(canvas, i, 1);
         }
     }
 
