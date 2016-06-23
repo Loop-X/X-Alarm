@@ -22,7 +22,6 @@ public abstract  class BaseView extends View implements ViewPainter{
 
     public BaseView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        onInitial();
 
     }
     
