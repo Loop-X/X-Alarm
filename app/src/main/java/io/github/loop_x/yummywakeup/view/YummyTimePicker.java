@@ -48,6 +48,8 @@ public class YummyTimePicker extends View {
     private float yPos;
     private float yOffset;
 
+    private int mLastEvent;
+
     /*
     Constructors
      */
@@ -268,6 +270,7 @@ public class YummyTimePicker extends View {
         
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
+                mLastEvent = MotionEvent.ACTION_DOWN;
 
                 if (mVelocityTracker == null) {
                     mVelocityTracker = VelocityTracker.obtain();
@@ -280,11 +283,12 @@ public class YummyTimePicker extends View {
 
                 break;
             case MotionEvent.ACTION_MOVE:
-                // FUCK YOU!! WHY???
+                mLastEvent = MotionEvent.ACTION_MOVE;
                 mVelocityTracker.addMovement(event);
                 doMove(event);
                 break;
             case MotionEvent.ACTION_UP:
+                mLastEvent = MotionEvent.ACTION_UP;
                 mVelocityTracker.addMovement(event);
 
                 //doUp(event);
@@ -295,15 +299,15 @@ public class YummyTimePicker extends View {
                 velocityY = mVelocityTracker.getYVelocity();
 
                 // ToDo 如果不加这个的话 用户滑动太快会有奇怪的现象
-                if(velocityY >= 2000) {
-                    velocityY = 2000;
+                if(velocityY >= mMaximumFlingVelocity) {
+                    velocityY = mMaximumFlingVelocity;
                 }
 
                 if ((Math.abs(velocityY) > mMinimumFlingVelocity)) {
                     mScroller.fling(0, (int)mLastDownY,
                             (int)mVelocityTracker.getXVelocity(), (int)velocityY,
                             0, 0,
-                            0, 2000);
+                            0, mMaximumFlingVelocity);
 
                     ViewCompat.postInvalidateOnAnimation(this);
                 }
@@ -346,6 +350,10 @@ public class YummyTimePicker extends View {
 
             ViewCompat.postInvalidateOnAnimation(this);
         } else {
+            if(mLastEvent == MotionEvent.ACTION_UP) {
+                mMoveLen = 0;
+            }
+
             if (mSelectListener != null) {
                 mSelectListener.onSelect(mDataList.get(mCurrentSelected));
             }
