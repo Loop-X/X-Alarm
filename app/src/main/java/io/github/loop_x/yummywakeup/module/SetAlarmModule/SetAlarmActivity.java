@@ -108,8 +108,10 @@ public class SetAlarmActivity extends BaseActivity {
         cal.set(Calendar.HOUR_OF_DAY, mAlarm.hour);
         cal.set(Calendar.MINUTE, mAlarm.minutes);
 
-        tvCurrentAlarmTime.setText(DateFormat.format(is24hMode ? MainActivity.M24 : MainActivity.M12, cal));
-        tvCurrentAlarmAMPM.setText(DateFormat.format(is24hMode ? "" : "a", cal));
+        tvCurrentAlarmTime.setText(
+                DateFormat.format(is24hMode ? MainActivity.M24 : MainActivity.M12, cal));
+        tvCurrentAlarmAMPM.setText(
+                Alarms.get24HourMode(this) ? "" : ( mAlarm.hour < 13 ? "AM" : "PM"));
 
         /** Init Time Picker **/
 
