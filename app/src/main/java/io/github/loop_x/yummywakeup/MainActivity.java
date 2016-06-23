@@ -42,7 +42,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private Alarm mAlarm;
     private int alarmId;
 
-    private final static String M24 = "kk:mm";
+    public final static String M12 = "hh:mm";
+    public final static String M24 = "kk:mm";
 
     private View openRightDrawerView;
     private View openLeftDrawerView;
@@ -245,6 +246,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         cal.set(Calendar.HOUR_OF_DAY, alarm.hour);
         cal.set(Calendar.MINUTE, alarm.minutes);
 
+        // ToDo Support also M12
         tvAlarmTime.setText(DateFormat.format(M24, cal));
 
     }

@@ -2,12 +2,17 @@ package io.github.loop_x.yummywakeup.module.SetAlarmModule;
 
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
+import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.facebook.rebound.SpringUtil;
 
+import java.util.Calendar;
+
+import io.github.loop_x.yummywakeup.MainActivity;
 import io.github.loop_x.yummywakeup.R;
 import io.github.loop_x.yummywakeup.UIUtils;
 import io.github.loop_x.yummywakeup.infrastructure.BaseActivity;
@@ -102,20 +107,13 @@ public class SetAlarmActivity extends BaseActivity {
         String min  = (mAlarm.minutes < 10 ? "0" : "") + mAlarm.minutes;
         String ampn = "";
 
-        if (is24hMode) {
-            hour = (mAlarm.hour < 10 ? "0" : "") + mAlarm.hour;
-        } else {
-            if(mAlarm.hour > 12) {
-                hour = "0" + (mAlarm.hour - 12);
-                ampn = "PM";
-            } else {
-                hour = "" + mAlarm.hour;
-                ampn = "AM";
-            }
-        }
+        final Calendar cal = Calendar.getInstance();
 
-        tvCurrentAlarmTime.setText(hour + ":" + min);
-        tvCurrentAlarmAMPM.setText(ampn);
+        cal.set(Calendar.HOUR_OF_DAY, mAlarm.hour);
+        cal.set(Calendar.MINUTE, mAlarm.minutes);
+
+        tvCurrentAlarmTime.setText(DateFormat.format(is24hMode ? MainActivity.M24 : MainActivity.M12, cal));
+        tvCurrentAlarmAMPM.setText(DateFormat.format(is24hMode ? "" : "a", cal));
 
         /** Init Time Picker **/
 
