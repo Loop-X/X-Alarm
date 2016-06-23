@@ -11,11 +11,8 @@ import android.view.ViewGroup;
 
 import io.github.loop_x.yummywakeup.R;
 import io.github.loop_x.yummywakeup.infrastructure.BaseActivity;
+import io.github.loop_x.yummywakeup.module.AlarmModule.AlarmAlertFullScreenToTest;
 
-/**
- * Author SunMeng
- * Date : 2016 六月 11
- */
 public class UnlockTypeActivity extends BaseActivity {
 
     private static final int PAGE_CONTENT = 4;
@@ -36,12 +33,12 @@ public class UnlockTypeActivity extends BaseActivity {
         saveLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               int current =  viewPager.getCurrentItem();
+                int current =  viewPager.getCurrentItem();
 
-                Intent intent  = new Intent(UnlockTypeActivity.this,UnlockTypeActivity.class);
+                Intent intent  = new Intent(UnlockTypeActivity.this, UnlockTypeActivity.class);
                 int returnValue = convertItemPositionToUnlockTypeId(current);
-                intent.putExtra("unlockType",returnValue);
-                setResult(RESULT_OK,intent);
+                intent.putExtra("unlockType", returnValue);
+                setResult(RESULT_OK, intent);
                 finish();
             }
         });
@@ -109,14 +106,12 @@ public class UnlockTypeActivity extends BaseActivity {
         return R.layout.activity_unlock_type;
     }
 
-    
     public static class UnlockModePageAdapter extends PagerAdapter {
         private LayoutInflater layoutInflater;
 
         public UnlockModePageAdapter(Context context) {
             layoutInflater = LayoutInflater.from(context);
         }
-
 
         @Override
         public int getCount() {
@@ -208,5 +203,11 @@ public class UnlockTypeActivity extends BaseActivity {
             tab.setIcon(resId);
         }
         
+    }
+
+    public void runDemo(View view) {
+        Intent intent = new Intent(this, AlarmAlertFullScreenToTest.class);
+        intent.putExtra("UnlockType", convertItemPositionToUnlockTypeId(viewPager.getCurrentItem()));
+        startActivity(intent);
     }
 }

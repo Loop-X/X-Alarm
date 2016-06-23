@@ -4,15 +4,15 @@ import io.github.loop_x.yummywakeup.module.UnlockTypeModule.UnlockTypeEnum;
 
 public class UnlockFragmentFactory {
 
-    public static UnlockFragment create(int unlocktype) {
+    public static UnlockFragment create(int unlockType) {
 
-        if (unlocktype == UnlockTypeEnum.Normal.getID()){
+        if (unlockType == UnlockTypeEnum.Normal.getID()){
             return new NormalAlarm();
-        } else if (unlocktype == UnlockTypeEnum.Math.getID()){
+        } else if (unlockType == UnlockTypeEnum.Math.getID()){
             return MathAlarm.newInstance();
-        } else if (unlocktype == UnlockTypeEnum.Puzzle.getID()){
+        } else if (unlockType == UnlockTypeEnum.Puzzle.getID()){
             return PuzzleAlarm.newInstance();
-        } else if (unlocktype == UnlockTypeEnum.Shake.getID()){
+        } else if (unlockType == UnlockTypeEnum.Shake.getID()){
             return ShakeAlarm.newInstance();
         }
 

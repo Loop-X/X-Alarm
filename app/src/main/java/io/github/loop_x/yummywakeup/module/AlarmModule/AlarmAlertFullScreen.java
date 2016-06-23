@@ -163,6 +163,7 @@ public class AlarmAlertFullScreen extends FragmentActivity implements UnlockFrag
                             //snooze();
                             break;
                         case 2:
+                            // ToDo Here is the reason
                             dismiss(false);
                             break;
                         default:

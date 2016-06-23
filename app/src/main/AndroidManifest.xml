@@ -50,6 +50,15 @@
             android:taskAffinity=""
             android:theme="@android:style/Theme.Wallpaper.NoTitleBar" />
 
+        <!-- Used as demo of unlock type for user -->
+        <activity
+            android:name=".module.AlarmModule.AlarmAlertFullScreenToTest"
+            android:configChanges="orientation|keyboardHidden|keyboard|navigation"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.Wallpaper.NoTitleBar" />
+
         <provider
             android:name=".service.AlarmProvider"
             android:authorities="io.github.loop_x.yummywakeup"

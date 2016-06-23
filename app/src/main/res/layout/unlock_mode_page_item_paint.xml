@@ -19,11 +19,19 @@
             android:layout_centerInParent="true"
             android:src="@drawable/model_paint_big" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="runDemo"
+            android:text="Have a try"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="85dp"
             android:text="拼个图"
             android:textColor="@color/loopX_2" />
+
     </LinearLayout>
+
 </RelativeLayout>

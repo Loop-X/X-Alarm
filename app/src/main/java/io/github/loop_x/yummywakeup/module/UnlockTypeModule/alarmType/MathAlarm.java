@@ -39,12 +39,7 @@ public class MathAlarm extends UnlockFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        try {
-            mListener = (AlarmAlertFullScreen) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+        mListener = (OnAlarmAction) activity;
     }
 
     @Override
