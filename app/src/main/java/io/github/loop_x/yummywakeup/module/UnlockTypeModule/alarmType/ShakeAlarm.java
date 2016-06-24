@@ -75,6 +75,7 @@ public class ShakeAlarm extends UnlockFragment implements SensorEventListener{
     @Override
     public void onDetach() {
         super.onDetach();
+        mListener.closeAlarm();
         mListener = null;
     }
 
