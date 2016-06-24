@@ -18,7 +18,7 @@
             android:textSize="50sp"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <EditText
+        <io.github.loop_x.yummywakeup.view.YummyEditText
             android:id="@+id/et_calcul_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

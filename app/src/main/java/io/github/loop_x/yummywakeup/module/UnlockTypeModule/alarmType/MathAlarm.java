@@ -10,6 +10,7 @@ import android.widget.EditText;
 
 import io.github.loop_x.yummywakeup.R;
 import io.github.loop_x.yummywakeup.tools.CalculationFormula;
+import io.github.loop_x.yummywakeup.view.YummyEditText;
 import io.github.loop_x.yummywakeup.view.YummyTextView;
 
 public class MathAlarm extends UnlockFragment {
@@ -18,7 +19,7 @@ public class MathAlarm extends UnlockFragment {
     private int result;
     private String input;
     private YummyTextView tvFormula;
-    private EditText etCalculResult;
+    private YummyEditText etCalculResult;
     private OnAlarmAction mListener;
 
     public MathAlarm() {}
@@ -42,7 +43,7 @@ public class MathAlarm extends UnlockFragment {
     public void onViewInitial() {
 
         tvFormula = (YummyTextView) findViewById(R.id.tv_formula);
-        etCalculResult = (EditText) findViewById(R.id.et_calcul_result);
+        etCalculResult = (YummyEditText) findViewById(R.id.et_calcul_result);
 
         etCalculResult.setFocusable(true);
         etCalculResult.setFocusableInTouchMode(true);
