@@ -177,11 +177,10 @@ public class YummyTimePicker extends View {
 
         float d = MARGIN_ALPHA * mTextSize * position + type * mMoveLen;
 
-        mPaint.setTextSize(mTextSize);
+    //    mPaint.setTextSize(mTextSize);
 
         float y = mViewHeight / 2 + type * d;
-        Paint.FontMetricsInt fontMetricsInt = mPaint.getFontMetricsInt();
-        float baseline = y - (fontMetricsInt.top / 2 + fontMetricsInt.bottom / 2);
+        float baseline = y - yOffset;
 
         // String to draw
         String text = mDataList.get(mCurrentSelected + type * position);
@@ -222,7 +221,9 @@ public class YummyTimePicker extends View {
                 mViewHeight / 2 + MARGIN_ALPHA * mTextSize / 2,
                 mPaintDividerLine);
     }
-
+    
+    
+    
     /**
      * Selected given item
      * @param selected
