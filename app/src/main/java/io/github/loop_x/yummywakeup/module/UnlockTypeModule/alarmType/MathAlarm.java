@@ -99,6 +99,7 @@ public class MathAlarm extends UnlockFragment {
     @Override
     public void onDetach() {
         super.onDetach();
+        mListener.closeAlarm();
         mListener = null;
     }
 
