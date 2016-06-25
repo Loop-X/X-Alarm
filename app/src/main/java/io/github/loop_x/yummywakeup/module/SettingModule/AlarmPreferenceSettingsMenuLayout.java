@@ -74,14 +74,26 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                CustomAdapter.mLastSelectPosition = i;
-                mAdapter.notifyDataSetChanged();
+                if (CustomAdapter.mLastSelectPosition != i) {
 
-                stopRingtone();
-                mRingtone = RingtoneManager.getRingtone(mContext,
-                        Uri.parse("android.resource://io.github.loop_x.yummywakeup/raw/ringtone_" + i));
-                mRingtone.play();
+                    stopRingtone();
+                    mRingtone = RingtoneManager.getRingtone(mContext,
+                            Uri.parse("android.resource://io.github.loop_x.yummywakeup/raw/ringtone_" + i));
 
+                    CustomAdapter.mLastSelectPosition = i;
+                    mAdapter.notifyDataSetChanged();
+                    mRingtone.play();
+
+                } else {
+                    if(mRingtone != null) {
+                        stopRingtone();
+                    } else {
+                        mRingtone = RingtoneManager.getRingtone(mContext,
+                                Uri.parse("android.resource://io.github.loop_x.yummywakeup/raw/ringtone_" + i));
+                        mRingtone.play();
+                    }
+
+                }
             }
         });
 
