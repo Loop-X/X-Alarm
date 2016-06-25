@@ -55,9 +55,11 @@ public class AlarmAlertFullScreenToTest extends FragmentActivity implements Unlo
 
     @Override
     public void closeAlarm() {
-        mMediaPlayer.stop();
-        mMediaPlayer.release();
-        mMediaPlayer = null;
+        if(mMediaPlayer != null) {
+            mMediaPlayer.stop();
+            mMediaPlayer.release();
+            mMediaPlayer = null;
+        }
         finish();
     }
 

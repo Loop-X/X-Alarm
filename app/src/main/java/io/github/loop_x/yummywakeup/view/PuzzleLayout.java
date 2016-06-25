@@ -74,7 +74,7 @@ public class PuzzleLayout extends RelativeLayout implements View.OnClickListener
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
         mWidth = Math.min(getMeasuredHeight(), getMeasuredWidth());
-        mColumn = 5;
+        mColumn = 4;
 
         if (!once) {
             initBitmap();

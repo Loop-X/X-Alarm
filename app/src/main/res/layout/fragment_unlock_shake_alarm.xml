@@ -24,7 +24,7 @@
             android:layout_centerHorizontal="true"
             android:text="@string/shake_your_phone"
             android:textSize="40sp"
-            android:textColor="@color/loopX_3_40_alpha"
+            android:textColor="@color/loopX_1"
             android:layout_below="@id/tv_shake_progress"/>
 
         <ImageView

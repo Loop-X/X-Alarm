@@ -39,7 +39,6 @@ public class PuzzleAlarm extends UnlockFragment {
 
     }
 
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -49,6 +48,7 @@ public class PuzzleAlarm extends UnlockFragment {
     @Override
     public void onDetach() {
         super.onDetach();
+        mListener.closeAlarm();
         mListener = null;
     }
 

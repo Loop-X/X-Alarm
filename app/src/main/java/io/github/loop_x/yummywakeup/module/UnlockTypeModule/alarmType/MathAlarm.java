@@ -1,28 +1,25 @@
 package io.github.loop_x.yummywakeup.module.UnlockTypeModule.alarmType;
 
 import android.app.Activity;
+import android.content.Context;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.View;
-import android.widget.Button;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import io.github.loop_x.yummywakeup.R;
-import io.github.loop_x.yummywakeup.module.AlarmModule.AlarmAlertFullScreen;
 import io.github.loop_x.yummywakeup.tools.CalculationFormula;
+import io.github.loop_x.yummywakeup.view.YummyEditText;
+import io.github.loop_x.yummywakeup.view.YummyTextView;
 
 public class MathAlarm extends UnlockFragment {
 
     private int[] formula;
     private int result;
     private String input;
-    private TextView tvFormula;
-    private EditText etCalculResult;
-    private ImageView ivFlagResult;
-    private Button btnCloseAlarm;
+    private YummyTextView tvFormula;
+    private YummyEditText etCalculResult;
     private OnAlarmAction mListener;
 
     public MathAlarm() {}
@@ -44,16 +41,20 @@ public class MathAlarm extends UnlockFragment {
 
     @Override
     public void onViewInitial() {
-        tvFormula = (TextView) findViewById(R.id.tv_formula);
-        etCalculResult = (EditText) findViewById(R.id.et_calcul_result);
-        ivFlagResult = (ImageView) findViewById(R.id.iv_flag_result);
-        btnCloseAlarm = (Button) findViewById(R.id.btn_calcul_close_alarm);
-        btnCloseAlarm.setEnabled(false);
-        btnCloseAlarm.setVisibility(View.GONE);
+
+        tvFormula = (YummyTextView) findViewById(R.id.tv_formula);
+        etCalculResult = (YummyEditText) findViewById(R.id.et_calcul_result);
+
+        etCalculResult.setFocusable(true);
+        etCalculResult.setFocusableInTouchMode(true);
+        etCalculResult.requestFocus();
+
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 
         formula = CalculationFormula.generateFormula(); // Generate formula
         result = CalculationFormula.getFormulaResult(formula); // Get formula's result
-        tvFormula.setText(CalculationFormula.getFormulaString(formula) + " = "); // Show formula on textView
+        tvFormula.setText(CalculationFormula.getFormulaString(formula) + " = ?"); // Show formula on textView
 
         initListener();
     }
@@ -83,29 +84,15 @@ public class MathAlarm extends UnlockFragment {
                     if (input.contains("-") && input.length() > 1) {
                         if(input.startsWith("-") && !input.substring(1).contains("-")) {
                             if (Integer.parseInt(input.substring(1)) == -1 * result) {
-                                btnCloseAlarm.setVisibility(View.VISIBLE);
-                                btnCloseAlarm.setEnabled(true);
-                                ivFlagResult.setBackgroundResource(R.drawable.icon_active);
+                                mListener.closeAlarm();
                             }
                         }
                     } else if (!input.contains("-")) {
                         if (Integer.parseInt(input) == result) {
-                            btnCloseAlarm.setVisibility(View.VISIBLE);
-                            btnCloseAlarm.setEnabled(true);
-                            ivFlagResult.setBackgroundResource(R.drawable.icon_active);
+                            mListener.closeAlarm();
                         }
-                    } else {
-                        btnCloseAlarm.setVisibility(View.GONE);
-                        btnCloseAlarm.setEnabled(false);
-                        ivFlagResult.setBackgroundResource(R.drawable.icon_inactive);
                     }
                 }
-            }
-    });
-        btnCloseAlarm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.closeAlarm();
             }
         });
     }
@@ -113,6 +100,7 @@ public class MathAlarm extends UnlockFragment {
     @Override
     public void onDetach() {
         super.onDetach();
+        mListener.closeAlarm();
         mListener = null;
     }
 

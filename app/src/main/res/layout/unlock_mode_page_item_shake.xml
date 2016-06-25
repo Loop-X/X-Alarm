@@ -27,8 +27,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="85dp"
+            android:layout_marginTop="60dp"
             android:text="摇晃手机直到水满屏幕"
+            android:textSize="30sp"
             android:textColor="@color/loopX_2" />
 
     </LinearLayout>
