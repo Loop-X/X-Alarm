@@ -117,7 +117,9 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                stopRingtone();
+            }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {}
