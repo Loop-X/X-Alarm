@@ -33,27 +33,18 @@ public class YummyTimePicker extends View {
 
     private List<String> mDataList;
     private int mCurrentSelected;
-
-    private Paint mPaint; // Draw text
-    private Paint mPaintDividerLine; // Draw divider line
-
+    
     private float mTextSize;
     private int mViewHeight;
     private int mViewWidth;
     private float mLastDownY;
     private float mMoveLen = 0;
     private onSelectListener mSelectListener;
-    private float baseline;
-    private float xPos;
-    private float yPos;
-    private float yOffset;
-
     private int mLastEvent;
-
-    /*
-    Constructors
-     */
-
+    private TextSelectorElement textSelectorElement;
+    
+    private DividerLineElement dividerLineElement;
+    
     public YummyTimePicker(Context context) {
         super(context);
         init(context);
@@ -67,24 +58,14 @@ public class YummyTimePicker extends View {
     private void init(Context context) {
 
         mDataList = new ArrayList<>();
-
-        Typeface tf = Typeface.createFromAsset(context.getAssets(),
-                "fonts/BebasNeue.otf");
-
-        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaint.setStyle(Paint.Style.FILL);
-        mPaint.setTextAlign(Paint.Align.CENTER);
-        mPaint.setColor(ContextCompat.getColor(getContext(), R.color.loopX_3));
-        mPaint.setTypeface(tf);
-
-        mPaintDividerLine = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaintDividerLine.setStyle(Paint.Style.FILL);
-        mPaintDividerLine.setColor(ContextCompat.getColor(getContext(), R.color.loopX_6));
         
         ViewConfiguration viewConfiguration = ViewConfiguration.get(context);
         mMinimumFlingVelocity = viewConfiguration.getScaledMinimumFlingVelocity();
         mMaximumFlingVelocity = viewConfiguration.getScaledMaximumFlingVelocity();
         mScroller = new Scroller(context);
+
+        dividerLineElement = new DividerLineElement();
+        textSelectorElement = new TextSelectorElement();
     }
 
     /*
@@ -130,13 +111,8 @@ public class YummyTimePicker extends View {
         mViewHeight = getMeasuredHeight();
         mViewWidth = getMeasuredWidth();
         mTextSize = mViewHeight / 4.0f;
-        mPaint.setTextSize(mTextSize);
-
-        xPos =  (float) (mViewWidth / 2);
-
-        // http://www.open-open.com/lib/view/open1459931221098.html
-        Paint.FontMetricsInt fontMetricsInt = mPaint.getFontMetricsInt();
-        yOffset = (fontMetricsInt.top / 2 + fontMetricsInt.bottom / 2);
+        dividerLineElement.onPrepareDraw();
+        textSelectorElement.onPrepareDraw();
     }
     
 
@@ -144,86 +120,148 @@ public class YummyTimePicker extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        yPos = mViewHeight / 2 + mMoveLen;
-        baseline = yPos - yOffset;
+        textSelectorElement.draw(canvas);
+        dividerLineElement.draw(canvas);
+
+    }
+
+    
+    class DividerLineElement implements ViewPainter{
+
+        private float topLineYPos;
+        private float bottomLineYPos;
+        private Paint mPaintDividerLine;
+
+
+        public DividerLineElement() {
+            mPaintDividerLine = new Paint(Paint.ANTI_ALIAS_FLAG);
+            mPaintDividerLine.setStyle(Paint.Style.FILL);
+            mPaintDividerLine.setColor(ContextCompat.getColor(getContext(), R.color.loopX_6));
+        }
         
-        // Draw item selected (the item in the middle of picker)
-        if (mCurrentSelected < mDataList.size()){
-            canvas.drawText(mDataList.get(mCurrentSelected), xPos, baseline, mPaint);
+        @Override
+        public void onPrepareDraw() {
+            topLineYPos = mViewHeight / 2 - MARGIN_ALPHA * mTextSize / 2;
+            bottomLineYPos = mViewHeight / 2 + MARGIN_ALPHA * mTextSize / 2;
         }
 
-        // Draw Divider Line
-        drawDividerLine(canvas);
-
-        // Draw items above mCurrentSelected
-        for (int i = 1; i <= mCurrentSelected; i++)
-        {
-            drawOtherText(canvas, i, -1);
+        @Override
+        public void draw(Canvas canvas) {
+            canvas.drawLine(0,topLineYPos, mViewWidth, topLineYPos, mPaintDividerLine);
+            canvas.drawLine(0,bottomLineYPos, mViewWidth,bottomLineYPos, mPaintDividerLine);
         }
-
-        // Draw items below mCurrentSelected
-        for (int i = 1; (mCurrentSelected + i) < mDataList.size(); i++)
-        {
-            drawOtherText(canvas, i, 1);
-        }
-    }
-
-    /**
-     * @param canvas
-     * @param position
-     * @param type 1 indicates to bottom，-1 indicates to top
-     */
-    private void drawOtherText(Canvas canvas, int position, int type) {
-
-        float d = MARGIN_ALPHA * mTextSize * position + type * mMoveLen;
-
-    //    mPaint.setTextSize(mTextSize);
-
-        float y = mViewHeight / 2 + type * d;
-        float baseline = y - yOffset;
-
-        // String to draw
-        String text = mDataList.get(mCurrentSelected + type * position);
-
-        // Set Gradient Color on item above and below
-        setGradientColor(type);
-
-        // Draw Text
-        canvas.drawText(text, (float) (mViewWidth / 2), baseline, mPaint);
-    }
-
-    private void setGradientColor(int type) {
-        Shader shader = null;
-
-        if (type == -1) {
-            shader = new LinearGradient(0, mPaint.getTextSize() / 4,
-                    0, mPaint.getTextSize() * 2,
-                    Color.BLACK, Color.WHITE, Shader.TileMode.CLAMP);
-        } else if (type == 1) {
-            shader = new LinearGradient(0, mViewHeight - mPaint.getTextSize() / 4,
-                    0, mViewHeight - mPaint.getTextSize() * 2,
-                    Color.BLACK, Color.WHITE, Shader.TileMode.CLAMP);
-        }
-
-        mPaint.setShader(shader);
-    }
-
-    private void drawDividerLine(Canvas canvas) {
-        canvas.drawLine(0,
-                mViewHeight / 2 - MARGIN_ALPHA * mTextSize / 2,
-                mViewWidth,
-                mViewHeight / 2 - MARGIN_ALPHA * mTextSize / 2,
-                mPaintDividerLine);
-
-        canvas.drawLine(0,
-                mViewHeight / 2 + MARGIN_ALPHA * mTextSize / 2,
-                mViewWidth,
-                mViewHeight / 2 + MARGIN_ALPHA * mTextSize / 2,
-                mPaintDividerLine);
     }
     
     
+    public class TextSelectorElement implements ViewPainter{
+        
+        private Paint selectedTextPaint;
+        
+        private Paint aboveTextPaint;
+        
+        private Paint bellowTextPaint;
+        private float baseline;
+        private float xPos;
+        private float yPos;
+        private float yOffset;
+
+        public TextSelectorElement() {
+
+            selectedTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            selectedTextPaint.setStyle(Paint.Style.FILL);
+            selectedTextPaint.setTextAlign(Paint.Align.CENTER);
+            selectedTextPaint.setColor(ContextCompat.getColor(getContext(), R.color.loopX_3));
+            selectedTextPaint.setTypeface(getTypeface());
+
+
+            aboveTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            aboveTextPaint.setStyle(Paint.Style.FILL);
+            aboveTextPaint.setTextAlign(Paint.Align.CENTER);
+            aboveTextPaint.setColor(ContextCompat.getColor(getContext(), R.color.loopX_3));
+            aboveTextPaint.setTypeface(getTypeface());
+            
+            bellowTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            bellowTextPaint.setStyle(Paint.Style.FILL);
+            bellowTextPaint.setTextAlign(Paint.Align.CENTER);
+            bellowTextPaint.setColor(ContextCompat.getColor(getContext(), R.color.loopX_3));
+            bellowTextPaint.setTypeface(getTypeface());
+            
+        }
+
+        private Typeface getTypeface() {
+            return Typeface.createFromAsset(YummyTimePicker.this.getContext().getAssets(),
+                    "fonts/BebasNeue.otf");
+        }
+
+        @Override
+        public void onPrepareDraw() {
+            selectedTextPaint.setTextSize(mTextSize);
+            aboveTextPaint.setTextSize(mTextSize);
+            bellowTextPaint.setTextSize(mTextSize);
+            
+            aboveTextPaint.setShader(new LinearGradient(0, mTextSize / 4,
+                    0, mTextSize * 2,
+                    Color.BLACK, Color.WHITE, Shader.TileMode.CLAMP));
+            bellowTextPaint.setShader(new LinearGradient(0, mViewHeight - mTextSize / 4,
+                    0, mViewHeight - mTextSize * 2,
+                    Color.BLACK, Color.WHITE, Shader.TileMode.CLAMP));
+            
+            xPos =  (float) (mViewWidth / 2);
+
+            // http://www.open-open.com/lib/view/open1459931221098.html
+            Paint.FontMetricsInt fontMetricsInt = selectedTextPaint.getFontMetricsInt();
+            yOffset = (fontMetricsInt.top / 2 + fontMetricsInt.bottom / 2);
+        }
+
+        @Override
+        public void draw(Canvas canvas) {
+
+            yPos = mViewHeight / 2 + mMoveLen;
+            baseline = yPos - yOffset;
+            
+            if (mCurrentSelected < mDataList.size()){
+                canvas.drawText(mDataList.get(mCurrentSelected), xPos, baseline, selectedTextPaint);
+            }
+            
+            for (int i = 1; i <= mCurrentSelected; i++)
+            {
+                drawText(canvas, i, -1);
+            }
+
+            for (int i = 1; (mCurrentSelected + i) < mDataList.size(); i++)
+            {
+                drawText(canvas, i, 1);
+            }
+
+        }
+
+        /**
+         * @param canvas
+         * @param position
+         * @param type 1 indicates to bottom，-1 indicates to top
+         */
+        private void drawText(Canvas canvas, int position, int type) {
+            
+            Paint paint = type == -1 ? aboveTextPaint : bellowTextPaint;
+                    
+
+            float d = MARGIN_ALPHA * mTextSize * position + type * mMoveLen;
+
+
+            float y = mViewHeight / 2 + type * d;
+            float baseline = y - yOffset;
+
+            // String to draw
+            String text = mDataList.get(mCurrentSelected + type * position);
+            
+            // Draw Text
+            canvas.drawText(text, (float) (mViewWidth / 2), baseline, paint);
+        }
+    }
+
     
+    
+
     /**
      * Selected given item
      * @param selected
