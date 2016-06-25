@@ -6,14 +6,15 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.util.AttributeSet;
-import android.util.Log;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SeekBar;
-import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import io.github.loop_x.yummywakeup.R;
 
@@ -24,7 +25,7 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
     private AudioManager mAudioManager;
 
     private SeekBar sbAlarmVolume;
-    private SeekBar sbAlarmVibration;
+    private ToggleButton sbAlarmVibration;
     private ListView lvRingtoneList;
     private CustomAdapter mAdapter;
 
@@ -52,10 +53,23 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
         /** Init Seekbar **/
 
         sbAlarmVolume = (SeekBar) findViewById(R.id.sb_alarm_volume);
-        sbAlarmVibration = (SeekBar) findViewById(R.id.sb_alarm_vibration);
+        sbAlarmVibration = (ToggleButton) findViewById(R.id.sb_alarm_vibration);
 
         initVolumeSeekBar();
-        initVibrationSeekBar();
+
+        /** Init Vibration **/
+
+        sbAlarmVibration.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    sbAlarmVibration.performHapticFeedback(
+                            HapticFeedbackConstants.LONG_PRESS,
+                            HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                } else {
+                    // The toggle is disabled
+                }
+            }
+        });
 
         /** Init Ringtone **/
 
@@ -126,10 +140,6 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
         });
     }
 
-    public void initVibrationSeekBar() {
-        sbAlarmVibration.setMax(1);
-    }
-
     public void stopRingtone() {
         if(mRingtone != null) {
             mRingtone.stop();
@@ -142,8 +152,12 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
         mAdapter.notifyDataSetChanged();
     }
 
+    public void setInitVibration(boolean isVibration) {
+        sbAlarmVibration.setChecked(isVibration);
+    }
+
     public boolean getVibrationSetting() {
-        return sbAlarmVibration.getProgress() == 1;
+        return sbAlarmVibration.isChecked();
     }
 
     public int getRingtone() {

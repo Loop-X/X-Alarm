@@ -27,7 +27,7 @@
         android:text="@string/vibration"
         android:textColor="@color/loopX_3" />
 
-    <SeekBar
+    <ToggleButton
         android:id="@+id/sb_alarm_vibration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

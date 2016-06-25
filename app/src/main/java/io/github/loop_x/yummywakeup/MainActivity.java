@@ -60,7 +60,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private AlarmPreferenceSettingsMenuLayout rightMenu;
     private UnlockTypeMenuLayout leftMenu;
     private ListView lvRingtoneList;
-    private SeekBar sbAlarmVibration;
     
     @Override
     public int getLayoutId() {
@@ -81,7 +80,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         rightMenu = (AlarmPreferenceSettingsMenuLayout) loopXDragMenuLayout.findViewById(R.id.menuRight);
         leftMenu =  (UnlockTypeMenuLayout) loopXDragMenuLayout.findViewById(R.id.menuLeft);
-        sbAlarmVibration = (SeekBar) loopXDragMenuLayout.findViewById(R.id.sb_alarm_vibration);
+        //sbAlarmVibration = (SeekBar) loopXDragMenuLayout.findViewById(R.id.sb_alarm_vibration);
         lvRingtoneList = (ListView) loopXDragMenuLayout.findViewById(R.id.lv_ringtone_list);
 
         loopXDragMenuLayout.setDragMenuStateListener(this);
@@ -309,12 +308,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void setRightMenuStatus() {
-        // Set vibration status
-        sbAlarmVibration.setProgress(mAlarm.vibrate? 1 : 0);
-
-        // Set ringtone status
         rightMenu.setInitRingtone(
                 Integer.valueOf(mAlarm.alert.toString().split("ringtone_")[1]));
+        rightMenu.setInitVibration(mAlarm.vibrate);
     }
 
     private void setLeftMenuStatus() {
