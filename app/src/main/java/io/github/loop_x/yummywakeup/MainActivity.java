@@ -254,7 +254,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 DateFormat.format(Alarms.get24HourMode(this) ? M24 : M12, cal));
 
         tvAlarmAMPM.setText(
-                Alarms.get24HourMode(this) ? "" : ( alarm.hour < 13 ? "AM" : "PM"));
+                DateFormat.format(Alarms.get24HourMode(this) ? "" : "a", cal));
 
     }
 

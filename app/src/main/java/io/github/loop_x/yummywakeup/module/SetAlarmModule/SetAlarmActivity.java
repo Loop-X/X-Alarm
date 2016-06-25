@@ -111,7 +111,7 @@ public class SetAlarmActivity extends BaseActivity {
         tvCurrentAlarmTime.setText(
                 DateFormat.format(is24hMode ? MainActivity.M24 : MainActivity.M12, cal));
         tvCurrentAlarmAMPM.setText(
-                Alarms.get24HourMode(this) ? "" : ( mAlarm.hour < 13 ? "AM" : "PM"));
+                DateFormat.format(is24hMode ? "" : "a", cal));
 
         /** Init Time Picker **/
 
@@ -122,23 +122,11 @@ public class SetAlarmActivity extends BaseActivity {
         timePickerHour.setHour(is24hMode);
         timePickerMinute.setMinute();
 
-        if(!is24hMode) {
-            timePickerAMPM.setVisibility(View.VISIBLE);
-            timePickerAMPM.setAMPM();
-            if(mAlarm.hour <= 12) {
-                timePickerAMPM.setSelected("AM");
-                timePickerHour.setSelected(mAlarm.hour);
-                AMPM = "AM";
-            } else {
-                timePickerAMPM.setSelected("PM");
-                timePickerHour.setSelected(mAlarm.hour - 12);
-                AMPM = "PM";
-            }
-        } else {
-            timePickerAMPM.setVisibility(View.INVISIBLE);
-            timePickerHour.setSelected(mAlarm.hour);
-        }
-
+        timePickerAMPM.setVisibility(is24hMode ? View.INVISIBLE : View.VISIBLE);
+        timePickerAMPM.setAMPM();
+        AMPM = (String) DateFormat.format(is24hMode ? "" : "a", cal);
+        timePickerAMPM.setSelected((AMPM.equals("AM") ? 0 : 1));
+        timePickerHour.setSelected((String) DateFormat.format(is24hMode ? "kk" : "hh", cal));
         timePickerMinute.setSelected("" + mAlarm.minutes);
 
         timePickerHour.setOnSelectListener(new YummyTimePicker.onSelectListener() {
@@ -151,9 +139,6 @@ public class SetAlarmActivity extends BaseActivity {
                         mAlarm.hour = Integer.valueOf(text);
                     } else {
                         mAlarm.hour = Integer.valueOf(text) + 12;
-                        if(mAlarm.hour == 24) {
-                            mAlarm.hour = 0;
-                        }
                     }
                 }
             }
@@ -169,11 +154,15 @@ public class SetAlarmActivity extends BaseActivity {
         timePickerAMPM.setOnSelectListener(new YummyTimePicker.onSelectListener() {
             @Override
             public void onSelect(String text) {
+                // If AMPM select, it must be 12h mode
                 AMPM = text;
                 if(AMPM.equals("PM")) {
-                    mAlarm.hour = mAlarm.hour + 12;
-                    if(mAlarm.hour == 24) {
-                        mAlarm.hour = 0;
+                    if(mAlarm.hour <= 12) {
+                        mAlarm.hour = mAlarm.hour + 12;
+                    }
+                } else {
+                    if(mAlarm.hour > 12) {
+                        mAlarm.hour = mAlarm.hour - 12;
                     }
                 }
             }
