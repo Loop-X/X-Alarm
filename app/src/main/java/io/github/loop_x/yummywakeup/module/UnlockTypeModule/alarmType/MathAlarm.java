@@ -21,6 +21,8 @@ public class MathAlarm extends UnlockFragment {
     private YummyTextView tvFormula;
     private YummyEditText etCalculResult;
     private OnAlarmAction mListener;
+    private InputMethodManager mInputMethodManager;
+    private Activity mContext;
 
     public MathAlarm() {}
 
@@ -36,6 +38,7 @@ public class MathAlarm extends UnlockFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        mContext = activity;
         mListener = (OnAlarmAction) activity;
     }
 
@@ -49,8 +52,8 @@ public class MathAlarm extends UnlockFragment {
         etCalculResult.setFocusableInTouchMode(true);
         etCalculResult.requestFocus();
 
-        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+        mInputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        mInputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 
         formula = CalculationFormula.generateFormula(); // Generate formula
         result = CalculationFormula.getFormulaResult(formula); // Get formula's result
@@ -84,12 +87,16 @@ public class MathAlarm extends UnlockFragment {
                     if (input.contains("-") && input.length() > 1) {
                         if(input.startsWith("-") && !input.substring(1).contains("-")) {
                             if (Integer.parseInt(input.substring(1)) == -1 * result) {
+                                mInputMethodManager.hideSoftInputFromWindow(
+                                        getActivity().getCurrentFocus().getWindowToken(), 0);
                                 mListener.closeAlarm();
                             }
                         }
                     } else if (!input.contains("-")) {
                         if (Integer.parseInt(input) == result) {
                             mListener.closeAlarm();
+                            mInputMethodManager.hideSoftInputFromWindow(
+                                    getActivity().getCurrentFocus().getWindowToken(), 0);
                         }
                     }
                 }

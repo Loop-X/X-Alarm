@@ -94,7 +94,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         /**
          * Play the alarm alert and vibrate the device.
          */
-        Intent playAlarm = new Intent(context,AlarmKlaxon.class);//Intent(Alarms.ALARM_ALERT_ACTION); will be cause crash
+        Intent playAlarm = new Intent(context, AlarmKlaxon.class);//Intent(Alarms.ALARM_ALERT_ACTION); will be cause crash
         playAlarm.putExtra(Alarms.ALARM_INTENT_EXTRA, alarm);
         context.startService(playAlarm);
 

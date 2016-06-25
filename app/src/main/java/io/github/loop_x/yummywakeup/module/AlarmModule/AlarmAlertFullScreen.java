@@ -22,7 +22,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -32,7 +31,6 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import io.github.loop_x.yummywakeup.R;
-import io.github.loop_x.yummywakeup.config.PreferenceKeys;
 import io.github.loop_x.yummywakeup.module.AlarmModule.model.Alarm;
 import io.github.loop_x.yummywakeup.module.UnlockTypeModule.alarmType.UnlockFragment;
 import io.github.loop_x.yummywakeup.module.UnlockTypeModule.alarmType.UnlockFragmentFactory;

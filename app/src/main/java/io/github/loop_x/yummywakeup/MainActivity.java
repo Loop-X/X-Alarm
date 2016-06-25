@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.facebook.rebound.Spring;
 
 import java.util.Calendar;
-import java.util.Locale;
 
 import io.github.loop_x.yummywakeup.config.PreferenceKeys;
 import io.github.loop_x.yummywakeup.infrastructure.BaseActivity;
@@ -323,5 +322,4 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         leftMenu.resetChosenStatus();
         leftMenu.setChosenStatue(mAlarm.unlockType);
     }
-
 }

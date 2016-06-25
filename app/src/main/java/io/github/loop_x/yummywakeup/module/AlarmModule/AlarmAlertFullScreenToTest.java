@@ -61,6 +61,7 @@ public class AlarmAlertFullScreenToTest extends FragmentActivity implements Unlo
             mMediaPlayer.release();
             mMediaPlayer = null;
         }
+
         finish();
     }
 
