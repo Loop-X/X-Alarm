@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.Window;
 
 import java.io.IOException;
@@ -63,4 +64,18 @@ public class AlarmAlertFullScreenToTest extends FragmentActivity implements Unlo
         finish();
     }
 
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        // Avoid closing alarm by the following keys
+        switch (event.getKeyCode()) {
+            case KeyEvent.KEYCODE_VOLUME_UP:
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+            case KeyEvent.KEYCODE_CAMERA:
+            case KeyEvent.KEYCODE_FOCUS:
+                return true;
+            default:
+                break;
+        }
+        return super.dispatchKeyEvent(event);
+    }
 }

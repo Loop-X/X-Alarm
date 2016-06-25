@@ -45,11 +45,9 @@ import io.github.loop_x.yummywakeup.module.UnlockTypeModule.alarmType.UnlockFrag
  */
 public class AlarmAlertFullScreen extends FragmentActivity implements UnlockFragment.OnAlarmAction {
 
-    private static final String DEFAULT_VOLUME_BEHAVIOR = "2";
     protected static final String SCREEN_OFF = "screen_off";
 
     protected Alarm mAlarm;
-    private int mVolumeBehavior;
 
     // Receives the ALARM_KILLED action from the AlarmKlaxon,
     // and also ALARM_SNOOZE_ACTION / ALARM_DISMISS_ACTION from other applications
@@ -89,13 +87,6 @@ public class AlarmAlertFullScreen extends FragmentActivity implements UnlockFrag
         fragmentTransaction.replace(R.id.fg_alarm, unlockFragment);
         fragmentTransaction.commit();
 
-        // Get the volume/camera button behavior setting
-        final String vol =
-                PreferenceManager.getDefaultSharedPreferences(this)
-                .getString(PreferenceKeys.KEY_VOLUME_BEHAVIOR,
-                        DEFAULT_VOLUME_BEHAVIOR);
-        mVolumeBehavior = Integer.parseInt(vol);
-
         final Window win = getWindow();
         win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
                 | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
@@ -133,9 +124,7 @@ public class AlarmAlertFullScreen extends FragmentActivity implements UnlockFrag
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-
         Log.v("yummywakeup", "AlarmAlert.OnNewIntent()");
-
         mAlarm = intent.getParcelableExtra(Alarms.ALARM_INTENT_EXTRA);
     }
 
@@ -149,27 +138,12 @@ public class AlarmAlertFullScreen extends FragmentActivity implements UnlockFrag
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        // Do this on key down to handle a few of the system keys.
-        boolean up = event.getAction() == KeyEvent.ACTION_UP;
+        // Avoid closing alarm by the following keys
         switch (event.getKeyCode()) {
-            // Volume keys and camera keys dismiss the alarm
             case KeyEvent.KEYCODE_VOLUME_UP:
             case KeyEvent.KEYCODE_VOLUME_DOWN:
             case KeyEvent.KEYCODE_CAMERA:
             case KeyEvent.KEYCODE_FOCUS:
-                if (up) {
-                    switch (mVolumeBehavior) {
-                        case 1:
-                            //snooze();
-                            break;
-                        case 2:
-                            // ToDo Here is the reason
-                            dismiss(false);
-                            break;
-                        default:
-                            break;
-                    }
-                }
                 return true;
             default:
                 break;
