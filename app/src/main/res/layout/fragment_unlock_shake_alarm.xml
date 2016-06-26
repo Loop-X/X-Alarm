@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:wave="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/loopX_3">
@@ -27,12 +28,13 @@
             android:textColor="@color/loopX_1"
             android:layout_below="@id/tv_shake_progress"/>
 
-        <ImageView
+        <com.john.waveview.WaveView
             android:id="@+id/iv_water"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/water"
-            android:layout_alignParentBottom="true"/>
+            android:layout_height="match_parent"
+            android:background="#00000000"
+            wave:above_wave_color="#BBDEFB"
+            wave:blow_wave_color="#2196F3" />
 
     </RelativeLayout>
 

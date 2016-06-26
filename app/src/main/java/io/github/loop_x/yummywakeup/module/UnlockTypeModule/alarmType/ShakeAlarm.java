@@ -5,17 +5,16 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.view.Display;
-import android.widget.ImageView;
+
+import com.john.waveview.WaveView;
 
 import io.github.loop_x.yummywakeup.R;
-import io.github.loop_x.yummywakeup.module.AlarmModule.AlarmAlertFullScreen;
 import io.github.loop_x.yummywakeup.view.YummyTextView;
 
 public class ShakeAlarm extends UnlockFragment implements SensorEventListener{
 
     private YummyTextView tvShakeProgress;
-    private ImageView ivWater;
+    private WaveView ivWater;
 
     private OnAlarmAction mListener;
     private SensorManager mSensorManager;
@@ -24,9 +23,6 @@ public class ShakeAlarm extends UnlockFragment implements SensorEventListener{
     private long mShakeTimestamp;
     private static final float SHAKE_THRESHOLD_GRAVITY = 2.5F;
     private static final int SHAKE_STOP_TIME_MS = 300;
-
-    private int maxHeight;
-    private int initHeight;
 
     public ShakeAlarm() {}
 
@@ -49,7 +45,8 @@ public class ShakeAlarm extends UnlockFragment implements SensorEventListener{
     public void onViewInitial() {
 
         tvShakeProgress = (YummyTextView) findViewById(R.id.tv_shake_progress);
-        ivWater = (ImageView) findViewById(R.id.iv_water);
+        ivWater = (WaveView) findViewById(R.id.iv_water);
+        ivWater.setProgress(0);
 
         mSensorManager = (SensorManager) getActivity().getSystemService(getActivity().SENSOR_SERVICE);
         mSensorManager.registerListener(this,
@@ -57,13 +54,6 @@ public class ShakeAlarm extends UnlockFragment implements SensorEventListener{
                 SensorManager.SENSOR_DELAY_GAME);
 
         mShakeTimestamp = System.currentTimeMillis();
-
-        Display display = getActivity().getWindowManager().getDefaultDisplay();
-
-        maxHeight = display.getHeight();
-        initHeight = ivWater.getHeight();
-        ivWater.getLayoutParams().height = initHeight;
-        ivWater.requestLayout();
 
     }
 
@@ -108,19 +98,11 @@ public class ShakeAlarm extends UnlockFragment implements SensorEventListener{
             mShakeTimestamp = currentTime;
             mShakeCount += (int) gForce * 2;
 
-            ivWater.clearAnimation();
-            WaterExpandAnimation animation =
-                    new WaterExpandAnimation(
-                            ivWater,
-                            initHeight + (maxHeight - initHeight) * mShakeCount / 100);
-            animation.setDuration(SHAKE_STOP_TIME_MS - 100);
-            animation.setFillAfter(true);
-            ivWater.startAnimation(animation);
-
             if(mShakeCount >= 100) {
                 mShakeCount = 100;
             }
 
+            ivWater.setProgress(mShakeCount);
             tvShakeProgress.setText(mShakeCount + "%");
 
             if(mShakeCount == 100) {
