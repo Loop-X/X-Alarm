@@ -200,7 +200,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 setLeftMenuStatus();
 
                 ToastMaster.setToast(Toast.makeText(MainActivity.this,
-                        "解锁方式已更新",
+                        getString(R.string.unlock_type_updated),
                         Toast.LENGTH_SHORT));
                 ToastMaster.showToast();
             default:
@@ -302,7 +302,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             // Update right menu
             setRightMenuStatus();
 
-            ToastMaster.setToast(Toast.makeText(this, "Setting Updated", Toast.LENGTH_SHORT));
+            ToastMaster.setToast(Toast.makeText(this, getString(R.string.setting_updated), Toast.LENGTH_SHORT));
             ToastMaster.showToast();
         }
     }

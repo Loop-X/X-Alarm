@@ -266,7 +266,6 @@ public class SetAlarmActivity extends BaseActivity {
 
     }
 
-
     private void initRepeat() {
         if (mAlarm.daysOfWeek.isRepeatSet()) {
 

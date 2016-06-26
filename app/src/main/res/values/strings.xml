@@ -38,5 +38,7 @@
     <string name="math_exercise">Math Exercise</string>
     <string name="normal_alarm">Normal Alarm</string>
     <string name="puzzle_game">Puzzle Game</string>
+    <string name="unlock_type_updated">Unlock Type Updated</string>
+    <string name="setting_updated">Setting Updated</string>
 
 </resources>
