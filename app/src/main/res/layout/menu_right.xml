@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <io.github.loop_x.yummywakeup.view.YummyTextView
         android:layout_width="51.5dp"
@@ -27,12 +28,16 @@
         android:text="@string/vibration"
         android:textColor="@color/loopX_3" />
 
-    <ToggleButton
+    <com.kyleduo.switchbutton.SwitchButton
         android:id="@+id/sb_alarm_vibration"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        app:kswTintColor="@color/loopX_2"
+        app:kswBackColor="@color/loopX_3_40_alpha"
+        app:kswThumbWidth="50dp"/>
 
     <io.github.loop_x.yummywakeup.view.YummyTextView
         android:layout_width="51.5dp"

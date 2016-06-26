@@ -16,6 +16,8 @@ import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.ToggleButton;
 
+import com.kyleduo.switchbutton.SwitchButton;
+
 import io.github.loop_x.yummywakeup.R;
 
 public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
@@ -25,7 +27,7 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
     private AudioManager mAudioManager;
 
     private SeekBar sbAlarmVolume;
-    private ToggleButton sbAlarmVibration;
+    private SwitchButton sbAlarmVibration;
     private ListView lvRingtoneList;
     private CustomAdapter mAdapter;
 
@@ -53,7 +55,7 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
         /** Init Seekbar **/
 
         sbAlarmVolume = (SeekBar) findViewById(R.id.sb_alarm_volume);
-        sbAlarmVibration = (ToggleButton) findViewById(R.id.sb_alarm_vibration);
+        sbAlarmVibration = (SwitchButton) findViewById(R.id.sb_alarm_vibration);
 
         initVolumeSeekBar();
 
