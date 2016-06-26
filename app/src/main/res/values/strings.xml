@@ -9,13 +9,13 @@
     <string name="alarm_alert_alert_silenced">"Alarm has ringed <xliff:g id="MINUTES">%d</xliff:g> minutes"</string>
     <string-array name="alarm_set">
         <item msgid="5163476010406761625">"Alarm set for 1 minute from now"</item>
-        <item msgid="7110525731259629055">"Alarm set for <xliff:g id="DAYS">%1$s</xliff:g>from now。"</item>
-        <item msgid="7003982794086186185">"Alarm set for <xliff:g id="HOURS">%2$s</xliff:g>from now。"</item>
-        <item msgid="7311021123230077742">"Alarm set for <xliff:g id="DAYS">%1$s</xliff:g> <xliff:g id="HOURS">%2$s</xliff:g>from now。"</item>
-        <item msgid="8431715191823114872">"Alarm set for <xliff:g id="MINUTES">%3$s</xliff:g>from now。"</item>
-        <item msgid="3244151088673185428">"Alarm set for <xliff:g id="DAYS">%1$s</xliff:g> <xliff:g id="MINUTES">%3$s</xliff:g>from now。"</item>
-        <item msgid="3663661342600168814">"Alarm set for <xliff:g id="HOURS">%2$s</xliff:g> <xliff:g id="MINUTES">%3$s</xliff:g>from now。"</item>
-        <item msgid="7779544127785487304">"Alarm set for <xliff:g id="DAYS">%1$s</xliff:g> <xliff:g id="HOURS">%2$s</xliff:g> <xliff:g id="MINUTES">%3$s</xliff:g>from now。"</item>
+        <item msgid="7110525731259629055">"Alarm set for <xliff:g id="DAYS">%1$s</xliff:g>from now"</item>
+        <item msgid="7003982794086186185">"Alarm set for <xliff:g id="HOURS">%2$s</xliff:g>from now"</item>
+        <item msgid="7311021123230077742">"Alarm set for <xliff:g id="DAYS">%1$s</xliff:g> <xliff:g id="HOURS">%2$s</xliff:g>from now"</item>
+        <item msgid="8431715191823114872">"Alarm set for <xliff:g id="MINUTES">%3$s</xliff:g>from now"</item>
+        <item msgid="3244151088673185428">"Alarm set for <xliff:g id="DAYS">%1$s</xliff:g> <xliff:g id="MINUTES">%3$s</xliff:g>from now"</item>
+        <item msgid="3663661342600168814">"Alarm set for <xliff:g id="HOURS">%2$s</xliff:g> <xliff:g id="MINUTES">%3$s</xliff:g>from now"</item>
+        <item msgid="7779544127785487304">"Alarm set for <xliff:g id="DAYS">%1$s</xliff:g> <xliff:g id="HOURS">%2$s</xliff:g> <xliff:g id="MINUTES">%3$s</xliff:g>from now"</item>
     </string-array>
     <string name="day">"1 day"</string>
     <string name="days">"<xliff:g id="DAYS">%s</xliff:g> days"</string>
