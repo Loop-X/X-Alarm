@@ -94,7 +94,7 @@ public class UnlockTypeActivity extends BaseActivity {
         Intent intent = getIntent();
         
         if (intent != null){
-            int unlockType = intent.getIntExtra("unlockType",UnlockTypeEnum.Normal.getID());
+            int unlockType = intent.getIntExtra("unlockType", UnlockTypeEnum.Normal.getID());
             currentItem = convertUnlockTypeIdToItemPosition(unlockType);
         }
         viewPager.setCurrentItem(currentItem, false);

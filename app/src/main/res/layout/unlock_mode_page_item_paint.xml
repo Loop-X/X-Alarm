@@ -23,13 +23,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="runDemo"
-            android:text="Have a try"/>
+            android:text="@string/have_a_try"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
-            android:text="拼个图"
+            android:text="@string/puzzle_game"
             android:textSize="30sp"
             android:textColor="@color/loopX_2" />
 

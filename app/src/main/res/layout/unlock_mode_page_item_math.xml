@@ -22,13 +22,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="runDemo"
-            android:text="Have a try"/>
+            android:text="@string/have_a_try"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
-            android:text="数学小王子"
+            android:text="@string/math_exercise"
             android:textSize="30sp"
             android:textColor="@color/loopX_2" />
 

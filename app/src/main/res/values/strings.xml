@@ -26,23 +26,17 @@
     <string name="every_day">"every day"</string>
     <string name="never">"never"</string>
     <string name="day_concat">", "</string>
-    <string name="cancel">Cancel</string>
-    <string name="accept">Accept</string>
     <string name="turn_on_alarm">Turn On Alarm</string>
     <string name="turn_off_alarm">Turn Off Alarm</string>
-    <string name="title_activity_unlock_type">Choose Alarm Unlock Type</string>
-    <string name="set_new_ringtone_successfully">Ringtone : </string>
-    <string name="choose_it">Choose it ?</string>
-    <string name="slogan_fragment_shake_alarm">Be careful when shake your phone!</string>
-    <string name="slogan_fragment_puzzle_alarm">Puzzle Game in the morning!</string>
-    <string name="slogan_fragment_normal_alarm">Normal Alarm for Normal People</string>
-    <string name="slogan_fragment_math_alarm">Math exercise to make you clear!</string>
-    <string name="diff_lvl_fragment_math_alarm">Difficult Level :</string>
-    <string name="diff_lvl_fragment_puzzle_alarm">Puzzle Size :</string>
-    <string name="diff_lvl_fragment_shake_alarm">Shake Times :</string>
-    <string name="set_vibrate">Set Vibrate</string>
-    <string name="set_ringtone">Set Ringtone</string>
     <string name="shake_your_phone">Shake Your Phone!</string>
     <string name="puzzle_alarm">Puzzle Alarm</string>
+    <string name="shake">SHAKE</string>
+    <string name="puzzle">PUZZLE</string>
+    <string name="math">MATH</string>
+    <string name="normal">NORMAL</string>
+    <string name="have_a_try">Have a try</string>
+    <string name="math_exercise">Math Exercise</string>
+    <string name="normal_alarm">Normal Alarm</string>
+    <string name="puzzle_game">Puzzle Game</string>
 
 </resources>

@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="29dp"
             android:gravity="center_horizontal"
-            android:text="NORMAL"
+            android:text="@string/normal"
             android:textColor="@color/loopX_3"
             android:textSize="20sp" />
 
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="29dp"
             android:gravity="center_horizontal"
-            android:text="MATH"
+            android:text="@string/math"
             android:textColor="@color/loopX_3"
             android:textSize="20sp" />
 
@@ -93,7 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="29dp"
             android:gravity="center_horizontal"
-            android:text="PAINT"
+            android:text="@string/puzzle"
             android:textColor="@color/loopX_3"
             android:textSize="20sp" />
 
@@ -130,7 +130,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="29dp"
             android:gravity="center_horizontal"
-            android:text="SHAKE"
+            android:text="@string/shake"
             android:textColor="@color/loopX_3"
             android:textSize="20sp" />
 
