@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -45,8 +46,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     public final static String M12 = "hh:mm";
     public final static String M24 = "kk:mm";
 
-    private View openRightDrawerView;
-    private View openLeftDrawerView;
+    private ImageView openRightDrawerView;
+    private ImageView openLeftDrawerView;
     private DragMenuLayout loopXDragMenuLayout;
 
     private YummyTextView tvAlarmTime;
@@ -75,8 +76,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         tvWakeUp = (YummyTextView) findViewById(R.id.tv_wake_up);
         setAlarmView = findViewById(R.id.im_set_alarm);
         loopXDragMenuLayout = (DragMenuLayout) findViewById(R.id.dragMenuLayout);
-        openRightDrawerView = findViewById(R.id.openRightDrawer);
-        openLeftDrawerView = findViewById(R.id.openLeftDrawer);
+        openRightDrawerView = (ImageView) findViewById(R.id.openRightDrawer);
+        openLeftDrawerView = (ImageView) findViewById(R.id.openLeftDrawer);
 
         rightMenu = (AlarmPreferenceSettingsMenuLayout) loopXDragMenuLayout.findViewById(R.id.menuRight);
         leftMenu =  (UnlockTypeMenuLayout) loopXDragMenuLayout.findViewById(R.id.menuLeft);
@@ -279,12 +280,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public void onMenuOpened(DragMenuLayout.MenuDirection direction) {
-
+        if(direction == DragMenuLayout.MenuDirection.RIGHT) {
+            openRightDrawerView.setImageResource(R.drawable.main_right_press);
+        } else {
+            openLeftDrawerView.setImageResource(R.drawable.main_left_press);
+        }
     }
 
     @Override
     public void onMenuClosed(DragMenuLayout.MenuDirection direction) {
         if(direction == DragMenuLayout.MenuDirection.RIGHT) {
+
+            openRightDrawerView.setImageResource(R.drawable.main_right);
 
             rightMenu.stopRingtone();
 
@@ -293,7 +300,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             mAlarm.alert =
                     Uri.parse("android.resource://io.github.loop_x.yummywakeup/raw/ringtone_"
                             + rightMenu.getRingtone());
-
 
             // Save alarm
             Alarms.setAlarm(MainActivity.this, mAlarm);
@@ -304,6 +310,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
             ToastMaster.setToast(Toast.makeText(this, getString(R.string.setting_updated), Toast.LENGTH_SHORT));
             ToastMaster.showToast();
+        } else {
+            openLeftDrawerView.setImageResource(R.drawable.main_left);
         }
     }
 
