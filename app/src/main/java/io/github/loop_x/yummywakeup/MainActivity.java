@@ -192,6 +192,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 // Show content view instead of left menu
                 loopXDragMenuLayout.closeMenuWithoutAnimation();
 
+                // Restore status of icon
+                openLeftDrawerView.setImageResource(R.drawable.main_left);
+
                 int unlockTypeId = data.getIntExtra("unlockType", UnlockTypeEnum.Normal.getID());
                 mAlarm.unlockType = unlockTypeId;
                 Alarms.setAlarm(MainActivity.this, mAlarm);
