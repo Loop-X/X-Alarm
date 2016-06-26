@@ -34,7 +34,9 @@
             android:layout_height="match_parent"
             android:background="#00000000"
             wave:above_wave_color="#BBDEFB"
-            wave:blow_wave_color="#2196F3" />
+            wave:blow_wave_color="#2196F3"
+            wave:wave_height="large"
+            wave:wave_hz="normal"/>
 
     </RelativeLayout>
 
