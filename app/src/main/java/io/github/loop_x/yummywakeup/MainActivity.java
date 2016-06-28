@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Handler;
-import android.text.format.DateFormat;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
@@ -15,7 +14,9 @@ import android.widget.Toast;
 
 import com.facebook.rebound.Spring;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import io.github.loop_x.yummywakeup.config.PreferenceKeys;
 import io.github.loop_x.yummywakeup.infrastructure.BaseActivity;
@@ -252,11 +253,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         cal.set(Calendar.HOUR_OF_DAY, alarm.hour);
         cal.set(Calendar.MINUTE, alarm.minutes);
 
-        tvAlarmTime.setText(
-                DateFormat.format(Alarms.get24HourMode(this) ? M24 : M12, cal));
+        Locale locale = new Locale("en");
 
-        tvAlarmAMPM.setText(
-                DateFormat.format(Alarms.get24HourMode(this) ? "" : "a", cal));
+        if(Alarms.get24HourMode(this)) {
+            SimpleDateFormat dateFormatTime = new SimpleDateFormat(M24, locale);
+            tvAlarmTime.setText(dateFormatTime.format(cal.getTime()));
+            tvAlarmAMPM.setVisibility(View.GONE);
+        } else {
+            SimpleDateFormat dateFormat = new SimpleDateFormat(M12, locale);
+            SimpleDateFormat dateFormatAMPM = new SimpleDateFormat("a", locale);
+            tvAlarmTime.setText(dateFormat.format(cal.getTime()));
+            tvAlarmAMPM.setVisibility(View.VISIBLE);
+            tvAlarmAMPM.setText(dateFormatAMPM.format(cal.getTime()));
+        }
+
 
     }
 

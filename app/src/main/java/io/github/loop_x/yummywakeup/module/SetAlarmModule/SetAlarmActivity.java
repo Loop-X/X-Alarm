@@ -2,15 +2,15 @@ package io.github.loop_x.yummywakeup.module.SetAlarmModule;
 
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
-import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.facebook.rebound.SpringUtil;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import io.github.loop_x.yummywakeup.MainActivity;
 import io.github.loop_x.yummywakeup.R;
@@ -109,10 +109,20 @@ public class SetAlarmActivity extends BaseActivity {
         cal.set(Calendar.HOUR_OF_DAY, mAlarm.hour);
         cal.set(Calendar.MINUTE, mAlarm.minutes);
 
-        tvCurrentAlarmTime.setText(
-                DateFormat.format(is24hMode ? MainActivity.M24 : MainActivity.M12, cal));
-        tvCurrentAlarmAMPM.setText(
-                DateFormat.format(is24hMode ? "" : "a", cal));
+        Locale locale = new Locale("en");
+
+        if(Alarms.get24HourMode(this)) {
+            SimpleDateFormat dateFormatTime = new SimpleDateFormat(MainActivity.M24, locale);
+            tvCurrentAlarmTime.setText(dateFormatTime.format(cal.getTime()));
+            tvCurrentAlarmAMPM.setVisibility(View.GONE);
+        } else {
+            SimpleDateFormat dateFormatTime = new SimpleDateFormat(MainActivity.M12, locale);
+            SimpleDateFormat dateFormatAMPM = new SimpleDateFormat("a", locale);
+            tvCurrentAlarmTime.setText(dateFormatTime.format(cal.getTime()));
+            tvCurrentAlarmAMPM.setVisibility(View.VISIBLE);
+            tvCurrentAlarmAMPM.setText(dateFormatAMPM.format(cal.getTime()));
+        }
+
 
         /** Init Time Picker **/
 
@@ -123,11 +133,22 @@ public class SetAlarmActivity extends BaseActivity {
         timePickerHour.setHour(is24hMode);
         timePickerMinute.setMinute();
 
-        timePickerAMPM.setVisibility(is24hMode ? View.INVISIBLE : View.VISIBLE);
-        timePickerAMPM.setAMPM();
-        AMPM = (String) DateFormat.format(is24hMode ? "" : "a", cal);
-        timePickerAMPM.setSelected((AMPM.equals("AM") ? 0 : 1));
-        timePickerHour.setSelected((String) DateFormat.format(is24hMode ? "kk" : "hh", cal));
+        SimpleDateFormat dateFormatHour = null;
+
+        if(Alarms.get24HourMode(this)) {
+            timePickerAMPM.setVisibility(View.INVISIBLE);
+            AMPM = "";
+            dateFormatHour = new SimpleDateFormat("kk", locale);
+        } else {
+            timePickerAMPM.setVisibility(View.VISIBLE);
+            timePickerAMPM.setAMPM();
+            SimpleDateFormat dateFormatAMPM = new SimpleDateFormat("a", locale);
+            AMPM = dateFormatAMPM.format(cal.getTime());
+            timePickerAMPM.setSelected((AMPM.equals("AM") ? 0 : 1));
+            dateFormatHour = new SimpleDateFormat("hh", locale);
+        }
+
+        timePickerHour.setSelected(dateFormatHour.format(cal.getTime()));
         timePickerMinute.setSelected("" + mAlarm.minutes);
 
         timePickerHour.setOnSelectListener(new YummyTimePicker.onSelectListener() {
