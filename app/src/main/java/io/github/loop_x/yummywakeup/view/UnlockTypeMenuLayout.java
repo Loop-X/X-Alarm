@@ -25,7 +25,8 @@ public class UnlockTypeMenuLayout extends LinearLayout implements View.OnClickLi
     private ImageView ivUnlockType1;
     private ImageView ivUnlockType2;
     private ImageView ivUnlockType3;
-
+    private int unlockType;
+    
     public UnlockTypeMenuLayout(Context context) {
         this(context, null);
     }
@@ -63,25 +64,25 @@ public class UnlockTypeMenuLayout extends LinearLayout implements View.OnClickLi
     @Override
     public void onClick(View v) {
          
-        UnlockTypeEnum unlockType = UnlockTypeEnum.Normal;
+        UnlockTypeEnum unlockTypeEnum = UnlockTypeEnum.Normal;
         
         switch (v.getId()){
             case R.id.normalLayout:
-                unlockType = UnlockTypeEnum.Normal;
+                unlockTypeEnum = UnlockTypeEnum.Normal;
                 break;
             case R.id.mathLayout:
-                unlockType = UnlockTypeEnum.Math;
+                unlockTypeEnum = UnlockTypeEnum.Math;
                 break;
             case R.id.paintLayout:
-                unlockType = UnlockTypeEnum.Puzzle;
+                unlockTypeEnum = UnlockTypeEnum.Puzzle;
                 break;
             case R.id.shakeLayout:
-                unlockType = UnlockTypeEnum.Shake;
+                unlockTypeEnum = UnlockTypeEnum.Shake;
                 break;
         }
         
         if (onUnlockTypeMenuClickListener != null){
-            onUnlockTypeMenuClickListener.onClick(unlockType);
+            onUnlockTypeMenuClickListener.onClick(unlockTypeEnum,unlockType);
         }
         
     }
@@ -93,10 +94,11 @@ public class UnlockTypeMenuLayout extends LinearLayout implements View.OnClickLi
     private  OnUnlockTypeMenuClickListener onUnlockTypeMenuClickListener;
     
     public interface OnUnlockTypeMenuClickListener{
-        public void  onClick(UnlockTypeEnum unlockTypeEnum);
+        public void  onClick(UnlockTypeEnum unlockTypeEnum,int currentUnlockType);
     }
 
     public void setChosenStatue(int i) {
+        unlockType = i;
         switch (i) {
             case 0:
                 ivUnlockType0.setVisibility(View.VISIBLE);
