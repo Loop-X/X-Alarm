@@ -19,6 +19,7 @@ import io.github.loop_x.yummywakeup.infrastructure.BaseActivity;
 import io.github.loop_x.yummywakeup.module.AlarmModule.Alarms;
 import io.github.loop_x.yummywakeup.module.AlarmModule.model.Alarm;
 import io.github.loop_x.yummywakeup.module.AlarmModule.model.DaysOfWeek;
+import io.github.loop_x.yummywakeup.tools.ToastMaster;
 import io.github.loop_x.yummywakeup.view.RippleBackgroundView;
 import io.github.loop_x.yummywakeup.view.YummyTextView;
 import io.github.loop_x.yummywakeup.view.YummyTimePicker;
@@ -243,15 +244,17 @@ public class SetAlarmActivity extends BaseActivity {
                 if(isOn) {
                     btnSwitchOnOffAlarm.setImageResource(R.drawable.switch_on);
                     doAlarmOffRippleAnimation();
-
-                
-                    Toast.makeText(this, R.string.turn_off_alarm, Toast.LENGTH_SHORT).show();
+                    ToastMaster.setToast(
+                            Toast.makeText(this, R.string.turn_off_alarm, Toast.LENGTH_SHORT));
+                    ToastMaster.showToast();
                     mAlarm.enabled = false;
                     isOn = false;
                 } else {
                     btnSwitchOnOffAlarm.setImageResource(R.drawable.switch_off);
                     doAlarmOnRippleAnimation();
-                    Toast.makeText(this, R.string.turn_on_alarm, Toast.LENGTH_SHORT).show();
+                    ToastMaster.setToast(
+                            Toast.makeText(this, R.string.turn_on_alarm, Toast.LENGTH_SHORT));
+                    ToastMaster.showToast();
                     mAlarm.enabled = true;
                     isOn = true;
                 }
