@@ -71,8 +71,8 @@ public class RippleBackgroundView extends View implements ViewTreeObserver.OnGlo
         }
 
         // Set ripple pivot
-        mRipplePivotX = rippleBuilder.ripplePivotX;
-        mRipplePivotY = rippleBuilder.ripplePivotY;
+        mRipplePivotX = rippleBuilder.haveSetRipplePivotX ? rippleBuilder.ripplePivotX : mRipplePivotX;
+        mRipplePivotY = rippleBuilder.haveSetRipplePivotY ? rippleBuilder.ripplePivotY : mRipplePivotY;
 
         mPaint.setColor(rippleBuilder.rippleColor);
 
@@ -150,12 +150,16 @@ public class RippleBackgroundView extends View implements ViewTreeObserver.OnGlo
         private float finishRippleRadius;
         private float startRippleRadius;
         private Drawable backgroundDrawable;
+        private boolean haveSetRipplePivotX;
+        private boolean haveSetRipplePivotY;
 
         public RippleBuilder(Context context) {
             this.context = context;
 
             backgroundColor = -1;
             startRippleRadius = 0;
+            haveSetRipplePivotX = false;
+            haveSetRipplePivotY = false;
         }
 
         public RippleBuilder setRippleColor(int rippleColor) {
@@ -172,11 +176,13 @@ public class RippleBackgroundView extends View implements ViewTreeObserver.OnGlo
 
         public RippleBuilder setRipplePivotX(float ripplePivotX) {
             this.ripplePivotX = ripplePivotX;
+            haveSetRipplePivotX = true;
             return this;
         }
 
         public RippleBuilder setRipplePivotY(float ripplePivotY) {
             this.ripplePivotY = ripplePivotY;
+            haveSetRipplePivotY = true;
             return this;
         }
 
