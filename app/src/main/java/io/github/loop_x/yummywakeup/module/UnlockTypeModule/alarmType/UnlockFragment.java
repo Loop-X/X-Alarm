@@ -11,7 +11,6 @@ public abstract class UnlockFragment extends BaseFragment {
      * Callback interface to unlock and close alarm
      */
     public interface OnAlarmAction{
-
         void closeAlarm();
     }
 }

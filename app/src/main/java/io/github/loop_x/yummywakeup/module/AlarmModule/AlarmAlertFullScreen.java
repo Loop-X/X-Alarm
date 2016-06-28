@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -158,6 +159,14 @@ public class AlarmAlertFullScreen extends FragmentActivity implements UnlockFrag
 
     @Override
     public void closeAlarm() {
+        Vibrator mVibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+
+        if (mAlarm.vibrate) {
+            mVibrator.cancel();
+        } else {
+            mVibrator.vibrate(500);
+        }
+
         dismiss(false);
     }
 
