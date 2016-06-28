@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -112,9 +111,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         leftMenu.setOnUnlockTypeMenuClickListener(new UnlockTypeMenuLayout.OnUnlockTypeMenuClickListener() {
             @Override
-            public void onClick(UnlockTypeEnum unlockTypeEnum) {
+            public void onClick(UnlockTypeEnum unlockTypeEnum,int currentUnlockType) {
                 Intent intent = new Intent(MainActivity.this,UnlockTypeActivity.class);
                 intent.putExtra("unlockType",unlockTypeEnum.getID());
+                intent.putExtra("currentUnlockType",currentUnlockType);
                 startActivityForResult(intent,UNLOCK_TYPE_REQUEST_CODE);        
             }
         });

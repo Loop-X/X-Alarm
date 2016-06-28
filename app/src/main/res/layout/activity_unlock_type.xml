@@ -45,13 +45,20 @@
         android:layout_width="match_parent"
         android:layout_height="68dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/loopX_2">
+        android:background="@color/loopX_3_10_alpha"
+        >
+        
+        <io.github.loop_x.yummywakeup.view.RippleBackgroundView
+            android:id="@+id/rippleBackground"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-        <ImageView
-            android:id="@+id/im_set_alarm_accept"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+        <io.github.loop_x.yummywakeup.view.YummyTextView
+            android:id="@+id/icSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/icon_set_choose_big" />
+            android:textColor="@color/loopX_3"
+            android:textSize="25sp" />
     </FrameLayout>
 </RelativeLayout>

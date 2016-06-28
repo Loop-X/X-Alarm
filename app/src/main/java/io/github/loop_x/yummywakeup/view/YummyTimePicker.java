@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
@@ -66,6 +67,7 @@ public class YummyTimePicker extends View {
 
         dividerLineElement = new DividerLineElement();
         textSelectorElement = new TextSelectorElement();
+        setBackgroundColor(Color.GRAY);
     }
 
     /*
@@ -212,6 +214,7 @@ public class YummyTimePicker extends View {
             Paint.FontMetricsInt fontMetricsInt = selectedTextPaint.getFontMetricsInt();
             yOffset = (fontMetricsInt.top / 2 + fontMetricsInt.bottom / 2);
         }
+        Rect textBounds = new Rect();
 
         @Override
         public void draw(Canvas canvas) {
@@ -222,6 +225,9 @@ public class YummyTimePicker extends View {
             if (mCurrentSelected < mDataList.size()){
                 canvas.drawText(mDataList.get(mCurrentSelected), xPos, baseline, selectedTextPaint);
             }
+
+
+            canvas.drawLine(0,baseline,mViewWidth , baseline,selectedTextPaint);
             
             for (int i = 1; i <= mCurrentSelected; i++)
             {
