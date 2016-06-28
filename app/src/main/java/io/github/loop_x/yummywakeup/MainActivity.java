@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
@@ -35,7 +36,7 @@ import io.github.loop_x.yummywakeup.view.YummyTextView;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener, DragMenuLayout.DragMenuStateListener {
 
-    private static final String TAG = "yummywakeup.MainActivity";
+    private static final String TAG = "ywp.MainActivity";
 
     private static final int SET_ALARM_REQUEST_CODE = 1;
     public static final int UNLOCK_TYPE_REQUEST_CODE = 2;
@@ -218,8 +219,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
      */
     private void initAlarm() {
 
+        Log.d(TAG, "----------->initAlarm");
+
         // Read saved alarm time from sharedPreference
         alarmId = readSavedAlarm();
+
+        Log.d(TAG, "Get alarmId " + alarmId);
 
         if (alarmId == -1) {
             // If no alarm available, set a default alarm with current time
@@ -239,6 +244,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         // Set Right Menu Status
         setRightMenuStatus();
+
+        Log.d(TAG, "<-----------initAlarm");
     }
 
     /**
@@ -274,10 +281,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
      * Save alarm time in sharedPreference
      */
     private void saveAlarm() {
+        Log.d(TAG, "----------->saveAlarm");
+
         SharedPreferences.Editor editor =
                 this.getSharedPreferences(PreferenceKeys.SHARE_PREF_NAME, Context.MODE_PRIVATE).edit();
         editor.clear();
         editor.putInt(PreferenceKeys.KEY_ALARM_ID, alarmId).commit();
+
+        Log.d(TAG, "save alarmId " + alarmId);
+        Log.d(TAG, "<-----------saveAlarm");
     }
 
     /**
@@ -286,9 +298,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
      * @return Id of alarm time
      */
     private int readSavedAlarm() {
+        Log.d(TAG, "----------->readSavedAlarm");
+
         SharedPreferences sharedPreferences =
                 this.getSharedPreferences(PreferenceKeys.SHARE_PREF_NAME, Context.MODE_PRIVATE);
-        return sharedPreferences.getInt(PreferenceKeys.KEY_ALARM_ID, -1);
+        int alarmId = sharedPreferences.getInt(PreferenceKeys.KEY_ALARM_ID, -1);
+
+        Log.d(TAG, "<-----------read alarm id " + alarmId);
+        Log.d(TAG, "<-----------readSavedAlarm");
+
+        return alarmId;
     }
 
     @Override
