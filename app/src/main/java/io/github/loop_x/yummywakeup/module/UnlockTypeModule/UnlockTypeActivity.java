@@ -118,7 +118,15 @@ public class UnlockTypeActivity extends BaseActivity {
         }
         mFistInit = true;
         viewPager.setCurrentItem(currentItem, false);
-
+        
+        if (currentItem == MODE_NORMAL){
+            
+            //fix bug: onPageSelected isn't triggered when calling setCurrentItem(0)
+            //so we fist let the viewpage select another page but not the MODE_NORMAL.
+            viewPager.setCurrentItem(MODE_NORMAL+1);
+            mFistInit = true;
+            viewPager.setCurrentItem(MODE_NORMAL);
+        }
     }
 
     @Override
