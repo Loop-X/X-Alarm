@@ -4,6 +4,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -56,11 +57,15 @@ public class AlarmAlertFullScreenToTest extends FragmentActivity implements Unlo
 
     @Override
     public void closeAlarm() {
+
         if(mMediaPlayer != null) {
             mMediaPlayer.stop();
             mMediaPlayer.release();
             mMediaPlayer = null;
         }
+
+        Vibrator mVibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        mVibrator.vibrate(500);
 
         finish();
     }
