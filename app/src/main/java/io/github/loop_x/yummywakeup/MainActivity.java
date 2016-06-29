@@ -77,6 +77,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         setAlarmView = findViewById(R.id.im_set_alarm);
         loopXDragMenuLayout = (DragMenuLayout) findViewById(R.id.dragMenuLayout);
         openRightDrawerView = (ImageView) findViewById(R.id.openRightDrawer);
+        openRightDrawerView.setTag(R.drawable.main_right);
         openLeftDrawerView = (ImageView) findViewById(R.id.openLeftDrawer);
 
         rightMenu = (AlarmPreferenceSettingsMenuLayout) loopXDragMenuLayout.findViewById(R.id.menuRight);
@@ -311,7 +312,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     public void onMenuOpened(DragMenuLayout.MenuDirection direction) {
         if(direction == DragMenuLayout.MenuDirection.RIGHT) {
             openRightDrawerView.setImageResource(R.drawable.main_right_press);
+            openRightDrawerView.setTag(R.drawable.main_right_press);
         } else {
+            // To avoid user slide too quickly from right to left
+            if((int)openRightDrawerView.getTag() == R.drawable.main_right_press) {
+                onMenuClosed(DragMenuLayout.MenuDirection.RIGHT);
+            }
+
             openLeftDrawerView.setImageResource(R.drawable.main_left_press);
         }
     }
@@ -321,6 +328,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         if(direction == DragMenuLayout.MenuDirection.RIGHT) {
 
             openRightDrawerView.setImageResource(R.drawable.main_right);
+            openRightDrawerView.setTag(R.drawable.main_right);
 
             rightMenu.stopRingtone();
 

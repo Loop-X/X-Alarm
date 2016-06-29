@@ -117,7 +117,6 @@ public class DragMenuLayout extends FrameLayout {
                     openLeftMenuWithAnimation();
                 }
             } else if (xvel < 0) {
-
                 if (mainViewRelativeToMenu > 0) {
                     if (mainViewRelativeToMenu < range) {
                         closeMenuWithAnimation();
@@ -126,9 +125,7 @@ public class DragMenuLayout extends FrameLayout {
                     }
                 } else {
                     openRightMenuWithAnimation();
-
                 }
-
             } else {
                 if (releasedChild == mainContentView) {
                     if (mainViewRelativeToMenu > 0) {
@@ -138,10 +135,8 @@ public class DragMenuLayout extends FrameLayout {
                         } else {
                             closeMenuWithAnimation();
                         }
-
                     } else {
                         //右边菜单正在打开
-
                         if (mainViewRelativeToMenu < -range * 0.3) {
                             openRightMenuWithAnimation();
                         } else {
@@ -177,7 +172,7 @@ public class DragMenuLayout extends FrameLayout {
         public void onViewPositionChanged(View changedView, int left, int top,
                                           int dx, int dy) {
 
-            Log.e("ViewDragHelper","------- onViewPositionChanged : dx: "+dx);
+            Log.e("ViewDragHelper", "------- onViewPositionChanged : dx: "+dx);
             
             if (changedView == mainContentView) {
                 mainViewRelativeToMenu = left;
@@ -207,7 +202,6 @@ public class DragMenuLayout extends FrameLayout {
                 }
             }
 
-           
             //layout shadow view
             shadowView.layout(mainViewRelativeToMenu, 0, mainViewRelativeToMenu + shadowViewWidth, shadowViewHeight);
 
@@ -215,8 +209,10 @@ public class DragMenuLayout extends FrameLayout {
                 if (mainViewRelativeToMenu > 0) {
 
                     //向右滑动，打开左边菜单
+
                     float percent = mainViewRelativeToMenu / (float) range;
                     float f1 = 1 - percent * 0.3f;
+
                     mainContentView.setScaleX(f1);
                     mainContentView.setScaleY(f1);
 
@@ -235,7 +231,6 @@ public class DragMenuLayout extends FrameLayout {
 
                     //向左滑动，打开右边菜单
 
-                    
                     float percent = -mainViewRelativeToMenu / (float) range;
                     float f2 = 1 - percent * 0.3f;
                     
@@ -277,7 +272,6 @@ public class DragMenuLayout extends FrameLayout {
                 shadowView.setScaleY(f1 * 1.85f * (1 - percent * 0.12f));
                 shadowView.setAlpha(percent);
 
-
             } else if (changedView == rightMenuView) {
 
                 //手指在右菜单上滑动
@@ -304,6 +298,7 @@ public class DragMenuLayout extends FrameLayout {
 
             if (releaseMenu) {
                 if (mainViewRelativeToMenu == 0) {
+
                     if (lastMainViewRelativeToMenu > 0) {
                         Log.e("ViewDragHelper","左菜单关闭");
                         if (dragMenuStateListener != null){
@@ -439,7 +434,6 @@ public class DragMenuLayout extends FrameLayout {
 
     public void closeMenuWithAnimation() {
         releaseMenu = true;
-
         if (dragHelper.smoothSlideViewTo(mainContentView, 0, 0)) {
             ViewCompat.postInvalidateOnAnimation(this);
         }
@@ -451,7 +445,6 @@ public class DragMenuLayout extends FrameLayout {
             ViewCompat.postInvalidateOnAnimation(this);
         }
     }
-    
 
     public void closeMenuWithoutAnimation() {
         
