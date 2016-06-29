@@ -1,12 +1,16 @@
 package io.github.loop_x.yummywakeup;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -69,6 +73,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public void onViewInitial() {
+
         mHandler = new Handler();
 
         tvAlarmTime = (YummyTextView) findViewById(R.id.tv_alarm_time);
@@ -147,7 +152,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 },100);
             }
         });
-
     }
 
     @Override
@@ -363,4 +367,27 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         leftMenu.resetChosenStatus();
         leftMenu.setChosenStatue(mAlarm.unlockType);
     }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        //Window window = this.getWindow();
+
+        /*
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(getColor(R.color.loopX_3));
+        */
+
+        if (hasFocus) {
+            final View decorView = getWindow().getDecorView();
+            decorView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        }
+
+    }
+
 }
