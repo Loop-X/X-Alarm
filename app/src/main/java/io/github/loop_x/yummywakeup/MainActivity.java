@@ -1,6 +1,5 @@
 package io.github.loop_x.yummywakeup;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -180,7 +179,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
                 long newTime = Alarms.setAlarm(MainActivity.this, mAlarm);
                 setAlarmTimeOnTextView(mAlarm);
-
                 saveAlarm();
 
                 Toast toast = Toast.makeText(MainActivity.this,
@@ -218,13 +216,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
      * Init alarm
      */
     private void initAlarm() {
-
-        Log.d(TAG, "----------->initAlarm");
+        Log.d(TAG, "-----------> initAlarm");
 
         // Read saved alarm time from sharedPreference
         alarmId = readSavedAlarm();
-
-        Log.d(TAG, "Get alarmId " + alarmId);
 
         if (alarmId == -1) {
             // If no alarm available, set a default alarm with current time
@@ -245,7 +240,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         // Set Right Menu Status
         setRightMenuStatus();
 
-        Log.d(TAG, "<-----------initAlarm");
+        Log.d(TAG, "<----------- initAlarm");
     }
 
     /**
@@ -281,15 +276,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
      * Save alarm time in sharedPreference
      */
     private void saveAlarm() {
-        Log.d(TAG, "----------->saveAlarm");
+        Log.d(TAG, "-----------> saveAlarm");
 
         SharedPreferences.Editor editor =
-                this.getSharedPreferences(PreferenceKeys.SHARE_PREF_NAME, Context.MODE_PRIVATE).edit();
+                getSharedPreferences(PreferenceKeys.SHARE_PREF_NAME, MODE_PRIVATE).edit();
         editor.clear();
-        editor.putInt(PreferenceKeys.KEY_ALARM_ID, alarmId).commit();
+        editor.putInt(PreferenceKeys.KEY_ALARM_ID, mAlarm.id);
+        editor.putLong(PreferenceKeys.KEY_ALARM_TIME, mAlarm.time);
+        editor.commit();
 
-        Log.d(TAG, "save alarmId " + alarmId);
-        Log.d(TAG, "<-----------saveAlarm");
+        Log.d(TAG, "saveAlarm - save alarmId " + alarmId);
+        Log.d(TAG, "<----------- saveAlarm");
     }
 
     /**
@@ -298,14 +295,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
      * @return Id of alarm time
      */
     private int readSavedAlarm() {
-        Log.d(TAG, "----------->readSavedAlarm");
+        Log.d(TAG, "-----------> readSavedAlarm");
 
         SharedPreferences sharedPreferences =
-                this.getSharedPreferences(PreferenceKeys.SHARE_PREF_NAME, Context.MODE_PRIVATE);
+                getSharedPreferences(PreferenceKeys.SHARE_PREF_NAME, MODE_PRIVATE);
         int alarmId = sharedPreferences.getInt(PreferenceKeys.KEY_ALARM_ID, -1);
 
-        Log.d(TAG, "<-----------read alarm id " + alarmId);
-        Log.d(TAG, "<-----------readSavedAlarm");
+        Log.d(TAG, "readSavedAlarm - read alarm id " + alarmId);
+        Log.d(TAG, "<----------- readSavedAlarm");
 
         return alarmId;
     }

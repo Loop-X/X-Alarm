@@ -34,6 +34,9 @@ import io.github.loop_x.yummywakeup.module.AlarmModule.model.Alarm;
 
 
 public class AlarmProvider extends ContentProvider {
+
+    private static final String TAG = "ywp.AlarmProvider";
+
     private SQLiteOpenHelper mOpenHelper;
 
     private static final int ALARMS = 1;
@@ -165,6 +168,8 @@ public class AlarmProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri url, ContentValues initialValues) {
+        Log.d(TAG, "-----------> insert");
+
         if (sURLMatcher.match(url) != ALARMS) {
             throw new IllegalArgumentException("Cannot insert into URL: " + url);
         }
@@ -176,10 +181,13 @@ public class AlarmProvider extends ContentProvider {
         if (rowId < 0) {
             throw new SQLException("Failed to insert row into " + url);
         }
-        Log.v("yummywakeup", "Added alarm rowId = " + rowId);
+        Log.d(TAG, "insert - Added alarm rowId = " + rowId);
 
         Uri newUrl = ContentUris.withAppendedId(Alarm.Columns.CONTENT_URI, rowId);
         getContext().getContentResolver().notifyChange(newUrl, null);
+
+        Log.d(TAG, "<----------- insert");
+
         return newUrl;
     }
 

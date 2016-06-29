@@ -31,6 +31,8 @@ import io.github.loop_x.yummywakeup.module.AlarmModule.model.DaysOfWeek;
  */
 public class Alarms {
 
+    private static final String TAG = "ywp.Alarms";
+
     // This action triggers the AlarmReceiver as well as the AlarmKlaxon. It
     // is a public action used in the manifest for receiving Alarm broadcasts
     // from the alarm manager.
@@ -74,16 +76,22 @@ public class Alarms {
      * @return alarm ID
      */
     public static int addAlarm(Context context, Alarm alarm) {
+        Log.d(TAG, "-----------> addAlarm");
+
         ContentValues values = createContentValues(alarm);
         Uri uri = context.getContentResolver().insert(
                 Alarm.Columns.CONTENT_URI, values);
         alarm.id = (int) ContentUris.parseId(uri);
-        
+
+        Log.d(TAG, "addAlarm - Get alarm id " + alarm.id + " from ContentUris.parseId(uri)");
+
         long timeInMillis = calculateAlarm(alarm);
         if (alarm.enabled) {
             clearNextAlarmIfNeeded(context, timeInMillis);
         }
         setNextAlert(context);
+
+        Log.d(TAG, "<----------- addAlarm");
 
         return alarm.id;
     }
@@ -230,6 +238,9 @@ public class Alarms {
      * @return Time when the alarm will fire.
      */
     public static long setAlarm(Context context, Alarm alarm) {
+        Log.d(TAG, "-----------> setAlarm");
+        Log.d(TAG, "setAlarm - Alarm id passed in setAlarm() " + alarm.id);
+
         ContentValues values = createContentValues(alarm);
         ContentResolver resolver = context.getContentResolver();
         resolver.update(
@@ -251,6 +262,8 @@ public class Alarms {
         }
 
         setNextAlert(context);
+
+        Log.d(TAG, "<----------- setAlarm");
 
         return timeInMillis;
     }
@@ -447,18 +460,28 @@ public class Alarms {
      */
     public static void saveSnoozeAlert(final Context context, final int id,
                                        final long time) {
+
+        Log.d(TAG, "-----------> saveSnoozeAlert");
+
         SharedPreferences prefs = context.getSharedPreferences(
-                PreferenceKeys.SHARE_PREF_NAME, 0);
+                PreferenceKeys.SHARE_PREF_NAME, Context.MODE_PRIVATE);
         if (id == -1) {
+            Log.d(TAG, "saveSnoozeAlert - id is -1, goto clearAlarmPreference");
+
             clearAlarmPreference(context, prefs);
         } else {
             SharedPreferences.Editor ed = prefs.edit();
             ed.putInt(PreferenceKeys.KEY_ALARM_ID, id);
             ed.putLong(PreferenceKeys.KEY_ALARM_TIME, time);
             ed.apply();
+
+            Log.d(TAG, "saveSnoozeAlert - save alarm id " + id);
+            Log.d(TAG, "saveSnoozeAlert - save alarm time " + time);
         }
         // Set the next alert after updating the snooze.
         setNextAlert(context);
+
+        Log.d(TAG, "<----------- setAlarm");
     }
 
     /**
@@ -466,7 +489,7 @@ public class Alarms {
      */
     public static void disableSnoozeAlert(final Context context, final int id) {
         SharedPreferences prefs = context.getSharedPreferences(
-                PreferenceKeys.SHARE_PREF_NAME, 0);
+                PreferenceKeys.SHARE_PREF_NAME, Context.MODE_PRIVATE);
         int snoozeId = prefs.getInt(PreferenceKeys.KEY_ALARM_ID, -1);
         if (snoozeId == -1) {
             // No snooze set, do nothing.
