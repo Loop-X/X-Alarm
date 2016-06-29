@@ -28,12 +28,12 @@
     <string name="day_concat">", "</string>
     <string name="turn_on_alarm">打开闹钟</string>
     <string name="turn_off_alarm">关闭闹钟</string>
-    <string name="shake_your_phone">晃动手机!</string>
+    <string name="shake_your_phone">摇动手机!</string>
     <string name="puzzle_alarm">拼图解锁</string>
-    <string name="shake">晃动</string>
-    <string name="puzzle">拼图</string>
-    <string name="math">数学题</string>
-    <string name="normal">正常</string>
+    <string name="shake">摇动解锁</string>
+    <string name="puzzle">拼图解锁</string>
+    <string name="math">计算解锁</string>
+    <string name="normal">正常解锁</string>
     <string name="have_a_try">试一试</string>
     <string name="math_exercise">数学小王子</string>
     <string name="normal_alarm">正常闹钟</string>
