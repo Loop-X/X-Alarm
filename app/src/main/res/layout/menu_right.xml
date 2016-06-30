@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <io.github.loop_x.yummywakeup.view.YummyTextView
         android:layout_width="51.5dp"
@@ -19,39 +18,38 @@
         android:layout_marginBottom="30dp"
         android:layout_marginTop="10dp" />
 
-    <io.github.loop_x.yummywakeup.view.YummyTextView
-        android:layout_width="51.5dp"
-        android:layout_height="24.5dp"
-        android:layout_marginRight="213.5dp"
-        android:background="@color/loopX_2"
-        android:gravity="center"
-        android:text="@string/vibration"
-        android:textColor="@color/loopX_3" />
-
-    <com.kyleduo.switchbutton.SwitchButton
-        android:id="@+id/sb_alarm_vibration"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
-        android:layout_marginTop="30dp"
-        android:layout_gravity="center"
-        app:kswTintColor="@color/loopX_2"
-        app:kswBackColor="@color/loopX_3_40_alpha"
-        app:kswThumbWidth="50dp"/>
+        android:orientation="horizontal">
 
-    <io.github.loop_x.yummywakeup.view.YummyTextView
-        android:layout_width="51.5dp"
-        android:layout_height="24.5dp"
-        android:background="@color/loopX_2"
-        android:gravity="center"
-        android:text="@string/Ringtone"
-        android:textColor="@color/loopX_3" />
+        <io.github.loop_x.yummywakeup.view.YummyTextView
+            android:layout_width="51.5dp"
+            android:layout_height="24.5dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@color/loopX_2"
+            android:gravity="center"
+            android:text="@string/vibration"
+            android:textColor="@color/loopX_3" />
+
+        <com.kyleduo.switchbutton.SwitchButton
+            android:id="@+id/sb_alarm_vibration"
+            style="@style/SwitchButtonStyleLoopX"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+
+    </RelativeLayout>
+
+    
 
     <ListView
         android:id="@+id/lv_ringtone_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:choiceMode="singleChoice"/>
+        android:choiceMode="singleChoice" />
 
 </merge>
