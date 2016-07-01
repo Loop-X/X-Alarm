@@ -44,19 +44,19 @@ public class Alarms {
 
     // This is a private action used by the AlarmKlaxon to update the UI to
     // show the alarm has been killed.
-    public static final String ALARM_KILLED = "yummy_alarm_killed";
+    public static final String ALARM_KILLED = "com.yummywakeup.alarm_killed";
 
     // Extra in the ALARM_KILLED intent to indicate to the user how long the
     // alarm played before being killed.
-    public static final String ALARM_KILLED_TIMEOUT = "alarm_killed_timeout";
+    public static final String ALARM_KILLED_TIMEOUT = "com.yummywakeup.alarm_killed_timeout";
 
     // This string is used when passing an Alarm object through an intent.
-    public static final String ALARM_INTENT_EXTRA = "intent.extra.alarm";
+    public static final String ALARM_INTENT_EXTRA = "com.yummywakeup.intent.extra.alarm";
 
     // This extra is the raw Alarm object data. It is used in the
     // AlarmManagerService to avoid a ClassNotFoundException when filling in
     // the Intent extras.
-    public static final String ALARM_RAW_DATA = "intent.extra.alarm_raw";
+    public static final String ALARM_RAW_DATA = "com.yummywakeup.intent.extra.alarm_raw";
 
     // This string is used to identify the alarm id passed to SetAlarm from the
     // list of alarms.
