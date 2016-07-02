@@ -81,6 +81,7 @@ public class Alarms {
         ContentValues values = createContentValues(alarm);
         Uri uri = context.getContentResolver().insert(
                 Alarm.Columns.CONTENT_URI, values);
+        Log.d(TAG, "uri string is " + uri.toString());
         alarm.id = (int) ContentUris.parseId(uri);
 
         Log.d(TAG, "addAlarm - Get alarm id " + alarm.id + " from ContentUris.parseId(uri)");
@@ -190,6 +191,8 @@ public class Alarms {
      * @return Alarm object. Null if no alarm exists
      */
     public static Alarm getAlarm(ContentResolver contentResolver, int alarmId) {
+        Log.d(TAG, "-----------> getAlarm");
+
         Cursor cursor = contentResolver.query(
                 ContentUris.withAppendedId(Alarm.Columns.CONTENT_URI, alarmId),
                 Alarm.Columns.ALARM_QUERY_COLUMNS,
@@ -201,6 +204,9 @@ public class Alarms {
             }
             cursor.close();
         }
+
+        Log.d(TAG, "<----------- getAlarm");
+
         return alarm;
     }
 

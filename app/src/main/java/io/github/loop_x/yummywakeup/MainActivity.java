@@ -1,16 +1,12 @@
 package io.github.loop_x.yummywakeup;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -227,9 +223,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         alarmId = readSavedAlarm();
 
         if (alarmId == -1) {
-            // If no alarm available, set a default alarm with current time
-            mAlarm = new Alarm();
-            alarmId = Alarms.addAlarm(this, mAlarm);
+            // This is to avoid SP file removed for unknown reason
+            // Remember, always use Alarm ID 1
+            if(Alarms.getAlarm(getContentResolver(), 1) != null) {
+                mAlarm = Alarms.getAlarm(getContentResolver(), 1);
+                alarmId = mAlarm.id;
+            } else { // If no alarm available, set a default alarm with current time
+                mAlarm = new Alarm();
+                alarmId = Alarms.addAlarm(this, mAlarm);
+            }
             saveAlarm();
         } else {
             // ToDo 之前闹钟不灵 可不可能是CONTEXT的问题？

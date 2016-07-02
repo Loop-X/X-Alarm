@@ -26,6 +26,8 @@ import io.github.loop_x.yummywakeup.module.AlarmModule.Alarms;
 
 public class AlarmInitReceiver extends BroadcastReceiver {
 
+    private static final String TAG = "ywp.AlarmInitReceiver";
+
     /**
      * Sets alarm on
      *      ACTION_BOOT_COMPLETED.
@@ -37,7 +39,10 @@ public class AlarmInitReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
-        Log.v("yummywakeup", "AlarmInitReceiver" + action);
+
+        Log.v(TAG, "-----------> AlarmInitReceiver");
+
+        Log.v(TAG, "AlarmInitReceiver - get action " + action);
 
         // Remove the snooze alarm after a boot.
         if (action.equals(Intent.ACTION_BOOT_COMPLETED)) {
@@ -46,5 +51,7 @@ public class AlarmInitReceiver extends BroadcastReceiver {
 
         Alarms.disableExpiredAlarms(context);
         Alarms.setNextAlert(context);
+
+        Log.v(TAG, "<----------- AlarmInitReceiver");
     }
 }
