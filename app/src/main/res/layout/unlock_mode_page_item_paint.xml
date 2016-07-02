@@ -28,7 +28,7 @@
             android:textColor="@color/loopX_3"
             android:text="@string/have_a_try"/>
 
-        <TextView
+        <io.github.loop_x.yummywakeup.view.YummyTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
