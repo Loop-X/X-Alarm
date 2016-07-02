@@ -1,8 +1,11 @@
 package io.github.loop_x.yummywakeup.module.SetAlarmModule;
 
 import android.content.Intent;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -312,6 +315,19 @@ public class SetAlarmActivity extends BaseActivity {
             saturdaySelector.setDay(DaysOfWeek.SATURDAY,mAlarm.daysOfWeek.isSet(DaysOfWeek.SATURDAY));
             sundaySelector.setDay(DaysOfWeek.SUNDAY,mAlarm.daysOfWeek.isSet(DaysOfWeek.SUNDAY));
             
+        }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Window window = this.getWindow();
+
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getColor(R.color.loopX_2));
         }
     }
 }

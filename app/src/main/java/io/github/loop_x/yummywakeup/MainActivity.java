@@ -3,10 +3,13 @@ package io.github.loop_x.yummywakeup;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -61,6 +64,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private AlarmPreferenceSettingsMenuLayout rightMenu;
     private UnlockTypeMenuLayout leftMenu;
     private ListView lvRingtoneList;
+    private Window mWindow;
     
     @Override
     public int getLayoutId() {
@@ -69,6 +73,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public void onViewInitial() {
+
+        mWindow = this.getWindow();
 
         mHandler = new Handler();
 
@@ -374,14 +380,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
 
-        //Window window = this.getWindow();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            mWindow.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            mWindow.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            mWindow.setStatusBarColor(getColor(R.color.loopX_1_50_alpha));
+        }
+
 
         /*
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(getColor(R.color.loopX_3));
-        */
-
         if (hasFocus) {
             final View decorView = getWindow().getDecorView();
             decorView.setSystemUiVisibility(
@@ -389,6 +395,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                             | View.SYSTEM_UI_FLAG_FULLSCREEN
                             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         }
+        */
 
     }
 
