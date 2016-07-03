@@ -18,7 +18,7 @@
         android:paddingTop="10dp">
 
         <ImageView
-            android:id="@+id/openLeftDrawer"
+            android:id="@+id/iv_left_menu_indicator"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentLeft="true"
@@ -27,6 +27,7 @@
             android:src="@drawable/main_left" />
 
         <ImageView
+            android:id="@+id/iv_top_main_content_indicator"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerHorizontal="true"
@@ -34,7 +35,7 @@
             android:src="@drawable/main_mid" />
 
         <ImageView
-            android:id="@+id/openRightDrawer"
+            android:id="@+id/iv_right_menu_indicator"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
