@@ -2,6 +2,7 @@ package io.github.loop_x.yummywakeup.module.UnlockTypeModule;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
@@ -10,6 +11,8 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.widget.TextView;
 
@@ -280,5 +283,18 @@ public class UnlockTypeActivity extends BaseActivity {
         Intent intent = new Intent(this, AlarmAlertFullScreenToTest.class);
         intent.putExtra("UnlockType", convertItemPositionToUnlockTypeId(viewPager.getCurrentItem()));
         startActivity(intent);
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Window window = this.getWindow();
+
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getColor(R.color.loopX_1));
+        }
     }
 }
