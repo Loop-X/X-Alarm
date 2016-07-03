@@ -22,7 +22,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentLeft="true"
-            android:onClick="openLeftDrawer"
+            android:onClick="onClick"
             android:scaleType="centerCrop"
             android:src="@drawable/main_left" />
 
@@ -31,6 +31,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerHorizontal="true"
+            android:onClick="onClick"
             android:scaleType="centerCrop"
             android:src="@drawable/main_mid" />
 
@@ -39,7 +40,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
-            android:onClick="openRightDrawer"
+            android:onClick="onClick"
             android:scaleType="centerCrop"
             android:src="@drawable/main_right" />
 

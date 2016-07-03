@@ -98,30 +98,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         loopXDragMenuLayout.setDragMenuStateListener(this);
 
-        ivLeftMenuIndicator.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (loopXDragMenuLayout.getMenuStatus() == DragMenuLayout.MenuStatus.Close){
-                    loopXDragMenuLayout.openLeftMenuWithAnimation();
-                }else {
-                    loopXDragMenuLayout.closeMenuWithAnimation();
-                }
-            }
-        });
-
-        ivRightMenuIndicator.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                
-                if (loopXDragMenuLayout.getMenuStatus() == DragMenuLayout.MenuStatus.Close){
-                    loopXDragMenuLayout.openRightMenuWithAnimation();
-                }else {
-                    loopXDragMenuLayout.closeMenuWithAnimation();
-                }
-                
-            }
-        });
-
         leftMenu.setOnUnlockTypeMenuClickListener(new UnlockTypeMenuLayout.OnUnlockTypeMenuClickListener() {
             @Override
             public void onClick(UnlockTypeEnum unlockTypeEnum,int currentUnlockType) {
@@ -163,6 +139,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void onRefreshData() {
         initAlarm();
+        if(mAlarm.enabled) {
+            ivMainContentIndicator.setImageResource(R.drawable.main_mid);
+        } else {
+            ivMainContentIndicator.setImageResource(R.drawable.main_mid_off);
+        }
     }
 
     @Override
@@ -174,6 +155,38 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 Intent intent = new Intent(MainActivity.this, SetAlarmActivity.class);
                 intent.putExtra(Alarms.ALARM_INTENT_EXTRA, mAlarm);
                 startActivityForResult(intent, SET_ALARM_REQUEST_CODE);
+                break;
+            case R.id.iv_top_main_content_indicator:
+                if(mAlarm.enabled) {
+                    mAlarm.enabled = false;
+                    ivMainContentIndicator.setImageResource(R.drawable.main_mid_off);
+                    ToastMaster.setToast(Toast.makeText(MainActivity.this,
+                            getString(R.string.turn_off_alarm),
+                            Toast.LENGTH_SHORT));
+                } else {
+                    mAlarm.enabled = true;
+                    ivMainContentIndicator.setImageResource(R.drawable.main_mid);
+                    ToastMaster.setToast(Toast.makeText(MainActivity.this,
+                            getString(R.string.turn_on_alarm),
+                            Toast.LENGTH_SHORT));
+                }
+                ToastMaster.showToast();
+                Alarms.setAlarm(MainActivity.this, mAlarm);
+                saveAlarm();
+                break;
+            case R.id.iv_left_menu_indicator:
+                if (loopXDragMenuLayout.getMenuStatus() == DragMenuLayout.MenuStatus.Close){
+                    loopXDragMenuLayout.openLeftMenuWithAnimation();
+                }else {
+                    loopXDragMenuLayout.closeMenuWithAnimation();
+                }
+                break;
+            case R.id.iv_right_menu_indicator:
+                if (loopXDragMenuLayout.getMenuStatus() == DragMenuLayout.MenuStatus.Close){
+                    loopXDragMenuLayout.openRightMenuWithAnimation();
+                }else {
+                    loopXDragMenuLayout.closeMenuWithAnimation();
+                }
                 break;
         }
     }
