@@ -7,8 +7,11 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.facebook.rebound.SpringUtil;
+import com.wx.wheelview.widget.WheelView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -22,15 +25,18 @@ import io.github.loop_x.yummywakeup.module.AlarmModule.model.DaysOfWeek;
 import io.github.loop_x.yummywakeup.tools.ToastMaster;
 import io.github.loop_x.yummywakeup.view.RippleBackgroundView;
 import io.github.loop_x.yummywakeup.view.YummyTextView;
-import io.github.loop_x.yummywakeup.view.YummyTimePicker;
 
 public class SetAlarmActivity extends BaseActivity {
 
     private Alarm mAlarm;
+    
+    private WheelView hourWheelView;
+    private WheelView minuteWheelView;
+    private WheelView amPmWheelView;
 
-    private YummyTimePicker timePickerHour;
-    private YummyTimePicker timePickerMinute;
-    private YummyTimePicker timePickerAMPM;
+//    private YummyTimePicker timePickerHour;
+//    private YummyTimePicker timePickerMinute;
+//    private YummyTimePicker timePickerAMPM;
 
     private DayOfWeekSelectorView mondaySelectorView;
     private DayOfWeekSelectorView tuesdaySelector;
@@ -125,30 +131,66 @@ public class SetAlarmActivity extends BaseActivity {
 
 
         /** Init Time Picker **/
+        amPmWheelView = (WheelView) findViewById(R.id.am_pm_wheelview);
+        minuteWheelView = (WheelView) findViewById(R.id.minute_wheelview);
+        hourWheelView = (WheelView) findViewById(R.id.hour_wheelview);
 
-        timePickerHour = (YummyTimePicker) findViewById(R.id.tp_set_alarm_hour);
-        timePickerMinute = (YummyTimePicker) findViewById(R.id.tp_set_alarm_minute);
-        timePickerAMPM = (YummyTimePicker) findViewById(R.id.tp_set_alarm_am_pm);
+        WheelView.WheelViewStyle style = new WheelView.WheelStyleBuilder(this)
+                .selectedTextSize(60)
+                .unselectedTextSize(60)
+                .selectedTextColor( ContextCompat.getColor(this, R.color.loopX_3))
+                .unselectedTextColor( ContextCompat.getColor(this, R.color.loopX_3))
+                .wheelForegroundMask(new TimePickWheelMask(this))
+                .build();
 
-        timePickerHour.setHour(is24hMode);
-        timePickerMinute.setMinute();
+        hourWheelView.setStyle(style);
+        hourWheelView.setWheelAdapter(new TimePickWheelAdapter(this));
+        hourWheelView.setWheelSize(3);
+        hourWheelView.setWheelData(createHours(is24hMode));
+        hourWheelView.setLoop(true);
 
+        WheelView.WheelViewStyle minuteStyle = new WheelView.WheelStyleBuilder(this)
+                .selectedTextSize(60)
+                .unselectedTextSize(60)
+                .selectedTextColor( ContextCompat.getColor(this, R.color.loopX_3))
+                .unselectedTextColor( ContextCompat.getColor(this, R.color.loopX_3))
+                .wheelForegroundMask(new TimePickWheelMask(this))
+                .build();
+        minuteWheelView.setStyle(minuteStyle);
+        minuteWheelView.setWheelAdapter(new TimePickWheelAdapter(this));
+        minuteWheelView.setWheelSize(3);
+        minuteWheelView.setWheelData(createMinutes());
+        minuteWheelView.setLoop(true);
+
+
+        WheelView.WheelViewStyle amPMStyle = new WheelView.WheelStyleBuilder(this)
+                .selectedTextSize(40)
+                .unselectedTextSize(40)
+                .selectedTextColor( ContextCompat.getColor(this, R.color.loopX_2))
+                .unselectedTextColor( ContextCompat.getColor(this, R.color.loopX_3))
+                .build();
+        amPmWheelView.setStyle(amPMStyle);
+        amPmWheelView.setWheelSize(3);
+        amPmWheelView.setWheelAdapter(new TimePickWheelAdapter(this));
+        amPmWheelView.setWheelData(Arrays.asList(new String []{"","AM","PM"}));
+
+        
         SimpleDateFormat dateFormatHour = null;
 
         if(Alarms.get24HourMode(this)) {
-            timePickerAMPM.setVisibility(View.INVISIBLE);
+            amPmWheelView.setVisibility(View.INVISIBLE);
             AMPM = "";
             dateFormatHour = new SimpleDateFormat("kk", locale);
         } else {
-            timePickerAMPM.setVisibility(View.VISIBLE);
-            timePickerAMPM.setAMPM();
+            amPmWheelView.setVisibility(View.VISIBLE);
+        //    timePickerAMPM.setAMPM();
             SimpleDateFormat dateFormatAMPM = new SimpleDateFormat("a", locale);
             AMPM = dateFormatAMPM.format(cal.getTime());
-            timePickerAMPM.setSelected((AMPM.equals("AM") ? 0 : 1));
+        //    timePickerAMPM.setSelected((AMPM.equals("AM") ? 0 : 1));
             dateFormatHour = new SimpleDateFormat("hh", locale);
         }
 
-        timePickerHour.setSelected(dateFormatHour.format(cal.getTime()));
+        /*timePickerHour.setSelected(dateFormatHour.format(cal.getTime()));
         timePickerMinute.setSelected("" + mAlarm.minutes);
 
         timePickerHour.setOnSelectListener(new YummyTimePicker.onSelectListener() {
@@ -171,9 +213,9 @@ public class SetAlarmActivity extends BaseActivity {
             public void onSelect(String text) {
                 mAlarm.minutes = Integer.valueOf(text);
             }
-        });
+        });*/
 
-        timePickerAMPM.setOnSelectListener(new YummyTimePicker.onSelectListener() {
+     /*   timePickerAMPM.setOnSelectListener(new YummyTimePicker.onSelectListener() {
             @Override
             public void onSelect(String text) {
                 // If AMPM select, it must be 12h mode
@@ -188,7 +230,7 @@ public class SetAlarmActivity extends BaseActivity {
                     }
                 }
             }
-        });
+        });*/
 
         tvMON = (YummyTextView) findViewById(R.id.tv_monday);
         tvTUE = (YummyTextView) findViewById(R.id.tv_tuesday);
@@ -215,9 +257,37 @@ public class SetAlarmActivity extends BaseActivity {
         fridaySelector.setDayOfWeekSelectorListener(dayOfWeekSelectorListener);
         saturdaySelector.setDayOfWeekSelectorListener(dayOfWeekSelectorListener);
         sundaySelector.setDayOfWeekSelectorListener(dayOfWeekSelectorListener);
-        
+
         initRepeat();
 
+    }
+
+    private ArrayList<String> createHours(boolean is24hMode) {
+
+        ArrayList<String> list = new ArrayList<>();
+
+        for (int i = (is24hMode ? 0 : 1); i < (is24hMode ? 24 : 13); i++) {
+
+            if (i < 10) {
+                list.add("0" + i);
+            } else {
+                list.add("" + i);
+            }
+        }
+
+        return list;
+
+    }
+    private ArrayList<String> createMinutes() {
+        ArrayList<String> list = new ArrayList<String>();
+        for (int i = 0; i < 60; i++) {
+            if (i < 10) {
+                list.add("0" + i);
+            } else {
+                list.add("" + i);
+            }
+        }
+        return list;
     }
 
     DayOfWeekSelectorView.DayOfWeekSelectorListener dayOfWeekSelectorListener = new DayOfWeekSelectorView.DayOfWeekSelectorListener() {
