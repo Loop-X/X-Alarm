@@ -44,19 +44,19 @@ public class Alarms {
 
     // This is a private action used by the AlarmKlaxon to update the UI to
     // show the alarm has been killed.
-    public static final String ALARM_KILLED = "yummy_alarm_killed";
+    public static final String ALARM_KILLED = "com.yummywakeup.alarm_killed";
 
     // Extra in the ALARM_KILLED intent to indicate to the user how long the
     // alarm played before being killed.
-    public static final String ALARM_KILLED_TIMEOUT = "alarm_killed_timeout";
+    public static final String ALARM_KILLED_TIMEOUT = "com.yummywakeup.alarm_killed_timeout";
 
     // This string is used when passing an Alarm object through an intent.
-    public static final String ALARM_INTENT_EXTRA = "intent.extra.alarm";
+    public static final String ALARM_INTENT_EXTRA = "com.yummywakeup.intent.extra.alarm";
 
     // This extra is the raw Alarm object data. It is used in the
     // AlarmManagerService to avoid a ClassNotFoundException when filling in
     // the Intent extras.
-    public static final String ALARM_RAW_DATA = "intent.extra.alarm_raw";
+    public static final String ALARM_RAW_DATA = "com.yummywakeup.intent.extra.alarm_raw";
 
     // This string is used to identify the alarm id passed to SetAlarm from the
     // list of alarms.
@@ -81,6 +81,7 @@ public class Alarms {
         ContentValues values = createContentValues(alarm);
         Uri uri = context.getContentResolver().insert(
                 Alarm.Columns.CONTENT_URI, values);
+        Log.d(TAG, "uri string is " + uri.toString());
         alarm.id = (int) ContentUris.parseId(uri);
 
         Log.d(TAG, "addAlarm - Get alarm id " + alarm.id + " from ContentUris.parseId(uri)");
@@ -190,6 +191,8 @@ public class Alarms {
      * @return Alarm object. Null if no alarm exists
      */
     public static Alarm getAlarm(ContentResolver contentResolver, int alarmId) {
+        Log.d(TAG, "-----------> getAlarm");
+
         Cursor cursor = contentResolver.query(
                 ContentUris.withAppendedId(Alarm.Columns.CONTENT_URI, alarmId),
                 Alarm.Columns.ALARM_QUERY_COLUMNS,
@@ -201,6 +204,9 @@ public class Alarms {
             }
             cursor.close();
         }
+
+        Log.d(TAG, "<----------- getAlarm");
+
         return alarm;
     }
 

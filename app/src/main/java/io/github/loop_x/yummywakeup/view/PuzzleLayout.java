@@ -15,7 +15,9 @@ import android.widget.RelativeLayout;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
+import io.github.loop_x.yummywakeup.BuildConfig;
 import io.github.loop_x.yummywakeup.R;
 import io.github.loop_x.yummywakeup.tools.ImagePiece;
 import io.github.loop_x.yummywakeup.tools.ImageSplitUtil;
@@ -87,9 +89,12 @@ public class PuzzleLayout extends RelativeLayout implements View.OnClickListener
     }
 
     private void initBitmap() {
+        Random random = new Random();
+        String imgName = "puzzle_" + (random.nextInt(11) + 1);
+
         if (mBitmap == null) {
             mBitmap = BitmapFactory.decodeResource(getResources(),
-                    R.drawable.puzzle);
+                    getResources().getIdentifier(imgName, "drawable", BuildConfig.APPLICATION_ID));
         }
         mItemBitmaps = ImageSplitUtil.splitImage(mBitmap, mColumn);
 

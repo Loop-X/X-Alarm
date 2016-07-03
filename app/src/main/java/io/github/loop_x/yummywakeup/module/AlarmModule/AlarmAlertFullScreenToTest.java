@@ -3,6 +3,7 @@ package io.github.loop_x.yummywakeup.module.AlarmModule;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.FragmentActivity;
@@ -10,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.Window;
+import android.view.WindowManager;
 
 import java.io.IOException;
 
@@ -83,5 +85,18 @@ public class AlarmAlertFullScreenToTest extends FragmentActivity implements Unlo
                 break;
         }
         return super.dispatchKeyEvent(event);
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Window window = this.getWindow();
+
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getColor(R.color.loopX_3_60_alpha));
+        }
     }
 }

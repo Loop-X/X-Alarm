@@ -1,6 +1,5 @@
 package io.github.loop_x.yummywakeup;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -50,8 +49,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     public final static String M12 = "hh:mm";
     public final static String M24 = "kk:mm";
 
-    private ImageView openRightDrawerView;
-    private ImageView openLeftDrawerView;
+    private ImageView ivRightMenuIndicator;
+    private ImageView ivLeftMenuIndicator;
+    private ImageView ivMainContentIndicator;
     private DragMenuLayout loopXDragMenuLayout;
 
     private YummyTextView tvAlarmTime;
@@ -65,6 +65,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private AlarmPreferenceSettingsMenuLayout rightMenu;
     private UnlockTypeMenuLayout leftMenu;
     private ListView lvRingtoneList;
+    private Window mWindow;
     
     @Override
     public int getLayoutId() {
@@ -74,25 +75,30 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void onViewInitial() {
 
+        mWindow = this.getWindow();
+
         mHandler = new Handler();
 
         tvAlarmTime = (YummyTextView) findViewById(R.id.tv_alarm_time);
         tvAlarmAMPM = (YummyTextView) findViewById(R.id.tv_alarm_am_pm);
-        tvWakeUp = (YummyTextView) findViewById(R.id.tv_wake_up);
+        tvWakeUp    = (YummyTextView) findViewById(R.id.tv_wake_up);
+
+        loopXDragMenuLayout    = (DragMenuLayout) findViewById(R.id.dragMenuLayout);
+        ivRightMenuIndicator   = (ImageView) findViewById(R.id.iv_right_menu_indicator);
+        ivRightMenuIndicator.setTag(R.drawable.main_right);
+        ivLeftMenuIndicator    = (ImageView) findViewById(R.id.iv_left_menu_indicator);
+        ivMainContentIndicator = (ImageView) findViewById(R.id.iv_top_main_content_indicator);
+
         setAlarmView = findViewById(R.id.im_set_alarm);
-        loopXDragMenuLayout = (DragMenuLayout) findViewById(R.id.dragMenuLayout);
-        openRightDrawerView = (ImageView) findViewById(R.id.openRightDrawer);
-        openRightDrawerView.setTag(R.drawable.main_right);
-        openLeftDrawerView = (ImageView) findViewById(R.id.openLeftDrawer);
 
         rightMenu = (AlarmPreferenceSettingsMenuLayout) loopXDragMenuLayout.findViewById(R.id.menuRight);
-        leftMenu =  (UnlockTypeMenuLayout) loopXDragMenuLayout.findViewById(R.id.menuLeft);
-        //sbAlarmVibration = (SeekBar) loopXDragMenuLayout.findViewById(R.id.sb_alarm_vibration);
+        leftMenu  = (UnlockTypeMenuLayout) loopXDragMenuLayout.findViewById(R.id.menuLeft);
+
         lvRingtoneList = (ListView) loopXDragMenuLayout.findViewById(R.id.lv_ringtone_list);
 
         loopXDragMenuLayout.setDragMenuStateListener(this);
 
-        openLeftDrawerView.setOnClickListener(new View.OnClickListener() {
+        ivLeftMenuIndicator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (loopXDragMenuLayout.getMenuStatus() == DragMenuLayout.MenuStatus.Close){
@@ -103,7 +109,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             }
         });
 
-        openRightDrawerView.setOnClickListener(new View.OnClickListener() {
+        ivRightMenuIndicator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 
@@ -198,7 +204,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 loopXDragMenuLayout.closeMenuWithoutAnimation();
 
                 // Restore status of icon
-                openLeftDrawerView.setImageResource(R.drawable.main_left);
+                ivLeftMenuIndicator.setImageResource(R.drawable.main_left);
 
                 int unlockTypeId = data.getIntExtra("unlockType", UnlockTypeEnum.Normal.getID());
                 mAlarm.unlockType = unlockTypeId;
@@ -227,9 +233,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         alarmId = readSavedAlarm();
 
         if (alarmId == -1) {
-            // If no alarm available, set a default alarm with current time
-            mAlarm = new Alarm();
-            alarmId = Alarms.addAlarm(this, mAlarm);
+            // This is to avoid SP file removed for unknown reason
+            // Remember, always use Alarm ID 1
+            if(Alarms.getAlarm(getContentResolver(), 1) != null) {
+                mAlarm = Alarms.getAlarm(getContentResolver(), 1);
+                alarmId = mAlarm.id;
+            } else { // If no alarm available, set a default alarm with current time
+                mAlarm = new Alarm();
+                alarmId = Alarms.addAlarm(this, mAlarm);
+            }
             saveAlarm();
         } else {
             // ToDo 之前闹钟不灵 可不可能是CONTEXT的问题？
@@ -315,15 +327,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void onMenuOpened(DragMenuLayout.MenuDirection direction) {
         if(direction == DragMenuLayout.MenuDirection.RIGHT) {
-            openRightDrawerView.setImageResource(R.drawable.main_right_press);
-            openRightDrawerView.setTag(R.drawable.main_right_press);
+            ivRightMenuIndicator.setImageResource(R.drawable.main_right_press);
+            ivRightMenuIndicator.setTag(R.drawable.main_right_press);
         } else {
             // To avoid user slide too quickly from right to left
-            if((int)openRightDrawerView.getTag() == R.drawable.main_right_press) {
+            if((int) ivRightMenuIndicator.getTag() == R.drawable.main_right_press) {
                 onMenuClosed(DragMenuLayout.MenuDirection.RIGHT);
             }
 
-            openLeftDrawerView.setImageResource(R.drawable.main_left_press);
+            ivLeftMenuIndicator.setImageResource(R.drawable.main_left_press);
         }
     }
 
@@ -331,8 +343,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     public void onMenuClosed(DragMenuLayout.MenuDirection direction) {
         if(direction == DragMenuLayout.MenuDirection.RIGHT) {
 
-            openRightDrawerView.setImageResource(R.drawable.main_right);
-            openRightDrawerView.setTag(R.drawable.main_right);
+            ivRightMenuIndicator.setImageResource(R.drawable.main_right);
+            ivRightMenuIndicator.setTag(R.drawable.main_right);
 
             rightMenu.stopRingtone();
 
@@ -352,7 +364,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             ToastMaster.setToast(Toast.makeText(this, getString(R.string.setting_updated), Toast.LENGTH_SHORT));
             ToastMaster.showToast();
         } else {
-            openLeftDrawerView.setImageResource(R.drawable.main_left);
+            ivLeftMenuIndicator.setImageResource(R.drawable.main_left);
         }
     }
 
@@ -372,14 +384,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
 
-        //Window window = this.getWindow();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            mWindow.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            mWindow.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            mWindow.setStatusBarColor(getColor(R.color.loopX_1_50_alpha));
+        }
+
 
         /*
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(getColor(R.color.loopX_3));
-        */
-
         if (hasFocus) {
             final View decorView = getWindow().getDecorView();
             decorView.setSystemUiVisibility(
@@ -387,6 +399,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                             | View.SYSTEM_UI_FLAG_FULLSCREEN
                             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         }
+        */
 
     }
 

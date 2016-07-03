@@ -135,9 +135,9 @@ public class AlarmProvider extends ContentProvider {
         int match = sURLMatcher.match(url);
         switch (match) {
             case ALARMS:
-                return "vnd.android.cursor.dir/alarms";
+                return "vnd.android.cursor.dir/yummywakeup.alarms";
             case ALARMS_ID:
-                return "vnd.android.cursor.item/alarms";
+                return "vnd.android.cursor.item/yummywakeup.alarms";
             default:
                 throw new IllegalArgumentException("Unknown URL");
         }
