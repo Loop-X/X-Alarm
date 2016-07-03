@@ -33,11 +33,30 @@
     <string name="shake">摇动解锁</string>
     <string name="puzzle">拼图解锁</string>
     <string name="math">计算解锁</string>
-    <string name="normal">正常解锁</string>
+    <string name="type">打字解锁</string>
     <string name="have_a_try">试一试</string>
     <string name="math_exercise">数学小王子</string>
-    <string name="normal_alarm">正常闹钟</string>
+    <string name="type_alarm">打字闹钟</string>
     <string name="puzzle_game">拼个图</string>
     <string name="unlock_type_updated">更新解锁方式</string>
     <string name="setting_updated">更新设置</string>
+
+    <!-- For Type Alarm  -->
+    <string name="type_alarm_sentence_0">就是失去了一切别的也还有未来</string>
+    <string name="type_alarm_sentence_1">对明天做好的准备就是今天做到最好</string>
+    <string name="type_alarm_sentence_2">苦难是人生最伟大的老师</string>
+    <string name="type_alarm_sentence_3">你的腰不弯别人就不能骑在你的背上</string>
+    <string name="type_alarm_sentence_4">浪费时间就是掠夺自己</string>
+    <string name="type_alarm_sentence_5">永远不要低估你改变自我的能力</string>
+    <string name="type_alarm_sentence_6">凡是决心取得胜利的人是从来不说不可能的</string>
+    <string name="type_alarm_sentence_7">天生我才必有用</string>
+    <string name="type_alarm_sentence_8">世间无所谓天才它仅是刻苦加勤奋</string>
+    <string name="type_alarm_sentence_9">世上无难事只怕有心人</string>
+    <string name="type_alarm_sentence_10">我行因为我相信我行</string>
+    <string name="type_alarm_sentence_11">退缩者永无胜利</string>
+    <string name="type_alarm_sentence_12">行动胜于言语</string>
+    <string name="type_alarm_sentence_13">学会掌握自己的命运</string>
+    <string name="type_alarm_sentence_14">勇往直前决不放弃</string>
+    <string name="type_alarm_sentence_15">有知识而无时间只算半个能人</string>
+
 </resources>

@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="29dp"
             android:gravity="center_horizontal"
-            android:text="@string/normal"
+            android:text="@string/type"
             android:textColor="@color/loopX_3"
             android:textSize="20sp" />
 

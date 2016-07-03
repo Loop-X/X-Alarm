@@ -33,12 +33,30 @@
     <string name="shake">SHAKE</string>
     <string name="puzzle">PUZZLE</string>
     <string name="math">MATH</string>
-    <string name="normal">NORMAL</string>
+    <string name="type">TYPE</string>
     <string name="have_a_try">Have a try</string>
     <string name="math_exercise">Math Exercise</string>
-    <string name="normal_alarm">Normal Alarm</string>
+    <string name="type_alarm">Type Alarm</string>
     <string name="puzzle_game">Puzzle Game</string>
     <string name="unlock_type_updated">Unlock Type Updated</string>
     <string name="setting_updated">Setting Updated</string>
+
+    <!-- For Type Alarm  -->
+    <string name="type_alarm_sentence_0">When all else is lost the future still remains</string>
+    <string name="type_alarm_sentence_1">The best preparation for tomorrow is doing your best today</string>
+    <string name="type_alarm_sentence_2">Suffering is the most powerful teacher of life</string>
+    <string name="type_alarm_sentence_3">A man can not ride your back unless it is bent</string>
+    <string name="type_alarm_sentence_4">Wasting time is robbing oneself</string>
+    <string name="type_alarm_sentence_5">Never underestimate your power to change yourself</string>
+    <string name="type_alarm_sentence_6">The man who has made up his mind to win will never say impossible</string>
+    <string name="type_alarm_sentence_7">All things in their being are good for something</string>
+    <string name="type_alarm_sentence_8">There is no such thing as genius, it is nothing but labour and diligence</string>
+    <string name="type_alarm_sentence_9">Nothing in the world is difficult for one who sets his mind on it</string>
+    <string name="type_alarm_sentence_10">I can because i think i can</string>
+    <string name="type_alarm_sentence_11">Quitters never win and winners never quit</string>
+    <string name="type_alarm_sentence_12">Action speak louder than words</string>
+    <string name="type_alarm_sentence_13">Take control of your own destiny</string>
+    <string name="type_alarm_sentence_14">Keep on going never give up</string>
+    <string name="type_alarm_sentence_15">Knowledge without practice makes but half an artist</string>
 
 </resources>

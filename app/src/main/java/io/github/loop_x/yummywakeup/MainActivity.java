@@ -219,7 +219,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 // Restore status of icon
                 ivLeftMenuIndicator.setImageResource(R.drawable.main_left);
 
-                int unlockTypeId = data.getIntExtra("unlockType", UnlockTypeEnum.Normal.getID());
+                int unlockTypeId = data.getIntExtra("unlockType", UnlockTypeEnum.Type.getID());
                 mAlarm.unlockType = unlockTypeId;
                 Alarms.setAlarm(MainActivity.this, mAlarm);
                 saveAlarm();

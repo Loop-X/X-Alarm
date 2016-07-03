@@ -16,7 +16,7 @@ import io.github.loop_x.yummywakeup.module.UnlockTypeModule.UnlockTypeEnum;
  */
 public class UnlockTypeMenuLayout extends LinearLayout implements View.OnClickListener {
 
-    private View normalLayout;
+    private View typeLayout;
     private View mathLayout;
     private View paintLayout;
     private View shakeLayout;
@@ -45,7 +45,7 @@ public class UnlockTypeMenuLayout extends LinearLayout implements View.OnClickLi
         super.onFinishInflate();
         LayoutInflater.from(getContext()).inflate(R.layout.menu_left, this, true);
 
-        normalLayout = findViewById(R.id.normalLayout);
+        typeLayout = findViewById(R.id.normalLayout);
         mathLayout = findViewById(R.id.mathLayout);
         paintLayout = findViewById(R.id.paintLayout);
         shakeLayout = findViewById(R.id.shakeLayout);
@@ -55,7 +55,7 @@ public class UnlockTypeMenuLayout extends LinearLayout implements View.OnClickLi
         ivUnlockType2 = (ImageView) findViewById(R.id.iv_unlock_type_2);
         ivUnlockType3 = (ImageView) findViewById(R.id.iv_unlock_type_3);
 
-        normalLayout.setOnClickListener(this);
+        typeLayout.setOnClickListener(this);
         mathLayout.setOnClickListener(this);
         paintLayout.setOnClickListener(this);
         shakeLayout.setOnClickListener(this);
@@ -64,11 +64,11 @@ public class UnlockTypeMenuLayout extends LinearLayout implements View.OnClickLi
     @Override
     public void onClick(View v) {
          
-        UnlockTypeEnum unlockTypeEnum = UnlockTypeEnum.Normal;
+        UnlockTypeEnum unlockTypeEnum = UnlockTypeEnum.Type;
         
         switch (v.getId()){
             case R.id.normalLayout:
-                unlockTypeEnum = UnlockTypeEnum.Normal;
+                unlockTypeEnum = UnlockTypeEnum.Type;
                 break;
             case R.id.mathLayout:
                 unlockTypeEnum = UnlockTypeEnum.Math;

@@ -5,7 +5,7 @@ package io.github.loop_x.yummywakeup.module.UnlockTypeModule;
  */
 public enum UnlockTypeEnum {
 
-    Normal ("Normal"),
+    Type ("Type"),
     Math   ("Math"),
     Puzzle ("Puzzle"),
     Shake  ("Shake");
@@ -18,7 +18,7 @@ public enum UnlockTypeEnum {
 
     public int toID(String name) {
 
-        if(name == Normal.toString()) {
+        if(name == Type.toString()) {
             return 0;
         } else if(name == Math.toString()) {
             return 1;
@@ -35,7 +35,7 @@ public enum UnlockTypeEnum {
 
         switch (id) {
             case 0:
-                return Normal.toString();
+                return Type.toString();
             case 1:
                 return Math.toString();
             case 2:

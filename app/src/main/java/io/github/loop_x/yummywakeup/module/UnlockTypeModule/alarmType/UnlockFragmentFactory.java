@@ -6,8 +6,8 @@ public class UnlockFragmentFactory {
 
     public static UnlockFragment create(int unlockType) {
 
-        if (unlockType == UnlockTypeEnum.Normal.getID()){
-            return new NormalAlarm();
+        if (unlockType == UnlockTypeEnum.Type.getID()){
+            return new TypeAlarm();
         } else if (unlockType == UnlockTypeEnum.Math.getID()){
             return MathAlarm.newInstance();
         } else if (unlockType == UnlockTypeEnum.Puzzle.getID()){
@@ -16,6 +16,6 @@ public class UnlockFragmentFactory {
             return ShakeAlarm.newInstance();
         }
 
-        return new NormalAlarm();
+        return new TypeAlarm();
     }
 }
