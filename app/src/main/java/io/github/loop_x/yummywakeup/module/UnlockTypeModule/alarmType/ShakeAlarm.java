@@ -108,7 +108,8 @@ public class ShakeAlarm extends UnlockFragment implements SensorEventListener{
             }
 
             mShakeTimestamp = currentTime;
-            mShakeCount += (int) gForce * 2;
+
+            mShakeCount += (int) gForce * 1.5;
 
             if(mShakeCount >= 100) {
                 mShakeCount = 100;
