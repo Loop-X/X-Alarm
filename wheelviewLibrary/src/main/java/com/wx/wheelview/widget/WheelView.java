@@ -281,7 +281,6 @@ public class WheelView<T> extends ListView implements IWheelView<T> {
         wheelBackgroundMask.setWheelItemSize(mWheelSize);
         wheelBackgroundMask.preDraw();
         
-        setForeground(wheelBackgroundMask);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             setBackground(wheelBackgroundMask);
         } else {
@@ -558,6 +557,8 @@ public class WheelView<T> extends ListView implements IWheelView<T> {
         } else {
             position = firstPosition + 1;
         }
+        
+        
         refreshVisibleItems(firstPosition, position + mWheelSize / 2,
                 mWheelSize / 2);
         if (mLoop) {
@@ -651,9 +652,7 @@ public class WheelView<T> extends ListView implements IWheelView<T> {
         }
     }
 
-    public enum Skin { // 滚轮皮肤
-        Common, Holo, None
-    }
+  
 
     public interface OnWheelItemSelectedListener<T> {
         void onItemSelected(int position, T t);
