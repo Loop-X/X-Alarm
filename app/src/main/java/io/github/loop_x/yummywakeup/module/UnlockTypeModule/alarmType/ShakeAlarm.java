@@ -5,10 +5,15 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.widget.Toast;
 
 import com.john.waveview.WaveView;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import io.github.loop_x.yummywakeup.R;
+import io.github.loop_x.yummywakeup.tools.ToastMaster;
 import io.github.loop_x.yummywakeup.view.YummyTextView;
 
 public class ShakeAlarm extends UnlockFragment implements SensorEventListener{
@@ -23,6 +28,13 @@ public class ShakeAlarm extends UnlockFragment implements SensorEventListener{
     private long mShakeTimestamp;
     private static final float SHAKE_THRESHOLD_GRAVITY = 2.5F;
     private static final int SHAKE_STOP_TIME_MS = 300;
+
+    TimerTask task = new TimerTask() {
+        @Override
+        public void run() {
+            mListener.closeAlarm();
+        }
+    };
 
     public ShakeAlarm() {}
 
@@ -106,7 +118,13 @@ public class ShakeAlarm extends UnlockFragment implements SensorEventListener{
             tvShakeProgress.setText(mShakeCount + "%");
 
             if(mShakeCount == 100) {
-                mListener.closeAlarm();
+                ToastMaster.setToast(Toast.makeText(getActivity(),
+                        getString(R.string.puzzle_complete),
+                        Toast.LENGTH_SHORT));
+                ToastMaster.showToast();
+
+                Timer timer = new Timer(true);
+                timer.schedule(task, 1200);
             }
         }
     }

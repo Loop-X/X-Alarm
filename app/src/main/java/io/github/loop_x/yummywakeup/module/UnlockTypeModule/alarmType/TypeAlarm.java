@@ -7,11 +7,15 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import io.github.loop_x.yummywakeup.BuildConfig;
 import io.github.loop_x.yummywakeup.R;
+import io.github.loop_x.yummywakeup.tools.ToastMaster;
 import io.github.loop_x.yummywakeup.view.YummyEditText;
 import io.github.loop_x.yummywakeup.view.YummyTextView;
 
@@ -25,6 +29,13 @@ public class TypeAlarm extends UnlockFragment {
     private InputMethodManager mInputMethodManager;
 
     private Activity mContext;
+
+    TimerTask task = new TimerTask() {
+        @Override
+        public void run() {
+            mListener.closeAlarm();
+        }
+    };
 
     @Override
     public int getLayoutId() {
@@ -61,7 +72,13 @@ public class TypeAlarm extends UnlockFragment {
                     Log.d("cao", "b " + tvSentenceToType.getText().toString().toLowerCase());
                     if(etTypeSentence.getText().toString().toLowerCase().equals(
                             tvSentenceToType.getText().toString().toLowerCase())) {
-                        mListener.closeAlarm();
+                        ToastMaster.setToast(Toast.makeText(getActivity(),
+                                getString(R.string.puzzle_complete),
+                                Toast.LENGTH_SHORT));
+                        ToastMaster.showToast();
+
+                        Timer timer = new Timer(true);
+                        timer.schedule(task, 1200);
                     }
                 }
             }
