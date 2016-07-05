@@ -1,21 +1,22 @@
 package io.github.loop_x.yummywakeup.module.SetAlarmModule;
 
 import android.content.Intent;
-import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.facebook.rebound.SpringUtil;
+import com.wx.wheelview.common.WheelConstants;
 import com.wx.wheelview.widget.WheelView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import io.github.loop_x.yummywakeup.MainActivity;
@@ -36,6 +37,9 @@ public class SetAlarmActivity extends BaseActivity {
     private WheelView hourWheelView;
     private WheelView minuteWheelView;
     private WheelView amPmWheelView;
+    private ArrayList<String> minutesStrList;
+    private ArrayList<String> hourStrList;
+    private ArrayList<String> amPMStrList;
 
 //    private YummyTimePicker timePickerHour;
 //    private YummyTimePicker timePickerMinute;
@@ -167,16 +171,39 @@ public class SetAlarmActivity extends BaseActivity {
 
 
         WheelView.WheelViewStyle amPMStyle = new WheelView.WheelStyleBuilder(this)
-                .selectedTextSize(40)
-                .unselectedTextSize(40)
-                .selectedTextColor( ContextCompat.getColor(this, R.color.loopX_2))
-                .unselectedTextColor( ContextCompat.getColor(this, R.color.loopX_3))
+                .selectedTextSize(30)
+                .unselectedTextSize(30)
+                .selectedTextColor( ContextCompat.getColor(this, R.color.loopX_3))
+                .unselectedTextColor( ContextCompat.getColor(this, R.color.loopX_3_40_alpha))
                 .build();
         amPmWheelView.setStyle(amPMStyle);
         amPmWheelView.setWheelSize(3);
         amPmWheelView.setWheelAdapter(new TimePickWheelAdapter(this));
-        amPmWheelView.setWheelData(Arrays.asList(new String []{"","AM","PM"}));
+        amPmWheelView.setWheelData(createAmPMStrList());
+        amPmWheelView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == SCROLL_STATE_IDLE) {
+                    if (amPmWheelView.getFirstVisiblePosition() == 0){
+                        View itemView = amPmWheelView.getChildAt(1);
+                        float deltaY = itemView.getY();
+                        if (deltaY >= 0) {
+                            int d = amPmWheelView.getSmoothDistance(deltaY);
+                            amPmWheelView.smoothScrollBy(d, WheelConstants
+                                    .WHEEL_SMOOTH_SCROLL_DURATION);
+                        }
+                    }
+                }
+            }
 
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (visibleItemCount != 0) {
+                    amPmWheelView.refreshCurrentPosition(false);
+                }
+            }
+        });
+        
         
         SimpleDateFormat dateFormatHour = null;
 
@@ -186,19 +213,19 @@ public class SetAlarmActivity extends BaseActivity {
             dateFormatHour = new SimpleDateFormat("kk", locale);
         } else {
             amPmWheelView.setVisibility(View.VISIBLE);
-        //    timePickerAMPM.setAMPM();
             SimpleDateFormat dateFormatAMPM = new SimpleDateFormat("a", locale);
             AMPM = dateFormatAMPM.format(cal.getTime());
-        //    timePickerAMPM.setSelected((AMPM.equals("AM") ? 0 : 1));
+            amPmWheelView.setSelection((AMPM.equals("AM") ? 1 : 2));
             dateFormatHour = new SimpleDateFormat("hh", locale);
         }
 
-        /*timePickerHour.setSelected(dateFormatHour.format(cal.getTime()));
-        timePickerMinute.setSelected("" + mAlarm.minutes);
+        minuteWheelView.setSelection(minutesStrList.indexOf("" + mAlarm.minutes));
+        hourWheelView.setSelection(hourStrList.indexOf(dateFormatHour.format(cal.getTime())));
 
-        timePickerHour.setOnSelectListener(new YummyTimePicker.onSelectListener() {
+        hourWheelView.setOnWheelItemSelectedListener(new WheelView.OnWheelItemSelectedListener() {
             @Override
-            public void onSelect(String text) {
+            public void onItemSelected(int position, Object o) {
+                String text = hourStrList.get(position);
                 if(is24hMode) {
                     mAlarm.hour = Integer.valueOf(text);
                 } else {
@@ -211,18 +238,19 @@ public class SetAlarmActivity extends BaseActivity {
             }
         });
 
-        timePickerMinute.setOnSelectListener(new YummyTimePicker.onSelectListener() {
+        minuteWheelView.setOnWheelItemSelectedListener(new WheelView.OnWheelItemSelectedListener() {
             @Override
-            public void onSelect(String text) {
-                mAlarm.minutes = Integer.valueOf(text);
-            }
-        });*/
+            public void onItemSelected(int position, Object o) {
+                mAlarm.minutes = Integer.valueOf(minutesStrList.get(position));
 
-     /*   timePickerAMPM.setOnSelectListener(new YummyTimePicker.onSelectListener() {
+            }
+        });
+
+        amPmWheelView.setOnWheelItemSelectedListener(new WheelView.OnWheelItemSelectedListener() {
             @Override
-            public void onSelect(String text) {
+            public void onItemSelected(int position, Object o) {
                 // If AMPM select, it must be 12h mode
-                AMPM = text;
+                AMPM = amPMStrList.get(position);
                 if(AMPM.equals("PM")) {
                     if(mAlarm.hour <= 12) {
                         mAlarm.hour = mAlarm.hour + 12;
@@ -233,8 +261,9 @@ public class SetAlarmActivity extends BaseActivity {
                     }
                 }
             }
-        });*/
-
+        });
+        
+        
         tvMON = (YummyTextView) findViewById(R.id.tv_monday);
         tvTUE = (YummyTextView) findViewById(R.id.tv_tuesday);
         tvWED = (YummyTextView) findViewById(R.id.tv_wednesday);
@@ -265,32 +294,36 @@ public class SetAlarmActivity extends BaseActivity {
 
     }
 
+    @NonNull
+    private List<String> createAmPMStrList() {
+        amPMStrList = new ArrayList<>();
+        amPMStrList.addAll(Arrays.asList(new String []{"","AM","PM"}));
+        return amPMStrList;
+    }
+
     private ArrayList<String> createHours(boolean is24hMode) {
 
-        ArrayList<String> list = new ArrayList<>();
-
+        hourStrList = new ArrayList<>();
         for (int i = (is24hMode ? 0 : 1); i < (is24hMode ? 24 : 13); i++) {
-
             if (i < 10) {
-                list.add("0" + i);
+                hourStrList.add("0" + i);
             } else {
-                list.add("" + i);
+                hourStrList.add("" + i);
             }
         }
-
-        return list;
+        return hourStrList;
 
     }
     private ArrayList<String> createMinutes() {
-        ArrayList<String> list = new ArrayList<String>();
+        minutesStrList = new ArrayList<String>();
         for (int i = 0; i < 60; i++) {
             if (i < 10) {
-                list.add("0" + i);
+                minutesStrList.add("0" + i);
             } else {
-                list.add("" + i);
+                minutesStrList.add("" + i);
             }
         }
-        return list;
+        return minutesStrList;
     }
 
     DayOfWeekSelectorView.DayOfWeekSelectorListener dayOfWeekSelectorListener = new DayOfWeekSelectorView.DayOfWeekSelectorListener() {
