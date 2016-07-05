@@ -528,7 +528,7 @@ public class WheelView<T> extends ListView implements IWheelView<T> {
      * @param scrollDistance
      * @return
      */
-    private int getSmoothDistance(float scrollDistance) {
+    public int getSmoothDistance(float scrollDistance) {
         if (Math.abs(scrollDistance) <= 2) {
             return (int) scrollDistance;
         } else if (Math.abs(scrollDistance) < 12) {
@@ -543,7 +543,7 @@ public class WheelView<T> extends ListView implements IWheelView<T> {
      *
      * @param join
      */
-    private void refreshCurrentPosition(boolean join) {
+    public void refreshCurrentPosition(boolean join) {
         if (getChildAt(0) == null || mItemH == 0) {
             return;
         }
