@@ -14,8 +14,8 @@
 
     <color name="loopX_3_60_alpha">#AFFFFFFF</color>
     <color name="loopX_3_40_alpha">#66FFFFFF</color>
+    <color name="loopX_3_20_alpha">#33FFFFFF</color>
     <color name="loopX_3_10_alpha">#1AFFFFFF</color>
-
     <color name="loopX_2_50_alpha">#80E60044</color>
 
     <color name="alarm_set_top_alarm_off">#FF171625</color>
