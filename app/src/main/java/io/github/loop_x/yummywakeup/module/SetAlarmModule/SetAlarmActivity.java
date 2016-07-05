@@ -40,11 +40,7 @@ public class SetAlarmActivity extends BaseActivity {
     private ArrayList<String> minutesStrList;
     private ArrayList<String> hourStrList;
     private ArrayList<String> amPMStrList;
-
-//    private YummyTimePicker timePickerHour;
-//    private YummyTimePicker timePickerMinute;
-//    private YummyTimePicker timePickerAMPM;
-
+    
     private DayOfWeekSelectorView mondaySelectorView;
     private DayOfWeekSelectorView tuesdaySelector;
     private DayOfWeekSelectorView wednesdaySelector;
