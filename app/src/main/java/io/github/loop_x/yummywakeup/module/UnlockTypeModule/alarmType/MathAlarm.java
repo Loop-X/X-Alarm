@@ -7,9 +7,14 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import io.github.loop_x.yummywakeup.R;
 import io.github.loop_x.yummywakeup.tools.CalculationFormula;
+import io.github.loop_x.yummywakeup.tools.ToastMaster;
 import io.github.loop_x.yummywakeup.view.YummyEditText;
 import io.github.loop_x.yummywakeup.view.YummyTextView;
 
@@ -29,6 +34,13 @@ public class MathAlarm extends UnlockFragment {
     public static MathAlarm newInstance() {
         return new MathAlarm();
     }
+
+    TimerTask task = new TimerTask() {
+        @Override
+        public void run() {
+            mListener.closeAlarm();
+        }
+    };
 
     @Override
     public int getLayoutId() {
@@ -87,21 +99,31 @@ public class MathAlarm extends UnlockFragment {
                     if (input.contains("-") && input.length() > 1) {
                         if(input.startsWith("-") && !input.substring(1).contains("-")) {
                             if (Integer.parseInt(input.substring(1)) == -1 * result) {
-                                mInputMethodManager.hideSoftInputFromWindow(
-                                        getActivity().getCurrentFocus().getWindowToken(), 0);
-                                mListener.closeAlarm();
+                                success();
                             }
                         }
                     } else if (!input.contains("-")) {
                         if (Integer.parseInt(input) == result) {
-                            mListener.closeAlarm();
-                            mInputMethodManager.hideSoftInputFromWindow(
-                                    getActivity().getCurrentFocus().getWindowToken(), 0);
+                            success();
                         }
                     }
                 }
             }
         });
+    }
+
+    private void success() {
+
+        mInputMethodManager.hideSoftInputFromWindow(
+                getActivity().getCurrentFocus().getWindowToken(), 0);
+
+        ToastMaster.setToast(Toast.makeText(getActivity(),
+                getString(R.string.puzzle_complete),
+                Toast.LENGTH_SHORT));
+        ToastMaster.showToast();
+
+        Timer timer = new Timer(true);
+        timer.schedule(task, 1200);
     }
 
     @Override

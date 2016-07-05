@@ -38,6 +38,7 @@
     <string name="math_exercise">数学小王子</string>
     <string name="type_alarm">打字闹钟</string>
     <string name="puzzle_game">拼个图</string>
+    <string name="puzzle_complete">解锁成功</string>
     <string name="unlock_type_updated">更新解锁方式</string>
     <string name="setting_updated">更新设置</string>
 

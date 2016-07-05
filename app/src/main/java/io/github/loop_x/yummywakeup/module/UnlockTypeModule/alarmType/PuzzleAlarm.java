@@ -1,15 +1,26 @@
 package io.github.loop_x.yummywakeup.module.UnlockTypeModule.alarmType;
 
 import android.app.Activity;
+import android.widget.Toast;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import io.github.loop_x.yummywakeup.R;
-import io.github.loop_x.yummywakeup.module.AlarmModule.AlarmAlertFullScreen;
+import io.github.loop_x.yummywakeup.tools.ToastMaster;
 import io.github.loop_x.yummywakeup.view.PuzzleLayout;
 
 public class PuzzleAlarm extends UnlockFragment {
 
     private PuzzleLayout puzzleLayout;
     private OnAlarmAction mListener;
+
+    TimerTask task = new TimerTask() {
+        @Override
+        public void run() {
+            mListener.closeAlarm();
+        }
+    };
 
     public PuzzleAlarm() {}
 
@@ -28,7 +39,15 @@ public class PuzzleAlarm extends UnlockFragment {
         puzzleLayout.setPuzzleListener(new PuzzleLayout.PuzzleListener() {
             @Override
             public void unlockAlarm() {
-                mListener.closeAlarm();
+
+                ToastMaster.setToast(Toast.makeText(getActivity(),
+                        getString(R.string.puzzle_complete),
+                        Toast.LENGTH_SHORT));
+                ToastMaster.showToast();
+
+                Timer timer = new Timer(true);
+                timer.schedule(task, 1200);
+
             }
         });
 
