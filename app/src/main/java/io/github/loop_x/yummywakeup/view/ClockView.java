@@ -104,7 +104,6 @@ public class ClockView extends View {
                 setTranslationY(value);
             }
         });
-        
 
         mAlphaAnimation = ObjectAnimator.ofFloat(0.0f,1.0f);
         mAlphaAnimation.setDuration(100);
@@ -157,41 +156,33 @@ public class ClockView extends View {
         clockTimeIndicatorDraw.draw(canvas);
     }
 
-
     public class ClockBackgroundDraw implements ViewPainter {
+
         private int bgColor;
 
         public ClockBackgroundDraw() {
-            bgColor = Color.parseColor("#1A000000");
+            bgColor = Color.parseColor("#00000000");
         }
-
-       
 
         @Override
-        public void onPrepareDraw() {
-            
-        }
+        public void onPrepareDraw() {}
 
         @Override
         public void draw(Canvas canvas) {
             canvas.drawColor(bgColor);
         }
     }
-    
-    
-    
-    
+
     public  class ClockMainDraw implements ViewPainter {
         private Drawable clockMainDrawable;
 
         public ClockMainDraw() {
-            clockMainDrawable =  ContextCompat.getDrawable(getContext(),R.drawable.clock_main_bg); 
+            clockMainDrawable = ContextCompat.getDrawable(getContext(),R.drawable.clock_main_bg);
         }
-
 
         @Override
         public void onPrepareDraw() {
-            clockMainDrawable.setBounds(0,0,mClockWidth,mClockHeight);
+            clockMainDrawable.setBounds(0, 0, mClockWidth, mClockHeight);
         }
 
         @Override
@@ -199,8 +190,6 @@ public class ClockView extends View {
             clockMainDrawable.draw(canvas);
         }
     }
-    
-
 
     public class ClockTimeIndicatorDraw implements ViewPainter {
 
@@ -218,7 +207,6 @@ public class ClockView extends View {
         private float translateX;
         private float translateY;
 
-
         public ClockTimeIndicatorDraw() {
             hourIndicatorDrawable = ContextCompat.getDrawable(getContext(), R.drawable.clock_hour_hand);
             minuteIndicatorDrawable = ContextCompat.getDrawable(getContext(), R.drawable.clock_minute_hand);
@@ -226,7 +214,6 @@ public class ClockView extends View {
             dayAndNightIndicatorDrawable = ContextCompat.getDrawable(getContext(),R.drawable.clock_night);
         }
 
-    
         @Override
         public void onPrepareDraw() {
             int rightAndBottom = (int) (mClockWidth * 0.6f);
@@ -249,7 +236,6 @@ public class ClockView extends View {
             secondsAngle = 20 / 60.0f * 360.0f;
 
         }
-
         
         @Override
         public void draw(Canvas canvas) {
@@ -312,7 +298,6 @@ public class ClockView extends View {
         return seconds / 60.0f * 360.0f;
     }
 
-
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
@@ -330,7 +315,7 @@ public class ClockView extends View {
         // NOTE: It's safe to do these after registering the receiver since the receiver always runs
         // in the main thread, therefore the receiver can't run before this method returns.
         // The time zone may have changed while the receiver wasn't registered, so update the Time
-       /* mCalendar = Calendar.getInstance();
+        /* mCalendar = Calendar.getInstance();
         // Make sure we update to the current time
         onTimeChanged();
         doTimeIndicatorAnimation();
@@ -339,7 +324,6 @@ public class ClockView extends View {
 
         Log.e("ClockView","onAttachedToWindow");
     }
-    
 
     private void doTimeIndicatorAnimation() {
         mCalendar = Calendar.getInstance();
@@ -347,7 +331,6 @@ public class ClockView extends View {
         final float hourAngle = getHourAngleByHour(mCalendar.get(Calendar.HOUR));
         final float minuteAngle = getMinuteAngleByMinute(mCalendar.get(Calendar.MINUTE));
         final float secondsAngle = getSecondAngleBySecond(mCalendar.get(Calendar.SECOND));
-        
 
         ValueAnimator hourAnimator = ValueAnimator.ofInt(-35,0);
         hourAnimator.setInterpolator(new DecelerateInterpolator());
@@ -360,7 +343,6 @@ public class ClockView extends View {
                 invalidate();
             }
         });
-
 
         ValueAnimator minuteAnimator = ValueAnimator.ofInt(-35,0);
         minuteAnimator.setInterpolator(new LinearInterpolator());
@@ -380,7 +362,6 @@ public class ClockView extends View {
                 invalidate();
             }
         });
-
 
         ValueAnimator secondAnimator = ValueAnimator.ofInt(-35,0);
         secondAnimator.setInterpolator(new DecelerateInterpolator());
@@ -418,7 +399,6 @@ public class ClockView extends View {
             mAttached = false;
         }
     }
-    
 
     /**
      * Task running every second to update time and re-draw the view with new updates
@@ -453,8 +433,6 @@ public class ClockView extends View {
         }
     };
 
-
-
     /**
      * Invoked when time changed. To update hour/minute/second with current time.
      */
@@ -462,15 +440,5 @@ public class ClockView extends View {
         mCalendar = Calendar.getInstance();
         clockTimeIndicatorDraw.updateTime(mCalendar.get(Calendar.HOUR),mCalendar.get(Calendar.MINUTE),mCalendar.get(Calendar.SECOND));
     }
-
-
-
-
-
-
-
-
-
-
 
 }
