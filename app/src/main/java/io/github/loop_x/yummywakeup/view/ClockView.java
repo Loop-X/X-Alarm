@@ -197,7 +197,8 @@ public class ClockView extends View {
         private Drawable minuteIndicatorDrawable;
         private Drawable secondsIndicatorDrawable;
 
-        private Drawable dayAndNightIndicatorDrawable;
+        private Drawable nighttimeIndicatorDrawable;
+        private Drawable daytimeIndicatorDrawable;
 
         private float translate;
         private float hourAngle;
@@ -206,12 +207,14 @@ public class ClockView extends View {
 
         private float translateX;
         private float translateY;
-
+        private Calendar calendar;
+        
         public ClockTimeIndicatorDraw() {
             hourIndicatorDrawable = ContextCompat.getDrawable(getContext(), R.drawable.clock_hour_hand);
             minuteIndicatorDrawable = ContextCompat.getDrawable(getContext(), R.drawable.clock_minute_hand);
             secondsIndicatorDrawable = ContextCompat.getDrawable(getContext(), R.drawable.clock_second_hand);
-            dayAndNightIndicatorDrawable = ContextCompat.getDrawable(getContext(),R.drawable.clock_night);
+            nighttimeIndicatorDrawable = ContextCompat.getDrawable(getContext(),R.drawable.clock_night);
+            daytimeIndicatorDrawable = ContextCompat.getDrawable(getContext(),R.drawable.clock_daitime);
         }
 
         @Override
@@ -225,7 +228,8 @@ public class ClockView extends View {
 
 
             rightAndBottom = (int) (mClockWidth * 0.12f);
-            dayAndNightIndicatorDrawable.setBounds(0,0,rightAndBottom,rightAndBottom);
+            nighttimeIndicatorDrawable.setBounds(0,0,rightAndBottom,rightAndBottom);
+            daytimeIndicatorDrawable.setBounds(0,0,rightAndBottom,rightAndBottom);
             radius = rightAndBottom * 1.0f / 2;
             translateX = mClockRadius - radius;
             translateY = mClockRadius - ( mClockWidth * 0.78f / 2 ) - radius ;
@@ -234,6 +238,8 @@ public class ClockView extends View {
             hourAngle = 40 / 60.0f * 360.0f;
             minuteAngle = 30 / 60.0f * 360.0f;
             secondsAngle = 20 / 60.0f * 360.0f;
+
+
 
         }
         
@@ -261,7 +267,14 @@ public class ClockView extends View {
             canvas.save();
             canvas.rotate(secondsAngle,mClockRadius,mClockRadius);
             canvas.translate(translateX,translateY);
-            dayAndNightIndicatorDrawable.draw(canvas);
+
+            calendar = Calendar.getInstance();
+
+            if (calendar.get(Calendar.HOUR_OF_DAY) > 6 && calendar.get(Calendar.HOUR_OF_DAY) >= 18){
+                daytimeIndicatorDrawable.draw(canvas);
+            }else {
+                nighttimeIndicatorDrawable.draw(canvas);
+            }
             canvas.restore();
         }
         
