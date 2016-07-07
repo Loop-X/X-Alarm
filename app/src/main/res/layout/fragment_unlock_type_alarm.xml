@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white" >
+    android:background="@color/loopX_1" >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,22 +15,28 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/et_type_sentence"
             android:layout_centerHorizontal="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:gravity="center"
-            android:textColor="@color/loopX_1"
+            android:textColor="@color/loopX_2"
             android:textSize="25sp" />
 
         <io.github.loop_x.yummywakeup.view.YummyEditText
             android:id="@+id/et_type_sentence"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginTop="15dp"
             android:background="@drawable/et_math_result"
-            android:inputType="text"
-            android:gravity="center_horizontal"
-            android:minWidth="250dp"
             android:textSize="25sp"
-            android:textColor="@color/loopX_1" />
+            android:textColor="@color/loopX_2"
+            android:inputType="textMultiLine"
+            android:gravity="top|left"
+            android:minLines="1"
+            android:maxLines="3"
+            android:singleLine="false"
+            android:scrollHorizontally="false"
+            android:scrollbars="vertical" />
 
     </RelativeLayout>
     

@@ -3,6 +3,7 @@ package io.github.loop_x.yummywakeup.module.UnlockTypeModule.alarmType;
 import android.app.Activity;
 import android.content.Context;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -29,6 +30,7 @@ public class TypeAlarm extends UnlockFragment {
     private InputMethodManager mInputMethodManager;
 
     private Activity mContext;
+    private Timer mTimer = null;
 
     TimerTask task = new TimerTask() {
         @Override
@@ -68,8 +70,6 @@ public class TypeAlarm extends UnlockFragment {
             @Override
             public void afterTextChanged(Editable editable) {
                 if (!TextUtils.isEmpty(etTypeSentence.getText())) {
-                    Log.d("cao", "a " + etTypeSentence.getText().toString().toLowerCase());
-                    Log.d("cao", "b " + tvSentenceToType.getText().toString().toLowerCase());
                     if(etTypeSentence.getText().toString().toLowerCase().equals(
                             tvSentenceToType.getText().toString().toLowerCase())) {
                         ToastMaster.setToast(Toast.makeText(getActivity(),
@@ -77,8 +77,10 @@ public class TypeAlarm extends UnlockFragment {
                                 Toast.LENGTH_SHORT));
                         ToastMaster.showToast();
 
-                        Timer timer = new Timer(true);
-                        timer.schedule(task, 1200);
+                        if(mTimer == null) {
+                            mTimer = new Timer(true);
+                            mTimer.schedule(task, 1200);
+                        }
                     }
                 }
             }
@@ -106,8 +108,15 @@ public class TypeAlarm extends UnlockFragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener.closeAlarm();
-        mListener = null;
+
+        if(mListener != null) {
+            mListener.closeAlarm();
+            mListener = null;
+        }
+
+        if(mTimer != null) {
+            mTimer.cancel();
+        }
     }
 
     @Override
