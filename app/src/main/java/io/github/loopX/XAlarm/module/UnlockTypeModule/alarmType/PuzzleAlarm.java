@@ -14,6 +14,7 @@ public class PuzzleAlarm extends UnlockFragment {
 
     private PuzzleLayout puzzleLayout;
     private OnAlarmAction mListener;
+    private Timer mTimer;
 
     TimerTask task = new TimerTask() {
         @Override
@@ -45,8 +46,10 @@ public class PuzzleAlarm extends UnlockFragment {
                         Toast.LENGTH_SHORT));
                 ToastMaster.showToast();
 
-                Timer timer = new Timer(true);
-                timer.schedule(task, 1200);
+                if(mTimer != null) {
+                    mTimer = new Timer(true);
+                    mTimer.schedule(task, 1200);
+                }
 
             }
         });

@@ -28,6 +28,7 @@ public class ShakeAlarm extends UnlockFragment implements SensorEventListener{
     private long mShakeTimestamp;
     private static final float SHAKE_THRESHOLD_GRAVITY = 2.5F;
     private static final int SHAKE_STOP_TIME_MS = 300;
+    private Timer mTimer = null;
 
     TimerTask task = new TimerTask() {
         @Override
@@ -124,8 +125,10 @@ public class ShakeAlarm extends UnlockFragment implements SensorEventListener{
                         Toast.LENGTH_SHORT));
                 ToastMaster.showToast();
 
-                Timer timer = new Timer(true);
-                timer.schedule(task, 1200);
+                if(mTimer == null) {
+                    mTimer = new Timer(true);
+                    mTimer.schedule(task, 1200);
+                }
             }
         }
     }

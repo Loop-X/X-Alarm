@@ -27,6 +27,7 @@ public class MathAlarm extends UnlockFragment {
     private OnAlarmAction mListener;
     private InputMethodManager mInputMethodManager;
     private Activity mContext;
+    private Timer mTimer = null;
 
     public MathAlarm() {}
 
@@ -121,8 +122,11 @@ public class MathAlarm extends UnlockFragment {
                 Toast.LENGTH_SHORT));
         ToastMaster.showToast();
 
-        Timer timer = new Timer(true);
-        timer.schedule(task, 1200);
+        if(mTimer != null) {
+            mTimer = new Timer(true);
+            mTimer.schedule(task, 1200);
+        }
+
     }
 
     @Override
