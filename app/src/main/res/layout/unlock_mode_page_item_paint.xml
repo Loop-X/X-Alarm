@@ -24,7 +24,7 @@
             android:layout_height="38dp"
             android:onClick="runDemo"
             android:textSize="14sp"
-            android:background="@color/loopX_2"
+            android:background="@drawable/btn_have_a_try"
             android:textColor="@color/loopX_3"
             android:text="@string/have_a_try"/>
 
