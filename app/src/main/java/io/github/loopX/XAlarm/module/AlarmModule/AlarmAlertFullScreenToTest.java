@@ -37,7 +37,7 @@ public class AlarmAlertFullScreenToTest extends FragmentActivity implements Unlo
          */
         mMediaPlayer = new MediaPlayer();
         try {
-            mMediaPlayer.setDataSource(this, Uri.parse("android.resource://io.github.loop_x.yummywakeup/raw/ringtone_0"));
+            mMediaPlayer.setDataSource(this, Uri.parse("android.resource://io.github.loopX.XAlarm/raw/ringtone_0"));
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
             mMediaPlayer.setLooping(true);
             mMediaPlayer.prepare();

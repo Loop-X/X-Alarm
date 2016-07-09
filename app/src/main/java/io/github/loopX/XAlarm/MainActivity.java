@@ -364,7 +364,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             /** Update Vibration **/
             mAlarm.vibrate = rightMenu.getVibrationSetting();
             mAlarm.alert =
-                    Uri.parse("android.resource://io.github.loop_x.yummywakeup/raw/ringtone_"
+                    Uri.parse("android.resource://io.github.loopX.XAlarm/raw/ringtone_"
                             + rightMenu.getRingtone());
 
             // Save alarm
