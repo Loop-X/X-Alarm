@@ -16,8 +16,7 @@
             android:layout_centerInParent="true"
             android:text="0"
             android:textColor="@color/loopX_2"
-            android:textSize="100sp"
-            android:gravity="center" />
+            android:textSize="100sp" />
 
         <io.github.loopX.XAlarm.view.YummyTextView
             android:layout_width="wrap_content"
