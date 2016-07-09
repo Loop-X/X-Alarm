@@ -16,6 +16,9 @@ import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.widget.TextView;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import io.github.loopX.XAlarm.R;
 import io.github.loopX.XAlarm.UIUtils;
 import io.github.loopX.XAlarm.infrastructure.BaseActivity;
@@ -38,7 +41,12 @@ public class UnlockTypeActivity extends BaseActivity {
     private  int currentUnlockType;
     private RippleBackgroundView rippleBackground;
     private boolean mFistInit;
-    
+
+    RippleBackgroundView.RippleBuilder mSelectedRippleBuild;
+    RippleBackgroundView.RippleBuilder mUnSelectedRippleBuild;
+
+    private Timer mTimer;
+
     @Override
     public void onViewInitial() {
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
@@ -47,6 +55,16 @@ public class UnlockTypeActivity extends BaseActivity {
         saveLayout = findViewById(R.id.saveLayout);
         rippleBackground  = (RippleBackgroundView) findViewById(R.id.rippleBackground);
 
+        mSelectedRippleBuild = new RippleBackgroundView.RippleBuilder(UnlockTypeActivity.this)
+                .setFinishRippleRadius(UIUtils.getScreenWidth())
+                .setStartRippleRadius(0)
+                .setRippleColor(getResources().getColor(R.color.loopX_2));
+
+        mUnSelectedRippleBuild = new RippleBackgroundView.RippleBuilder(UnlockTypeActivity.this)
+                .setFinishRippleRadius(0)
+                .setStartRippleRadius(UIUtils.getScreenWidth())
+                .setRippleColor(getResources().getColor(R.color.loopX_2));
+
         saveDrawable = getResources().getDrawable(R.drawable.icon_set_choose_big);
         int w = UIUtils.dip2px(40);
         saveDrawable.setBounds(0,0,w,w);
@@ -54,13 +72,24 @@ public class UnlockTypeActivity extends BaseActivity {
         saveLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int current =  viewPager.getCurrentItem();
 
-                Intent intent  = new Intent(UnlockTypeActivity.this, UnlockTypeActivity.class);
-                int returnValue = convertItemPositionToUnlockTypeId(current);
-                intent.putExtra("unlockType", returnValue);
-                setResult(RESULT_OK, intent);
-                finish();
+                rippleBackground.startRipple(mSelectedRippleBuild);
+
+                if(mTimer == null) {
+                    mTimer = new Timer(true);
+                    mTimer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            int current =  viewPager.getCurrentItem();
+                            Intent intent  = new Intent(UnlockTypeActivity.this, UnlockTypeActivity.class);
+                            int returnValue = convertItemPositionToUnlockTypeId(current);
+                            intent.putExtra("unlockType", returnValue);
+                            setResult(RESULT_OK, intent);
+                            finish();
+                        }
+                    }, 150);
+                }
+
             }
         });
     }
@@ -189,23 +218,11 @@ public class UnlockTypeActivity extends BaseActivity {
     private class TabSelectedListener extends TabLayout.ViewPagerOnTabSelectedListener {
 
         AlphaAnimation alphaAnimation;
-        RippleBackgroundView.RippleBuilder selectedRippleBuild;
-        RippleBackgroundView.RippleBuilder unSelectedRippleBuild;
         
         public TabSelectedListener(ViewPager viewPager) {
             super(viewPager);
             alphaAnimation = new AlphaAnimation(0f,1f);
             alphaAnimation.setDuration(500);
-
-            selectedRippleBuild = new RippleBackgroundView.RippleBuilder(UnlockTypeActivity.this)
-                    .setFinishRippleRadius(UIUtils.getScreenWidth())
-                    .setStartRippleRadius(0)
-                    .setRippleColor(getResources().getColor(R.color.loopX_2));
-
-            unSelectedRippleBuild = new RippleBackgroundView.RippleBuilder(UnlockTypeActivity.this)
-                    .setFinishRippleRadius(0)
-                    .setStartRippleRadius(UIUtils.getScreenWidth())
-                    .setRippleColor(getResources().getColor(R.color.loopX_2));
         }
 
         @Override
@@ -218,9 +235,9 @@ public class UnlockTypeActivity extends BaseActivity {
             if (!mFistInit){
                 rippleBackground.setBackgroundDrawable(null);
                 if (!icSaveView.isSelected() && currentUnlockType == unlockType){
-                    rippleBackground.startRipple(selectedRippleBuild);
+                    rippleBackground.startRipple(mSelectedRippleBuild);
                 }else if (icSaveView.isSelected() && currentUnlockType != unlockType){
-                    rippleBackground.startRipple(unSelectedRippleBuild);
+                    rippleBackground.startRipple(mUnSelectedRippleBuild);
                 }
             }
 
@@ -233,7 +250,7 @@ public class UnlockTypeActivity extends BaseActivity {
                 mFistInit = false;
             }
             
-            saveLayout.setSelected( currentUnlockType == unlockType);
+            saveLayout.setSelected(currentUnlockType == unlockType);
             icSaveView.setText(currentUnlockType == unlockType ? "" : "OK");
             icSaveView.setCompoundDrawables(currentUnlockType == unlockType ? saveDrawable : null , null,null,null);
             
