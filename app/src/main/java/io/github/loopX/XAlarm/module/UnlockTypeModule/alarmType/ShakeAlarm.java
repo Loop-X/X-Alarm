@@ -7,14 +7,13 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.widget.Toast;
 
-import com.john.waveview.WaveView;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
 import io.github.loopX.XAlarm.R;
 import io.github.loopX.XAlarm.tools.ToastMaster;
 import io.github.loopX.XAlarm.view.YummyTextView;
+import io.github.loopX.XAlarm.view.waveview.WaveView;
 
 public class ShakeAlarm extends UnlockFragment implements SensorEventListener{
 

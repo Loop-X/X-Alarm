@@ -28,15 +28,15 @@
             android:textColor="@color/loopX_2"
             android:layout_below="@id/tv_shake_progress"/>
 
-        <com.john.waveview.WaveView
+        <io.github.loopX.XAlarm.view.waveview.WaveView
             android:id="@+id/iv_water"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#00000000"
-            wave:above_wave_color="#01579B"
-            wave:blow_wave_color="#03A9F4"
+            wave:above_wave_color="#E3F2FD"
+            wave:blow_wave_color="#2196F3"
             wave:wave_height="large"
-            wave:wave_hz="normal"/>
+            wave:wave_hz="slow"/>
 
     </RelativeLayout>
 
