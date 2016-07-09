@@ -5,7 +5,7 @@ android {
     buildToolsVersion project.buildToolsVersion
 
     defaultConfig {
-        applicationId "io.github.loop_x.yummywakeup"
+        applicationId "io.github.loopX.XAlarm"
         minSdkVersion project.minSdkVersion
         targetSdkVersion project.targetSdkVersion
         versionCode 1

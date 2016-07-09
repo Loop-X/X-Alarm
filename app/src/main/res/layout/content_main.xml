@@ -54,7 +54,7 @@
         android:visibility="invisible"
         />
     
-    <io.github.loop_x.yummywakeup.view.ClockView
+    <io.github.loopX.XAlarm.view.ClockView
         android:id="@+id/analog_clock"
         android:layout_width="300dp"
         android:layout_height="300dp"
@@ -62,7 +62,7 @@
         android:layout_marginTop="-40dp"
         android:layout_alignTop="@id/centerView"/>
 
-    <io.github.loop_x.yummywakeup.view.YummyTextView
+    <io.github.loopX.XAlarm.view.YummyTextView
         android:id="@+id/tv_wake_up"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
         android:textSize="18sp"
         android:textStyle="bold" />
 
-    <io.github.loop_x.yummywakeup.view.YummyTextView
+    <io.github.loopX.XAlarm.view.YummyTextView
         android:id="@+id/tv_alarm_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
         tools:text="10:20"
         android:textSize="50sp" />
 
-    <io.github.loop_x.yummywakeup.view.YummyTextView
+    <io.github.loopX.XAlarm.view.YummyTextView
         android:id="@+id/tv_alarm_am_pm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

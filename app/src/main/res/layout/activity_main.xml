@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<io.github.loop_x.yummywakeup.view.DragMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<io.github.loopX.XAlarm.view.DragMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/dragMenuLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/loopX_1"
     android:fitsSystemWindows="true">
 
-    <io.github.loop_x.yummywakeup.view.UnlockTypeMenuLayout
+    <io.github.loopX.XAlarm.view.UnlockTypeMenuLayout
         android:id="@+id/menuLeft"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,7 +18,7 @@
         android:tag="leftMenu" />
    
 
-    <io.github.loop_x.yummywakeup.module.SettingModule.AlarmPreferenceSettingsMenuLayout
+    <io.github.loopX.XAlarm.module.SettingModule.AlarmPreferenceSettingsMenuLayout
         android:id="@+id/menuRight"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -42,4 +42,4 @@
         android:layout_height="match_parent" />
 
 
-</io.github.loop_x.yummywakeup.view.DragMenuLayout>
+</io.github.loopX.XAlarm.view.DragMenuLayout>

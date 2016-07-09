@@ -11,7 +11,7 @@
         android:layout_height="156dp"
         android:layout_alignParentTop="true">
 
-        <io.github.loop_x.yummywakeup.view.RippleBackgroundView
+        <io.github.loopX.XAlarm.view.RippleBackgroundView
             android:id="@+id/rippleBackground"
             android:layout_width="match_parent"
             android:layout_height="156dp" />
@@ -23,14 +23,14 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="60dp">
 
-            <io.github.loop_x.yummywakeup.view.YummyTextView
+            <io.github.loopX.XAlarm.view.YummyTextView
                 android:id="@+id/tv_set_alarm_current_alarm_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/loopX_3"
                 android:textSize="60sp" />
 
-            <io.github.loop_x.yummywakeup.view.YummyTextView
+            <io.github.loopX.XAlarm.view.YummyTextView
                 android:id="@+id/tv_set_alarm_current_alarm_ampm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1">
 
-                    <io.github.loop_x.yummywakeup.view.YummyTextView
+                    <io.github.loopX.XAlarm.view.YummyTextView
                         android:id="@+id/tv_monday"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1">
 
-                    <io.github.loop_x.yummywakeup.view.YummyTextView
+                    <io.github.loopX.XAlarm.view.YummyTextView
                         android:id="@+id/tv_tuesday"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1">
 
-                    <io.github.loop_x.yummywakeup.view.YummyTextView
+                    <io.github.loopX.XAlarm.view.YummyTextView
                         android:id="@+id/tv_wednesday"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -98,7 +98,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1">
 
-                    <io.github.loop_x.yummywakeup.view.YummyTextView
+                    <io.github.loopX.XAlarm.view.YummyTextView
                         android:id="@+id/tv_thursday"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -113,7 +113,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1">
 
-                    <io.github.loop_x.yummywakeup.view.YummyTextView
+                    <io.github.loopX.XAlarm.view.YummyTextView
                         android:id="@+id/tv_friday"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -128,7 +128,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1">
 
-                    <io.github.loop_x.yummywakeup.view.YummyTextView
+                    <io.github.loopX.XAlarm.view.YummyTextView
                         android:id="@+id/tv_saturday"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -143,7 +143,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1">
 
-                    <io.github.loop_x.yummywakeup.view.YummyTextView
+                    <io.github.loopX.XAlarm.view.YummyTextView
                         android:id="@+id/tv_sunday"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -202,7 +202,7 @@
 
         </RelativeLayout>
 
-        <io.github.loop_x.yummywakeup.view.YummyTimePicker
+        <io.github.loopX.XAlarm.view.YummyTimePicker
             android:id="@+id/tp_set_alarm_am_pm"
             android:layout_width="100dp"
             android:layout_height="220dp"
@@ -217,43 +217,43 @@
         android:layout_marginBottom="20dp"
         android:baselineAligned="false">
 
-        <io.github.loop_x.yummywakeup.module.SetAlarmModule.DayOfWeekSelectorView
+        <io.github.loopX.XAlarm.module.SetAlarmModule.DayOfWeekSelectorView
             android:id="@+id/mondaySelector"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
-        <io.github.loop_x.yummywakeup.module.SetAlarmModule.DayOfWeekSelectorView
+        <io.github.loopX.XAlarm.module.SetAlarmModule.DayOfWeekSelectorView
             android:id="@+id/tuesdaySelector"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
-        <io.github.loop_x.yummywakeup.module.SetAlarmModule.DayOfWeekSelectorView
+        <io.github.loopX.XAlarm.module.SetAlarmModule.DayOfWeekSelectorView
             android:id="@+id/wednesdaySelector"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
-        <io.github.loop_x.yummywakeup.module.SetAlarmModule.DayOfWeekSelectorView
+        <io.github.loopX.XAlarm.module.SetAlarmModule.DayOfWeekSelectorView
             android:id="@+id/thursdaySelector"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
-        <io.github.loop_x.yummywakeup.module.SetAlarmModule.DayOfWeekSelectorView
+        <io.github.loopX.XAlarm.module.SetAlarmModule.DayOfWeekSelectorView
             android:id="@+id/fridaySelector"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
-        <io.github.loop_x.yummywakeup.module.SetAlarmModule.DayOfWeekSelectorView
+        <io.github.loopX.XAlarm.module.SetAlarmModule.DayOfWeekSelectorView
             android:id="@+id/saturdaySelector"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
-        <io.github.loop_x.yummywakeup.module.SetAlarmModule.DayOfWeekSelectorView
+        <io.github.loopX.XAlarm.module.SetAlarmModule.DayOfWeekSelectorView
             android:id="@+id/sundaySelector"
             android:layout_width="0dp"
             android:layout_height="match_parent"

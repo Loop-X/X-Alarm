@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <io.github.loop_x.yummywakeup.view.YummyTextView
+        <io.github.loopX.XAlarm.view.YummyTextView
             android:id="@+id/tv_formula"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
             android:textSize="50sp"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <io.github.loop_x.yummywakeup.view.YummyEditText
+        <io.github.loopX.XAlarm.view.YummyEditText
             android:id="@+id/et_calcul_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

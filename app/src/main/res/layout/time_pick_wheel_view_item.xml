@@ -4,7 +4,7 @@
     android:layout_height="75dp"
     android:layout_gravity="center">
 
-    <io.github.loop_x.yummywakeup.view.YummyTextView
+    <io.github.loopX.XAlarm.view.YummyTextView
         android:id="@+id/timeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

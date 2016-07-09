@@ -9,14 +9,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <io.github.loop_x.yummywakeup.view.PuzzleLayout
+        <io.github.loopX.XAlarm.view.PuzzleLayout
             android:id="@+id/rl_puzzle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:padding="3dp" />
 
-        <io.github.loop_x.yummywakeup.view.YummyTextView
+        <io.github.loopX.XAlarm.view.YummyTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"

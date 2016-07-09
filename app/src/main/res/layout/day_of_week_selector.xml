@@ -3,13 +3,13 @@
     android:layout_width="40dp"
     android:layout_height="40dp">
 
-    <io.github.loop_x.yummywakeup.view.RippleBackgroundView
+    <io.github.loopX.XAlarm.view.RippleBackgroundView
         android:id="@+id/rippleBackground"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="center" />
 
-    <io.github.loop_x.yummywakeup.view.YummyTextView
+    <io.github.loopX.XAlarm.view.YummyTextView
         android:id="@+id/dayOfWeek"
         android:layout_width="40dp"
         android:layout_height="40dp"

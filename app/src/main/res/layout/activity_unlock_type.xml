@@ -48,12 +48,12 @@
         android:background="@color/loopX_3_10_alpha"
         >
         
-        <io.github.loop_x.yummywakeup.view.RippleBackgroundView
+        <io.github.loopX.XAlarm.view.RippleBackgroundView
             android:id="@+id/rippleBackground"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <io.github.loop_x.yummywakeup.view.YummyTextView
+        <io.github.loopX.XAlarm.view.YummyTextView
             android:id="@+id/icSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
