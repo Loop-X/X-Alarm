@@ -118,7 +118,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle("Yummy Wake Up!")
+                        .setContentTitle("X-Alarm!")
                         .setContentText(label)
                         .setContentIntent(resultPendingIntent)
                         .setFullScreenIntent(resultPendingIntent, true)
@@ -157,7 +157,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle("Yummy Wake Up!")
+                        .setContentTitle("X-Alarm!")
                         .setContentText(context.getString(R.string.alarm_alert_alert_silenced, timeout))
                         .setContentIntent(pendingIntentintent)
                         .setAutoCancel(true);
