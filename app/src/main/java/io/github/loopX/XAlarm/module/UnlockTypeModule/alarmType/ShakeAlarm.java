@@ -116,7 +116,7 @@ public class ShakeAlarm extends UnlockFragment implements SensorEventListener{
             }
 
             ivWater.setProgress(mShakeCount);
-            tvShakeProgress.setText(mShakeCount + "%");
+            tvShakeProgress.setText(mShakeCount + "");
 
             if(mShakeCount == 100) {
                 ToastMaster.setToast(Toast.makeText(getActivity(),

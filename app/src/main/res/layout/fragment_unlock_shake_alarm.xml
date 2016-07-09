@@ -11,10 +11,10 @@
 
         <io.github.loopX.XAlarm.view.YummyTextView
             android:id="@+id/tv_shake_progress"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="0%"
+            android:text="0"
             android:textColor="@color/loopX_2"
             android:textSize="100sp"
             android:gravity="center" />
@@ -22,7 +22,18 @@
         <io.github.loopX.XAlarm.view.YummyTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/tv_shake_progress"
+            android:layout_alignBaseline="@id/tv_shake_progress"
+            android:layout_marginLeft="10dp"
+            android:text="%"
+            android:textColor="@color/loopX_2"
+            android:textSize="50sp" />
+
+        <io.github.loopX.XAlarm.view.YummyTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
             android:text="@string/shake_your_phone"
             android:textSize="40sp"
             android:textColor="@color/loopX_2"

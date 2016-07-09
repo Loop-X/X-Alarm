@@ -28,7 +28,7 @@
     <string name="day_concat">", "</string>
     <string name="turn_on_alarm">打开闹钟</string>
     <string name="turn_off_alarm">关闭闹钟</string>
-    <string name="shake_your_phone">摇动手机!</string>
+    <string name="shake_your_phone">摇动解锁</string>
     <string name="puzzle_alarm">拼图解锁</string>
     <string name="shake">摇动解锁</string>
     <string name="puzzle">拼图解锁</string>
@@ -36,7 +36,7 @@
     <string name="type">打字解锁</string>
     <string name="have_a_try">试一试</string>
     <string name="math_exercise">数学小王子</string>
-    <string name="type_alarm">打字闹钟</string>
+    <string name="type_alarm">打字解锁</string>
     <string name="puzzle_game">拼个图</string>
     <string name="puzzle_complete">解锁成功</string>
     <string name="unlock_type_updated">更新解锁方式</string>
