@@ -27,6 +27,7 @@ import android.provider.BaseColumns;
 import java.util.Calendar;
 
 import io.github.loopX.XAlarm.R;
+import io.github.loopX.XAlarm.XAlarmApp;
 import io.github.loopX.XAlarm.module.UnlockTypeModule.UnlockTypeEnum;
 
 public final class Alarm implements Parcelable {
@@ -217,7 +218,7 @@ public final class Alarm implements Parcelable {
         vibrate = true;
         enabled = true;
         daysOfWeek = new DaysOfWeek(0x7f); // By default, it will repeat every day
-        alert = Uri.parse("android.resource://io.github.loop_x.yummywakeup/raw/ringtone_0");
+        alert = Uri.parse(XAlarmApp.getResourcePath() + "/raw/ringtone_0");
         unlockType = UnlockTypeEnum.Type.getID();
     }
 

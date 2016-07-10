@@ -18,6 +18,7 @@ import android.widget.SeekBar;
 import com.kyleduo.switchbutton.SwitchButton;
 
 import io.github.loopX.XAlarm.R;
+import io.github.loopX.XAlarm.XAlarmApp;
 
 public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
 
@@ -77,7 +78,7 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
         mRingtoneManager = new RingtoneManager(mContext);
         for(int i = 0; i < 4; i++) {
             RingtoneManager.setActualDefaultRingtoneUri(mContext, RingtoneManager.TYPE_RINGTONE,
-                    Uri.parse("android.resource://io.github.loopX.XAlarm/raw/ringtone_" + i));
+                    Uri.parse(XAlarmApp.getResourcePath() + "/raw/ringtone_" + i));
         }
 
         lvRingtoneList = (ListView) findViewById(R.id.lv_ringtone_list);
@@ -93,7 +94,7 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
 
                     stopRingtone();
                     mRingtone = RingtoneManager.getRingtone(mContext,
-                            Uri.parse("android.resource://io.github.loopX.XAlarm/raw/ringtone_" + i));
+                            Uri.parse(XAlarmApp.getResourcePath() + "/raw/ringtone_" + i));
 
                     CustomAdapter.mLastSelectPosition = i;
                     mAdapter.notifyDataSetChanged();
@@ -104,7 +105,7 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
                         stopRingtone();
                     } else {
                         mRingtone = RingtoneManager.getRingtone(mContext,
-                                Uri.parse("android.resource://io.github.loopX.XAlarm/raw/ringtone_" + i));
+                                Uri.parse(XAlarmApp.getResourcePath() + "/raw/ringtoe_" + i));
                         mRingtone.play();
                     }
 

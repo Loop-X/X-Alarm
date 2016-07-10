@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import java.io.IOException;
 
 import io.github.loopX.XAlarm.R;
+import io.github.loopX.XAlarm.XAlarmApp;
 import io.github.loopX.XAlarm.module.UnlockTypeModule.alarmType.UnlockFragment;
 import io.github.loopX.XAlarm.module.UnlockTypeModule.alarmType.UnlockFragmentFactory;
 
@@ -37,7 +38,7 @@ public class AlarmAlertFullScreenToTest extends FragmentActivity implements Unlo
          */
         mMediaPlayer = new MediaPlayer();
         try {
-            mMediaPlayer.setDataSource(this, Uri.parse("android.resource://io.github.loopX.XAlarm/raw/ringtone_0"));
+            mMediaPlayer.setDataSource(this, Uri.parse(XAlarmApp.getResourcePath() + "/raw/ringtone_0"));
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
             mMediaPlayer.setLooping(true);
             mMediaPlayer.prepare();
