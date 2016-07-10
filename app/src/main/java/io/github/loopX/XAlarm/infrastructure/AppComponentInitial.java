@@ -2,7 +2,6 @@ package io.github.loopX.XAlarm.infrastructure;
 
 public interface AppComponentInitial {
 
-  
     /**
      * Initializes Views
      */
