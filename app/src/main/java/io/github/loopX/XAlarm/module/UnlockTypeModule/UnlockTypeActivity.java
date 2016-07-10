@@ -258,7 +258,7 @@ public class UnlockTypeActivity extends BaseActivity {
             int resId = 0;
             switch (position) {
                 case MODE_TYPE:
-                    resId = R.drawable.model_normal;
+                    resId = R.drawable.model_type;
                     break;
                 case MODE_MATH:
                     resId = R.drawable.model_math;
@@ -279,7 +279,7 @@ public class UnlockTypeActivity extends BaseActivity {
             int resId = 0;
             switch (tab.getPosition()) {
                 case MODE_TYPE:
-                    resId = R.drawable.model_normal_grey;
+                    resId = R.drawable.model_type_grey;
                     break;
                 case MODE_MATH:
                     resId = R.drawable.model_math_grey;
