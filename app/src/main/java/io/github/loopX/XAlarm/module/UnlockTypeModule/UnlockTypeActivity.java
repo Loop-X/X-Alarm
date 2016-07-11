@@ -87,7 +87,7 @@ public class UnlockTypeActivity extends BaseActivity {
                             setResult(RESULT_OK, intent);
                             finish();
                         }
-                    }, 150);
+                    }, 500);
                 }
 
             }
