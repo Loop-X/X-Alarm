@@ -46,8 +46,8 @@ public class AlarmProvider extends ContentProvider {
             UriMatcher.NO_MATCH);
 
     static {
-        sURLMatcher.addURI(XAlarmApp.getPackagePath(), "alarm", ALARMS);
-        sURLMatcher.addURI(XAlarmApp.getPackagePath(), "alarm/#", ALARMS_ID);
+        sURLMatcher.addURI("io.github.loopX.XAlarm", "alarm", ALARMS);
+        sURLMatcher.addURI("io.github.loopX.XAlarm", "alarm/#", ALARMS_ID);
     }
 
     private static class DatabaseHelper extends SQLiteOpenHelper {
