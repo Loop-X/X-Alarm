@@ -208,6 +208,7 @@ public class ClockView extends View {
         private float translateX;
         private float translateY;
         private Calendar calendar;
+        private int hourOfDay;
         
         public ClockTimeIndicatorDraw() {
             hourIndicatorDrawable = ContextCompat.getDrawable(getContext(), R.drawable.clock_hour_hand);
@@ -269,8 +270,8 @@ public class ClockView extends View {
             canvas.translate(translateX,translateY);
 
             calendar = Calendar.getInstance();
-
-            if (calendar.get(Calendar.HOUR_OF_DAY) > 6 && calendar.get(Calendar.HOUR_OF_DAY) >= 18){
+            hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+            if ( hourOfDay> 6 && hourOfDay <= 18){
                 daytimeIndicatorDrawable.draw(canvas);
             }else {
                 nighttimeIndicatorDrawable.draw(canvas);
