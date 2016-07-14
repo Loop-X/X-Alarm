@@ -22,10 +22,6 @@ public class AlarmDBSchema {
             public static final String TONE            = "alarm_tone";
             public static final String ENABLED         = "enabled";
             public static final String VIBRATE         = "vibrate";
-            public static final String SNOOZED         = "snoozed";
-            public static final String SNOOZED_HOUR    = "snoozed_hour";
-            public static final String SNOOZED_MINUTE  = "snoozed_minute";
-            public static final String SNOOZED_SECONDS = "snoozed_seconds";
 
         }
     }

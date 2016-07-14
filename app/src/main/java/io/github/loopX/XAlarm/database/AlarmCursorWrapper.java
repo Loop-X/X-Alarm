@@ -29,11 +29,7 @@ public class AlarmCursorWrapper extends CursorWrapper {
         int unlockType = getInt(getColumnIndex(AlarmTable.Columns.UNLOCK_TYPE));
         String[] repeatingDays = getString(getColumnIndex(AlarmTable.Columns.DAYS)).split(",");
         boolean isVibrate = (getInt(getColumnIndex(AlarmTable.Columns.VIBRATE)) != 0);
-        boolean isSnoozed = (getInt(getColumnIndex(AlarmTable.Columns.SNOOZED)) != 0);
         boolean isEnabled = (getInt(getColumnIndex(AlarmTable.Columns.ENABLED)) != 0);
-        int snoozedHour = getInt(getColumnIndex(AlarmTable.Columns.SNOOZED_HOUR));
-        int snoozedMinute = getInt(getColumnIndex(AlarmTable.Columns.SNOOZED_MINUTE));
-        int snoozedSeconds = getInt(getColumnIndex(AlarmTable.Columns.SNOOZED_SECONDS));
         Uri alarmTone = Uri.parse(getString(getColumnIndex(AlarmTable.Columns.TONE)));
 
         // Create a new alarm
@@ -50,13 +46,7 @@ public class AlarmCursorWrapper extends CursorWrapper {
         }
 
         alarm.setVibrate(isVibrate);
-        alarm.setSnoozed(isSnoozed);
         alarm.setEnabled(isEnabled);
-
-        alarm.setSnoozed(isSnoozed);
-        alarm.setSnoozedHour(snoozedHour);
-        alarm.setSnoozedMinute(snoozedMinute);
-        alarm.setSnoozedSeconds(snoozedSeconds);
 
         return alarm;
     }

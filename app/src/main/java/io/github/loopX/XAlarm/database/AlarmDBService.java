@@ -18,7 +18,7 @@ public class AlarmDBService {
     private Context mContext;
     private SQLiteDatabase mDatabase;
 
-    private AlarmDBService(Context context) {
+    public AlarmDBService(Context context) {
         mContext = context.getApplicationContext();
         mDatabase = new AlarmDBHelper(mContext).getWritableDatabase();
     }
@@ -98,10 +98,6 @@ public class AlarmDBService {
         values.put(AlarmTable.Columns.DAYS, repeatingDays);
         values.put(AlarmTable.Columns.VIBRATE, alarm.isVibrate() ? 1 : 0);
         values.put(AlarmTable.Columns.ENABLED, alarm.isEnabled() ? 1 : 0);
-        values.put(AlarmTable.Columns.SNOOZED, alarm.isSnoozed() ? 1 : 0);
-        values.put(AlarmTable.Columns.SNOOZED_HOUR, alarm.getSnoozedHour());
-        values.put(AlarmTable.Columns.SNOOZED_MINUTE, alarm.getSnoozedMinute());
-        values.put(AlarmTable.Columns.SNOOZED_SECONDS, alarm.getSnoozedSeconds());
 
         return values;
 

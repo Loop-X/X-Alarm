@@ -28,11 +28,7 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
                 AlarmTable.Columns.UNLOCK_TYPE + ", " +
                 AlarmTable.Columns.DAYS + ", " +
                 AlarmTable.Columns.TONE + ", " +
-                AlarmTable.Columns.VIBRATE + ", " +
-                AlarmTable.Columns.SNOOZED + ", " +
-                AlarmTable.Columns.SNOOZED_HOUR + ", " +
-                AlarmTable.Columns.SNOOZED_MINUTE + ", " +
-                AlarmTable.Columns.SNOOZED_SECONDS +
+                AlarmTable.Columns.VIBRATE +
                 ")"
         );
 
