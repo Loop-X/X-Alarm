@@ -37,15 +37,16 @@ public class AlarmVibrator {
         }
     }
 
-    public void cleanup() {
-        mVibrator = null;
-    }
-
     public void stop() {
         if (mIsVibrating) {
             mVibrator.cancel();
             mIsVibrating = false;
         }
+    }
+
+    public void cleanup() {
+        stop();
+        mVibrator = null;
     }
 }
 
