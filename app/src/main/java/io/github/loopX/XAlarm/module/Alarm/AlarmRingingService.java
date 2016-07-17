@@ -3,8 +3,8 @@ package io.github.loopX.XAlarm.module.Alarm;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Binder;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
 
 import java.util.UUID;
 
@@ -24,6 +24,8 @@ public class AlarmRingingService extends Service {
     public static final String ALARM_ID = "x_alarm_id";
     private static final String ALARM_TIME = "x_alarm_time";
 
+    private final IBinder mBinder = new LocalBinder();
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -31,10 +33,9 @@ public class AlarmRingingService extends Service {
         mController = new AlarmRingingController(getApplicationContext());
     }
 
-    @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return mBinder;
     }
 
     @Override
@@ -95,6 +96,12 @@ public class AlarmRingingService extends Service {
     private void disableForegroundService() {
         stopForeground(true);
         SharedWakeLock.getInstance(this).releasePartialWakeLock();
+    }
+
+    public class LocalBinder extends Binder {
+        public AlarmRingingService getService() {
+            return AlarmRingingService.this;
+        }
     }
 
 
