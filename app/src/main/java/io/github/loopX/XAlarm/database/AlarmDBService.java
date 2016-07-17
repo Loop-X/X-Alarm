@@ -15,12 +15,20 @@ import io.github.loopX.XAlarm.database.AlarmDBSchema.AlarmTable;
  */
 public class AlarmDBService {
 
+    private static AlarmDBService mAlarmDBService;
     private Context mContext;
     private SQLiteDatabase mDatabase;
 
-    public AlarmDBService(Context context) {
+    private AlarmDBService(Context context) {
         mContext = context.getApplicationContext();
         mDatabase = new AlarmDBHelper(mContext).getWritableDatabase();
+    }
+
+    public static AlarmDBService getInstance(Context context) {
+        if (mAlarmDBService == null) {
+            mAlarmDBService = new AlarmDBService(context);
+        }
+        return mAlarmDBService;
     }
 
     /**

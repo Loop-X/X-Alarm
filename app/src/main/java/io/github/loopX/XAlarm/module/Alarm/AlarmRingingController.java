@@ -34,7 +34,7 @@ public final class AlarmRingingController {
             UUID alarmId = (UUID) intent.getExtras().getSerializable(AlarmScheduler.X_ALARM_ID);
 
             // Get alarm instance from DB
-            AlarmDBService alarmDBService = new AlarmDBService(XAlarmApp.getAppContext());
+            AlarmDBService alarmDBService = AlarmDBService.getInstance(XAlarmApp.getAppContext());
             mCurrentAlarm = alarmDBService.getAlarm(alarmId);
 
             // Start ringtone and Vibrator

@@ -32,7 +32,7 @@ public class Alarm {
 
     public Alarm(UUID alarmId) {
 
-        alarmDBService = new AlarmDBService(XAlarmApp.getAppContext());
+        alarmDBService = AlarmDBService.getInstance(XAlarmApp.getAppContext());
 
         id = alarmId;
 
