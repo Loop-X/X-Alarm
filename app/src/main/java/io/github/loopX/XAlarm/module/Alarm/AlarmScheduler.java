@@ -120,7 +120,7 @@ public class AlarmScheduler {
 
     private static PendingIntent createPendingIntent(Context context, Alarm alarm) {
 
-        Intent intent = new Intent(context, AlarmAlertFullScreen.class);
+        Intent intent = new Intent(context, AlarmWakeReceiver.class);
         intent.putExtra(X_ALARM_ID, alarm.getId());
 
         return PendingIntent

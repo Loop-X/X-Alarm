@@ -25,7 +25,7 @@ public class SharedWakeLock {
         mPartialWakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
     }
 
-    public static SharedWakeLock get(Context context) {
+    public static SharedWakeLock getInstance(Context context) {
         if (sWakeLock == null) {
             sWakeLock = new SharedWakeLock(context);
         }
