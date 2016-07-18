@@ -205,10 +205,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 setAlarmTimeOnTextView(mAlarm);
                 saveAlarm();
 
-                Toast toast = Toast.makeText(MainActivity.this,
-                        Alarms.formatToast(MainActivity.this, newTime),
-                        Toast.LENGTH_SHORT);
-                ToastMaster.setToast(toast);
+                String text = null;
+
+                if(mAlarm.enabled) {
+                    ivMainContentIndicator.setImageResource(R.drawable.main_mid);
+                    text = Alarms.formatToast(MainActivity.this, newTime);
+
+                } else {
+                    ivMainContentIndicator.setImageResource(R.drawable.main_mid_off);
+                    text = getString(R.string.turn_off_alarm);
+                }
+
+                ToastMaster.setToast(Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT));
                 ToastMaster.showToast();
                 break;
             case UNLOCK_TYPE_REQUEST_CODE:

@@ -1,10 +1,13 @@
 package io.github.loopX.XAlarm.module.Alarm;
 
+import android.content.Context;
 import android.net.Uri;
 
 import java.util.Calendar;
+import java.util.UUID;
 
 import io.github.loopX.XAlarm.XAlarmApp;
+import io.github.loopX.XAlarm.database.AlarmDBService;
 import io.github.loopX.XAlarm.module.UnlockTypeModule.UnlockTypeEnum;
 
 /**
@@ -12,121 +15,179 @@ import io.github.loopX.XAlarm.module.UnlockTypeModule.UnlockTypeEnum;
  **/
 public class Alarm {
 
-    private static final int SNOOZE_DURATION_INTEGER = (5 * 60) * 1000;
+    private AlarmDBService alarmDBService;
 
-    private int     mTimeHour;
-    private int     mTimeMinute;
-    private int     mUnlockType;
-    private int     mSnoozeHour;
-    private int     mSnoozeMinute;
-    private int     mSnoozeSeconds;
-    private boolean mRepeatingDays[];
-    private boolean mIsEnabled;
-    private boolean mIsVibrate;
-    private Uri     mAlarmTone;
+    private UUID    id;
+    private int     timeHour;
+    private int     timeMinute;
+    private int     unlockType;
+    private boolean repeatingDays[];
+    private boolean isEnabled;
+    private boolean isVibrate;
+    private Uri     alarmTone;
 
     public Alarm() {
+        this(UUID.randomUUID());
+    }
+
+    public Alarm(UUID alarmId) {
+
+        alarmDBService = AlarmDBService.getInstance(XAlarmApp.getAppContext());
+
+        id = alarmId;
 
         Calendar calendar = Calendar.getInstance();
 
-        mTimeHour = calendar.get(Calendar.HOUR_OF_DAY);
-        mTimeMinute = calendar.get(Calendar.MINUTE);
+        timeHour = calendar.get(Calendar.HOUR_OF_DAY);
+        timeMinute = calendar.get(Calendar.MINUTE);
 
-        mSnoozeHour = 0;
-        mSnoozeMinute = 0;
-        mSnoozeSeconds = 0;
-
-        mUnlockType = UnlockTypeEnum.Type.getID();
+        unlockType = UnlockTypeEnum.Type.getID();
 
         // By default, alarm repeats everyday
-        mRepeatingDays = new boolean[]{ true, true, true, true, true, true, true };
-        mAlarmTone = Uri.parse(XAlarmApp.getResourcePath() + "/raw/ringtone_0");
-        mIsEnabled = true;
-        mIsVibrate = true;
+        repeatingDays = new boolean[]{ true, true, true, true, true, true, true };
+        alarmTone = Uri.parse(XAlarmApp.getResourcePath() + "/raw/ringtone_0");
+        isEnabled = true;
+        isVibrate = true;
 
+    }
+
+    /*
+    Functions
+     */
+
+    /**
+     * Schedules the alarm via the AlarmScheduler
+     * @return alarm time
+     */
+    public long schedule() {
+
+        Context context = XAlarmApp.getAppContext();
+
+        if(isEnabled) {
+            AlarmScheduler.cancelAlarm(context, this);
+        } else {
+            isEnabled = true;
+        }
+
+        alarmDBService.updateAlarm(this);
+
+        return AlarmScheduler.scheduleAlarm(context, this);
+    }
+
+    /**
+     * Delete alarm from DB and AlarmManager
+     */
+    public void delete() {
+
+        Context context = XAlarmApp.getAppContext();
+
+        if (isEnabled()) {
+            AlarmScheduler.cancelAlarm(context, this);
+        }
+
+        alarmDBService.deleteAlarm(this);
+    }
+
+    /**
+     * Cancel
+     */
+    public void cancel() {
+
+        Context context = XAlarmApp.getAppContext();
+
+        setEnabled(false);
+        AlarmScheduler.cancelAlarm(context, this);
+
+        alarmDBService.updateAlarm(this);
+    }
+
+    public void onDismiss() {
+
+        Context context = XAlarmApp.getAppContext();
+
+        boolean updateAlarm = false;
+
+        // Schedule the next repeating alarm if necessary
+        AlarmScheduler.scheduleAlarm(context, this);
+
+        if (updateAlarm) {
+            alarmDBService.updateAlarm(this);
+        }
     }
 
     /*
     Setters and Getters
      */
 
-    public int getmTimeHour() {
-        return mTimeHour;
+    public int getTimeHour() {
+        return timeHour;
     }
 
-    public void setmTimeHour(int mTimeHour) {
-        this.mTimeHour = mTimeHour;
+    public void setTimeHour(int timeHour) {
+        this.timeHour = timeHour;
     }
 
-    public int getmTimeMinute() {
-        return mTimeMinute;
+    public int getTimeMinute() {
+        return timeMinute;
     }
 
-    public void setmTimeMinute(int mTimeMinute) {
-        this.mTimeMinute = mTimeMinute;
+    public void setTimeMinute(int timeMinute) {
+        this.timeMinute = timeMinute;
     }
 
-    public int getmUnlockType() {
-        return mUnlockType;
+    public int getUnlockType() {
+        return unlockType;
     }
 
-    public void setmUnlockType(int mUnlockType) {
-        this.mUnlockType = mUnlockType;
+    public void setUnlockType(int unlockType) {
+        this.unlockType = unlockType;
     }
 
-    public int getmSnoozeHour() {
-        return mSnoozeHour;
+    public boolean getRepeatingDay(int dayOfWeek) {
+        return repeatingDays[dayOfWeek];
     }
 
-    public void setmSnoozeHour(int mSnoozeHour) {
-        this.mSnoozeHour = mSnoozeHour;
+    public void setRepeatingDay(int dayOfWeek, boolean value) {
+        this.repeatingDays[dayOfWeek] = value;
     }
 
-    public int getmSnoozeMinute() {
-        return mSnoozeMinute;
+    public boolean[] getRepeatingDays() {
+        return repeatingDays;
     }
 
-    public void setmSnoozeMinute(int mSnoozeMinute) {
-        this.mSnoozeMinute = mSnoozeMinute;
+    public void setRepeatingDays(boolean[] repeatingDays) {
+        this.repeatingDays = repeatingDays;
     }
 
-    public int getmSnoozeSeconds() {
-        return mSnoozeSeconds;
+    public boolean isEnabled() {
+        return isEnabled;
     }
 
-    public void setmSnoozeSeconds(int mSnoozeSeconds) {
-        this.mSnoozeSeconds = mSnoozeSeconds;
+    public void setEnabled(boolean enabled) {
+        this.isEnabled = enabled;
     }
 
-    public boolean[] getmRepeatingDays() {
-        return mRepeatingDays;
+    public boolean isVibrate() {
+        return isVibrate;
     }
 
-    public void setmRepeatingDays(boolean[] mRepeatingDays) {
-        this.mRepeatingDays = mRepeatingDays;
+    public void setVibrate(boolean vibrate) {
+        this.isVibrate = vibrate;
     }
 
-    public boolean ismIsEnabled() {
-        return mIsEnabled;
+    public Uri getAlarmTone() {
+        return alarmTone;
     }
 
-    public void setmIsEnabled(boolean mIsEnabled) {
-        this.mIsEnabled = mIsEnabled;
+    public void setAlarmTone(Uri alarmTone) {
+        this.alarmTone = alarmTone;
     }
 
-    public boolean ismIsVibrate() {
-        return mIsVibrate;
+    public UUID getId() {
+        return id;
     }
 
-    public void setmIsVibrate(boolean mIsVibrate) {
-        this.mIsVibrate = mIsVibrate;
-    }
-
-    public Uri getmAlarmTone() {
-        return mAlarmTone;
-    }
-
-    public void setmAlarmTone(Uri mAlarmTone) {
-        this.mAlarmTone = mAlarmTone;
+    public void setId(UUID id) {
+        this.id = id;
     }
 }
