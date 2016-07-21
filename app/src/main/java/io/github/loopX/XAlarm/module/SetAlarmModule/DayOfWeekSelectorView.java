@@ -9,15 +9,12 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import java.util.Calendar;
+
 import io.github.loopX.XAlarm.R;
 import io.github.loopX.XAlarm.UIUtils;
-import io.github.loopX.XAlarm.module.AlarmModule.model.DaysOfWeek;
 import io.github.loopX.XAlarm.view.RippleBackgroundView;
 
-/**
- * Author UFreedom
- * Date : 2016 六月 10
- */
 public class DayOfWeekSelectorView extends FrameLayout implements View.OnClickListener {
 
     public int daysOfWeek;
@@ -108,19 +105,19 @@ public class DayOfWeekSelectorView extends FrameLayout implements View.OnClickLi
 
     private String getStringForDayOfWeek(int daysOfWeek) {
         switch (daysOfWeek) {
-            case DaysOfWeek.MONDAY:
+            case Calendar.MONDAY:
                 return "MON";
-            case DaysOfWeek.TUESDAY:
+            case Calendar.TUESDAY:
                 return "TUE";
-            case DaysOfWeek.WEDNESDAY:
+            case Calendar.WEDNESDAY:
                 return "WED";
-            case DaysOfWeek.THURSDAY:
+            case Calendar.THURSDAY:
                 return "THU";
-            case DaysOfWeek.FRIDAY:
+            case Calendar.FRIDAY:
                 return "FRI";
-            case DaysOfWeek.SATURDAY:
+            case Calendar.SATURDAY:
                 return "SAT";
-            case DaysOfWeek.SUNDAY:
+            case Calendar.SUNDAY:
                 return "SUN";
             default:
                 return "NONE";

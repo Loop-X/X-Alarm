@@ -1,10 +1,10 @@
 package io.github.loopX.XAlarm;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -19,12 +19,13 @@ import com.facebook.rebound.Spring;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
-import io.github.loopX.XAlarm.config.PreferenceKeys;
+import io.github.loopX.XAlarm.database.AlarmDBService;
 import io.github.loopX.XAlarm.infrastructure.BaseActivity;
-import io.github.loopX.XAlarm.module.AlarmModule.Alarms;
-import io.github.loopX.XAlarm.module.AlarmModule.model.Alarm;
+import io.github.loopX.XAlarm.module.Alarm.AlarmScheduler;
+import io.github.loopX.XAlarm.module.Alarm.Alarm;
 import io.github.loopX.XAlarm.module.SetAlarmModule.SetAlarmActivity;
 import io.github.loopX.XAlarm.module.SettingModule.AlarmPreferenceSettingsMenuLayout;
 import io.github.loopX.XAlarm.module.UnlockTypeModule.UnlockTypeActivity;
@@ -139,7 +140,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void onRefreshData() {
         initAlarm();
-        if(mAlarm.enabled) {
+        if(mAlarm.isEnabled()) {
             ivMainContentIndicator.setImageResource(R.drawable.main_mid);
         } else {
             ivMainContentIndicator.setImageResource(R.drawable.main_mid_off);
@@ -153,26 +154,27 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             // Go to Set Alarm Activity
             case R.id.im_set_alarm:
                 Intent intent = new Intent(MainActivity.this, SetAlarmActivity.class);
-                intent.putExtra(Alarms.ALARM_INTENT_EXTRA, mAlarm);
+                intent.putExtra(AlarmScheduler.X_ALARM_ID, mAlarm.getId());
                 startActivityForResult(intent, SET_ALARM_REQUEST_CODE);
                 break;
             case R.id.iv_top_main_content_indicator:
-                if(mAlarm.enabled) {
-                    mAlarm.enabled = false;
+                if(mAlarm.isEnabled()) {
+                    mAlarm.setEnabled(false);
                     ivMainContentIndicator.setImageResource(R.drawable.main_mid_off);
+                    AlarmScheduler.cancelAlarm(this, mAlarm);
                     ToastMaster.setToast(Toast.makeText(MainActivity.this,
                             getString(R.string.turn_off_alarm),
                             Toast.LENGTH_SHORT));
                 } else {
-                    mAlarm.enabled = true;
+                    mAlarm.setEnabled(true);
                     ivMainContentIndicator.setImageResource(R.drawable.main_mid);
+                    AlarmScheduler.scheduleAlarm(this, mAlarm);
                     ToastMaster.setToast(Toast.makeText(MainActivity.this,
                             getString(R.string.turn_on_alarm),
                             Toast.LENGTH_SHORT));
                 }
                 ToastMaster.showToast();
-                Alarms.setAlarm(MainActivity.this, mAlarm);
-                saveAlarm();
+                AlarmDBService.getInstance(this).updateAlarm(mAlarm);
                 break;
             case R.id.iv_left_menu_indicator:
                 if (loopXDragMenuLayout.getMenuStatus() == DragMenuLayout.MenuStatus.Close){
@@ -199,19 +201,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         switch (requestCode) {
             case SET_ALARM_REQUEST_CODE:
-                mAlarm = data.getParcelableExtra(Alarms.ALARM_INTENT_EXTRA);
+                mAlarm = data.getParcelableExtra(AlarmScheduler.X_ALARM_ID);
 
-                long newTime = Alarms.setAlarm(MainActivity.this, mAlarm);
+                AlarmDBService.getInstance(this).updateAlarm(mAlarm);
+
                 setAlarmTimeOnTextView(mAlarm);
-                saveAlarm();
 
                 String text = null;
 
-                if(mAlarm.enabled) {
+                if(mAlarm.isEnabled()) {
+                    long newTime = AlarmScheduler.scheduleAlarm(this, mAlarm);
                     ivMainContentIndicator.setImageResource(R.drawable.main_mid);
-                    text = Alarms.formatToast(MainActivity.this, newTime);
-
+                    text = AlarmScheduler.formatToast(MainActivity.this, newTime);
                 } else {
+                    AlarmScheduler.cancelAlarm(this, mAlarm);
                     ivMainContentIndicator.setImageResource(R.drawable.main_mid_off);
                     text = getString(R.string.turn_off_alarm);
                 }
@@ -228,9 +231,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 ivLeftMenuIndicator.setImageResource(R.drawable.main_left);
 
                 int unlockTypeId = data.getIntExtra("unlockType", UnlockTypeEnum.Type.getID());
-                mAlarm.unlockType = unlockTypeId;
-                Alarms.setAlarm(MainActivity.this, mAlarm);
-                saveAlarm();
+                mAlarm.setUnlockType(unlockTypeId);
+                AlarmDBService.getInstance(this).updateAlarm(mAlarm);
 
                 // Update left menu with chosen unlock type
                 setLeftMenuStatus();
@@ -250,23 +252,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private void initAlarm() {
         Log.d(TAG, "-----------> initAlarm");
 
-        // Read saved alarm time from sharedPreference
-        alarmId = readSavedAlarm();
+        List<Alarm> alarms = AlarmDBService.getInstance(this).getAlarms();
 
-        if (alarmId == -1) {
-            // This is to avoid SP file removed for unknown reason
-            // Remember, always use Alarm ID 1
-            if(Alarms.getAlarm(getContentResolver(), 1) != null) {
-                mAlarm = Alarms.getAlarm(getContentResolver(), 1);
-                alarmId = mAlarm.id;
-            } else { // If no alarm available, set a default alarm with current time
-                mAlarm = new Alarm();
-                alarmId = Alarms.addAlarm(this, mAlarm);
-            }
-            saveAlarm();
+        if(alarms.isEmpty()) {
+            mAlarm = new Alarm();
+            AlarmDBService.getInstance(this).addAlarm(mAlarm);
         } else {
-            // ToDo 之前闹钟不灵 可不可能是CONTEXT的问题？
-            mAlarm = Alarms.getAlarm(getContentResolver(), alarmId);
+            // Always force to get first alarm in list
+            mAlarm = alarms.get(0);
         }
 
         // Set alarm time on TextView
@@ -283,19 +276,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     /**
      * Set current alarm time on TextView
-     *
      * @param alarm
      */
     private void setAlarmTimeOnTextView(Alarm alarm) {
 
         final Calendar cal = Calendar.getInstance();
 
-        cal.set(Calendar.HOUR_OF_DAY, alarm.hour);
-        cal.set(Calendar.MINUTE, alarm.minutes);
+        cal.set(Calendar.HOUR_OF_DAY, alarm.getTimeHour());
+        cal.set(Calendar.MINUTE, alarm.getTimeMinute());
 
         Locale locale = new Locale("en");
 
-        if(Alarms.get24HourMode(this)) {
+        if(DateFormat.is24HourFormat(this)) {
             SimpleDateFormat dateFormatTime = new SimpleDateFormat(M24, locale);
             tvAlarmTime.setText(dateFormatTime.format(cal.getTime()));
             tvAlarmAMPM.setVisibility(View.GONE);
@@ -307,42 +299,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             tvAlarmAMPM.setText(dateFormatAMPM.format(cal.getTime()));
         }
 
-
-    }
-
-    /**
-     * Save alarm time in sharedPreference
-     */
-    private void saveAlarm() {
-        Log.d(TAG, "-----------> saveAlarm");
-
-        SharedPreferences.Editor editor =
-                getSharedPreferences(PreferenceKeys.SHARE_PREF_NAME, MODE_PRIVATE).edit();
-        editor.clear();
-        editor.putInt(PreferenceKeys.KEY_ALARM_ID, mAlarm.id);
-        editor.putLong(PreferenceKeys.KEY_ALARM_TIME, mAlarm.time);
-        editor.commit();
-
-        Log.d(TAG, "saveAlarm - save alarmId " + alarmId);
-        Log.d(TAG, "<----------- saveAlarm");
-    }
-
-    /**
-     * Read saved alarm time from sharedPreference
-     *
-     * @return Id of alarm time
-     */
-    private int readSavedAlarm() {
-        Log.d(TAG, "-----------> readSavedAlarm");
-
-        SharedPreferences sharedPreferences =
-                getSharedPreferences(PreferenceKeys.SHARE_PREF_NAME, MODE_PRIVATE);
-        int alarmId = sharedPreferences.getInt(PreferenceKeys.KEY_ALARM_ID, -1);
-
-        Log.d(TAG, "readSavedAlarm - read alarm id " + alarmId);
-        Log.d(TAG, "<----------- readSavedAlarm");
-
-        return alarmId;
     }
 
     @Override
@@ -370,14 +326,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             rightMenu.stopRingtone();
 
             /** Update Vibration **/
-            mAlarm.vibrate = rightMenu.getVibrationSetting();
-            mAlarm.alert =
-                    Uri.parse(XAlarmApp.getResourcePath() + "/raw/ringtone_"
-                            + rightMenu.getRingtone());
+            mAlarm.setVibrate(rightMenu.getVibrationSetting());
+            mAlarm.setAlarmTone(Uri.parse(XAlarmApp.getResourcePath() + "/raw/ringtone_"
+                            + rightMenu.getRingtone()));
 
             // Save alarm
-            Alarms.setAlarm(MainActivity.this, mAlarm);
-            saveAlarm();
+            AlarmDBService.getInstance(this).updateAlarm(mAlarm);
 
             // Update right menu
             setRightMenuStatus();
@@ -391,14 +345,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     private void setRightMenuStatus() {
         rightMenu.setInitRingtone(
-                Integer.valueOf(mAlarm.alert.toString().split("ringtone_")[1]));
-        rightMenu.setInitVibration(mAlarm.vibrate);
+                Integer.valueOf(mAlarm.getAlarmTone().toString().split("ringtone_")[1]));
+        rightMenu.setInitVibration(mAlarm.isVibrate());
     }
 
     private void setLeftMenuStatus() {
         // Set unlock type on left menu
         leftMenu.resetChosenStatus();
-        leftMenu.setChosenStatue(mAlarm.unlockType);
+        leftMenu.setChosenStatue(mAlarm.getUnlockType());
     }
 
     @Override

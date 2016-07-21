@@ -11,7 +11,7 @@ import android.os.Vibrator;
 public class AlarmVibrator {
 
     private Vibrator mVibrator;
-    private boolean mIsVibrating;
+    private boolean mIsVibrating; // Default false
 
     public AlarmVibrator(Context context) {
         mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
@@ -35,6 +35,10 @@ public class AlarmVibrator {
 
             mIsVibrating = true;
         }
+    }
+
+    public void vibrate(int time) {
+        mVibrator.vibrate(time);
     }
 
     public void stop() {

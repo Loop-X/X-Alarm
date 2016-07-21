@@ -28,7 +28,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         if (Alarms.ALARM_KILLED.equals(intent.getAction())) {
             // The alarm has been killed, update the notification
             updateNotification(context, (Alarm)
-                    intent.getParcelableExtra(Alarms.ALARM_INTENT_EXTRA),
+                    intent.getSerializableExtra(Alarms.ALARM_INTENT_EXTRA),
                     intent.getIntExtra(Alarms.ALARM_KILLED_TIMEOUT, -1));
             return;
         } else if (!Alarms.ALARM_ALERT_ACTION.equals(intent.getAction())) {

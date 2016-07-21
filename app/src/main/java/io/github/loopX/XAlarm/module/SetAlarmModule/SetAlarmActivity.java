@@ -3,6 +3,7 @@ package io.github.loopX.XAlarm.module.SetAlarmModule;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ImageView;
@@ -18,14 +19,15 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 import io.github.loopX.XAlarm.MainActivity;
 import io.github.loopX.XAlarm.R;
 import io.github.loopX.XAlarm.UIUtils;
+import io.github.loopX.XAlarm.database.AlarmDBService;
 import io.github.loopX.XAlarm.infrastructure.BaseActivity;
-import io.github.loopX.XAlarm.module.AlarmModule.Alarms;
-import io.github.loopX.XAlarm.module.AlarmModule.model.Alarm;
-import io.github.loopX.XAlarm.module.AlarmModule.model.DaysOfWeek;
+import io.github.loopX.XAlarm.module.Alarm.Alarm;
+import io.github.loopX.XAlarm.module.Alarm.AlarmScheduler;
 import io.github.loopX.XAlarm.tools.ToastMaster;
 import io.github.loopX.XAlarm.view.RippleBackgroundView;
 import io.github.loopX.XAlarm.view.YummyTextView;
@@ -84,12 +86,12 @@ public class SetAlarmActivity extends BaseActivity {
 
         /** Check 12 or 24 hour mode **/
 
-        is24hMode = Alarms.get24HourMode(this);
+        is24hMode = DateFormat.is24HourFormat(this);
 
         /** Get alarm object from intent **/
 
-        mAlarm = getIntent().getParcelableExtra(Alarms.ALARM_INTENT_EXTRA);
-        isOn = mAlarm.enabled;
+        UUID alarmId = (UUID) getIntent().getSerializableExtra(AlarmScheduler.X_ALARM_ID);
+        mAlarm = AlarmDBService.getInstance(this).getAlarm(alarmId);
 
         /** Init top bar **/
 
@@ -104,7 +106,7 @@ public class SetAlarmActivity extends BaseActivity {
         ripplePivotX = UIUtils.getScreenWidth() - UIUtils.dip2px(100) / 2 - UIUtils.dip2px(16);
         
         
-        if (isOn) {
+        if (mAlarm.isEnabled()) {
             btnSwitchOnOffAlarm.setImageResource(R.drawable.switch_off);
             rippleBackgroundView.setBackgroundResource(R.color.alarm_set_top_alarm_on);
 
@@ -115,12 +117,12 @@ public class SetAlarmActivity extends BaseActivity {
 
         final Calendar cal = Calendar.getInstance();
 
-        cal.set(Calendar.HOUR_OF_DAY, mAlarm.hour);
-        cal.set(Calendar.MINUTE, mAlarm.minutes);
+        cal.set(Calendar.HOUR_OF_DAY, mAlarm.getTimeHour());
+        cal.set(Calendar.MINUTE, mAlarm.getTimeMinute());
 
         Locale locale = new Locale("en");
 
-        if(Alarms.get24HourMode(this)) {
+        if(is24hMode) {
             SimpleDateFormat dateFormatTime = new SimpleDateFormat(MainActivity.M24, locale);
             tvCurrentAlarmTime.setText(dateFormatTime.format(cal.getTime()));
             tvCurrentAlarmAMPM.setVisibility(View.GONE);
@@ -203,7 +205,7 @@ public class SetAlarmActivity extends BaseActivity {
         
         SimpleDateFormat dateFormatHour = null;
 
-        if(Alarms.get24HourMode(this)) {
+        if(is24hMode) {
             amPmWheelView.setVisibility(View.INVISIBLE);
             AMPM = "";
             dateFormatHour = new SimpleDateFormat("kk", locale);
@@ -215,7 +217,7 @@ public class SetAlarmActivity extends BaseActivity {
             dateFormatHour = new SimpleDateFormat("hh", locale);
         }
 
-        minuteWheelView.setSelection(minutesStrList.indexOf("" + mAlarm.minutes));
+        minuteWheelView.setSelection(minutesStrList.indexOf("" + mAlarm.getTimeMinute()));
         hourWheelView.setSelection(hourStrList.indexOf(dateFormatHour.format(cal.getTime())));
 
         hourWheelView.setOnWheelItemSelectedListener(new WheelView.OnWheelItemSelectedListener() {
@@ -223,12 +225,12 @@ public class SetAlarmActivity extends BaseActivity {
             public void onItemSelected(int position, Object o) {
                 String text = hourStrList.get(position);
                 if(is24hMode) {
-                    mAlarm.hour = Integer.valueOf(text);
+                    mAlarm.setTimeHour(Integer.valueOf(text));
                 } else {
                     if(AMPM.equals("AM")) {
-                        mAlarm.hour = Integer.valueOf(text);
+                        mAlarm.setTimeHour(Integer.valueOf(text));
                     } else {
-                        mAlarm.hour = Integer.valueOf(text) + 12;
+                        mAlarm.setTimeHour(Integer.valueOf(text) + 12);
                     }
                 }
             }
@@ -237,7 +239,7 @@ public class SetAlarmActivity extends BaseActivity {
         minuteWheelView.setOnWheelItemSelectedListener(new WheelView.OnWheelItemSelectedListener() {
             @Override
             public void onItemSelected(int position, Object o) {
-                mAlarm.minutes = Integer.valueOf(minutesStrList.get(position));
+                mAlarm.setTimeMinute(Integer.valueOf(minutesStrList.get(position)));
 
             }
         });
@@ -248,12 +250,12 @@ public class SetAlarmActivity extends BaseActivity {
                 // If AMPM select, it must be 12h mode
                 AMPM = amPMStrList.get(position);
                 if(AMPM.equals("PM")) {
-                    if(mAlarm.hour <= 12) {
-                        mAlarm.hour = mAlarm.hour + 12;
+                    if(mAlarm.getTimeHour() <= 12) {
+                        mAlarm.setTimeHour(mAlarm.getTimeHour() + 12);
                     }
                 } else {
-                    if(mAlarm.hour > 12) {
-                        mAlarm.hour = mAlarm.hour - 12;
+                    if(mAlarm.getTimeHour() > 12) {
+                        mAlarm.setTimeHour(mAlarm.getTimeHour() - 12);
                     }
                 }
             }
@@ -325,7 +327,7 @@ public class SetAlarmActivity extends BaseActivity {
     DayOfWeekSelectorView.DayOfWeekSelectorListener dayOfWeekSelectorListener = new DayOfWeekSelectorView.DayOfWeekSelectorListener() {
         @Override
         public void onDayOfWeekSelector(int dayOfWeek, boolean selected) {
-            mAlarm.daysOfWeek.set(dayOfWeek,selected);
+            mAlarm.setRepeatingDay(dayOfWeek, selected);
         }
     };
 
@@ -364,27 +366,25 @@ public class SetAlarmActivity extends BaseActivity {
 
         switch(view.getId()) {
             case R.id.iv_switch_on_off_alarm:
-                if(isOn) {
+                if(mAlarm.isEnabled()) {
                     btnSwitchOnOffAlarm.setImageResource(R.drawable.switch_on);
                     doAlarmOffRippleAnimation();
                     ToastMaster.setToast(
                             Toast.makeText(this, R.string.turn_off_alarm, Toast.LENGTH_SHORT));
                     ToastMaster.showToast();
-                    mAlarm.enabled = false;
-                    isOn = false;
+                    mAlarm.setEnabled(false);
                 } else {
                     btnSwitchOnOffAlarm.setImageResource(R.drawable.switch_off);
                     doAlarmOnRippleAnimation();
                     ToastMaster.setToast(
                             Toast.makeText(this, R.string.turn_on_alarm, Toast.LENGTH_SHORT));
                     ToastMaster.showToast();
-                    mAlarm.enabled = true;
-                    isOn = true;
+                    mAlarm.setEnabled(true);
                 }
                 break;
             case R.id.im_set_alarm_accept:
                 Intent intent = new Intent();
-                intent.putExtra(Alarms.ALARM_INTENT_EXTRA, mAlarm);
+                intent.putExtra(AlarmScheduler.X_ALARM_ID, mAlarm.getId());
                 setResult(RESULT_OK, intent);
                 finish();
                 break;
@@ -393,28 +393,26 @@ public class SetAlarmActivity extends BaseActivity {
     }
 
     private void initRepeat() {
-        if (mAlarm.daysOfWeek.isRepeatSet()) {
 
-            int colorActiv = ContextCompat.getColor(this, R.color.loopX_3);
-            int colorNoActiv = ContextCompat.getColor(this, R.color.loopX_6);
+        int colorActiv = ContextCompat.getColor(this, R.color.loopX_3);
+        int colorNoActiv = ContextCompat.getColor(this, R.color.loopX_6);
 
-            tvMON.setTextColor(mAlarm.daysOfWeek.isSet(DaysOfWeek.MONDAY) ? colorActiv : colorNoActiv);
-            tvTUE.setTextColor(mAlarm.daysOfWeek.isSet(DaysOfWeek.TUESDAY) ? colorActiv : colorNoActiv);
-            tvWED.setTextColor(mAlarm.daysOfWeek.isSet(DaysOfWeek.WEDNESDAY) ? colorActiv : colorNoActiv);
-            tvTHU.setTextColor(mAlarm.daysOfWeek.isSet(DaysOfWeek.THURSDAY) ? colorActiv : colorNoActiv);
-            tvFRI.setTextColor(mAlarm.daysOfWeek.isSet(DaysOfWeek.FRIDAY) ? colorActiv : colorNoActiv);
-            tvSAT.setTextColor(mAlarm.daysOfWeek.isSet(DaysOfWeek.SATURDAY) ? colorActiv : colorNoActiv);
-            tvSUN.setTextColor(mAlarm.daysOfWeek.isSet(DaysOfWeek.SUNDAY) ? colorActiv : colorNoActiv);
+        tvMON.setTextColor(mAlarm.getRepeatingDay(Calendar.MONDAY - 1) ? colorActiv : colorNoActiv);
+        tvTUE.setTextColor(mAlarm.getRepeatingDay(Calendar.TUESDAY - 1) ? colorActiv : colorNoActiv);
+        tvWED.setTextColor(mAlarm.getRepeatingDay(Calendar.WEDNESDAY - 1) ? colorActiv : colorNoActiv);
+        tvTHU.setTextColor(mAlarm.getRepeatingDay(Calendar.THURSDAY - 1) ? colorActiv : colorNoActiv);
+        tvFRI.setTextColor(mAlarm.getRepeatingDay(Calendar.FRIDAY - 1) ? colorActiv : colorNoActiv);
+        tvSAT.setTextColor(mAlarm.getRepeatingDay(Calendar.SATURDAY - 1) ? colorActiv : colorNoActiv);
+        tvSUN.setTextColor(mAlarm.getRepeatingDay(Calendar.SUNDAY - 1) ? colorActiv : colorNoActiv);
 
-            mondaySelectorView.setDay(DaysOfWeek.MONDAY,mAlarm.daysOfWeek.isSet(DaysOfWeek.MONDAY));
-            tuesdaySelector.setDay(DaysOfWeek.TUESDAY,mAlarm.daysOfWeek.isSet(DaysOfWeek.TUESDAY));
-            wednesdaySelector.setDay(DaysOfWeek.WEDNESDAY,mAlarm.daysOfWeek.isSet(DaysOfWeek.WEDNESDAY));
-            thursdaySelector.setDay(DaysOfWeek.THURSDAY,mAlarm.daysOfWeek.isSet(DaysOfWeek.THURSDAY));
-            fridaySelector.setDay(DaysOfWeek.FRIDAY,mAlarm.daysOfWeek.isSet(DaysOfWeek.FRIDAY));
-            saturdaySelector.setDay(DaysOfWeek.SATURDAY,mAlarm.daysOfWeek.isSet(DaysOfWeek.SATURDAY));
-            sundaySelector.setDay(DaysOfWeek.SUNDAY,mAlarm.daysOfWeek.isSet(DaysOfWeek.SUNDAY));
-            
-        }
+        mondaySelectorView.setDay(Calendar.MONDAY, mAlarm.getRepeatingDay(Calendar.MONDAY - 1));
+        tuesdaySelector.setDay(Calendar.TUESDAY, mAlarm.getRepeatingDay(Calendar.TUESDAY - 1));
+        wednesdaySelector.setDay(Calendar.WEDNESDAY, mAlarm.getRepeatingDay(Calendar.WEDNESDAY - 1));
+        thursdaySelector.setDay(Calendar.THURSDAY, mAlarm.getRepeatingDay(Calendar.THURSDAY - 1));
+        fridaySelector.setDay(Calendar.FRIDAY, mAlarm.getRepeatingDay(Calendar.FRIDAY - 1));
+        saturdaySelector.setDay(Calendar.SATURDAY, mAlarm.getRepeatingDay(Calendar.SATURDAY - 1));
+        sundaySelector.setDay(Calendar.SUNDAY, mAlarm.getRepeatingDay(Calendar.SUNDAY - 1));
+
     }
 
     @Override

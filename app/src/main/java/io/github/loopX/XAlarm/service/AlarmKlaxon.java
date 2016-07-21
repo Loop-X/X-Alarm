@@ -162,7 +162,7 @@ public class AlarmKlaxon extends Service {
             return START_NOT_STICKY;
         }
 
-        final Alarm alarm = intent.getParcelableExtra(Alarms.ALARM_INTENT_EXTRA);
+        final Alarm alarm = intent.getSerializableExtra(Alarms.ALARM_INTENT_EXTRA);
 
         if (alarm == null) {
             Log.v("yummywakeup", "AlarmKlaxon failed to parse the alarm from the intent");

@@ -1,7 +1,6 @@
 package io.github.loopX.XAlarm.module.AlarmModule;
 
-import android.media.AudioManager;
-import android.media.MediaPlayer;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,17 +12,21 @@ import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
 
-import java.io.IOException;
+import java.util.UUID;
 
 import io.github.loopX.XAlarm.R;
 import io.github.loopX.XAlarm.XAlarmApp;
+import io.github.loopX.XAlarm.database.AlarmDBService;
+import io.github.loopX.XAlarm.module.Alarm.AlarmRingtonePlayer;
+import io.github.loopX.XAlarm.module.Alarm.AlarmScheduler;
+import io.github.loopX.XAlarm.module.Alarm.AlarmVibrator;
 import io.github.loopX.XAlarm.module.UnlockTypeModule.alarmType.UnlockFragment;
 import io.github.loopX.XAlarm.module.UnlockTypeModule.alarmType.UnlockFragmentFactory;
 
 
 public class AlarmAlertFullScreenToTest extends FragmentActivity implements UnlockFragment.OnAlarmAction {
 
-    private MediaPlayer mMediaPlayer;
+    private AlarmRingtonePlayer mPlayer;
 
     @Override
     protected void onCreate(Bundle icicle) {
@@ -36,16 +39,7 @@ public class AlarmAlertFullScreenToTest extends FragmentActivity implements Unlo
         /**
          * Set ringtone
          */
-        mMediaPlayer = new MediaPlayer();
-        try {
-            mMediaPlayer.setDataSource(this, Uri.parse(XAlarmApp.getResourcePath() + "/raw/ringtone_0"));
-            mMediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
-            mMediaPlayer.setLooping(true);
-            mMediaPlayer.prepare();
-            mMediaPlayer.start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        mPlayer = new AlarmRingtonePlayer(this);
 
         /**
          * Pop-up unlock fragment according to unlock type
@@ -59,18 +53,32 @@ public class AlarmAlertFullScreenToTest extends FragmentActivity implements Unlo
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mPlayer.play(Uri.parse(XAlarmApp.getResourcePath() + "/raw/ringtone_0"));
+    }
+
+    @Override
     public void closeAlarm() {
 
-        if(mMediaPlayer != null) {
-            mMediaPlayer.stop();
-            mMediaPlayer.release();
-            mMediaPlayer = null;
-        }
+        mPlayer.stop();
 
-        Vibrator mVibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        AlarmVibrator mVibrator = new AlarmVibrator(this);
         mVibrator.vibrate(500);
 
         finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPlayer.cleanup();
     }
 
     @Override
