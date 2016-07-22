@@ -3,6 +3,7 @@ package io.github.loopX.XAlarm.module.Alarm;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 
 import java.util.UUID;
 
@@ -13,19 +14,14 @@ import io.github.loopX.XAlarm.module.AlarmModule.AlarmAlertFullScreen;
 public final class AlarmRingingController {
 
     private Context mContext;
-    private AlarmRingtonePlayer mRingtonePlayer;
-    private AlarmVibrator mVibrator;
     private Alarm mCurrentAlarm;
     private boolean mAllowDismissRequested;
 
     public AlarmRingingController(Context context) {
         mContext = context;
-        mRingtonePlayer = new AlarmRingtonePlayer(mContext);
-        mVibrator = new AlarmVibrator(mContext);
     }
 
     protected void registerAlarm(Intent intent) {
-
         SharedWakeLock.getInstance(mContext).acquireFullWakeLock();
 
         if (intent != null) {
@@ -38,7 +34,7 @@ public final class AlarmRingingController {
             mCurrentAlarm = alarmDBService.getAlarm(alarmId);
 
             // Start ringtone and Vibrator
-            startAlarmRinging();
+            // startAlarmRinging();
 
             // Launch alarm unlock UI
             launchRingingUX(alarmId);
@@ -52,35 +48,14 @@ public final class AlarmRingingController {
     protected void alarmRingingSessionCompleted() {
         // We need to handle the case where the alarm timed out. In that case we
         // wont get an explicit call from the AlarmRingingActivity to silence the alarm
-        silenceAlarmRinging();
+        // silenceAlarmRinging();
         mCurrentAlarm = null;
 
         // Cleanup all states
-        mVibrator.cleanup();
-        mRingtonePlayer.cleanup();
+        // mVibrator.cleanup();
+        // mRingtonePlayer.cleanup();
 
         SharedWakeLock.getInstance(mContext).releaseFullWakeLock();
-    }
-
-    /**
-     * Start alarm ringtone and vibrator
-     */
-    public void startAlarmRinging() {
-
-        // Vibrate
-        if (mCurrentAlarm.isVibrate()) mVibrator.vibrate();
-
-        // Play ringtone
-        Uri ringtone = mCurrentAlarm.getAlarmTone();
-        mRingtonePlayer.play(ringtone);
-    }
-
-    /**
-     * Stop alarm ringtone and vibrator
-     */
-    public void silenceAlarmRinging() {
-        mVibrator.stop();
-        mRingtonePlayer.stop();
     }
 
     public void requestAllowDismiss() {
@@ -108,7 +83,7 @@ public final class AlarmRingingController {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                 Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS |
                 Intent.FLAG_ACTIVITY_NO_USER_ACTION);
-        intent.putExtra(AlarmRingingService.ALARM_ID, alarmId);
+        intent.putExtra(AlarmScheduler.X_ALARM_ID, alarmId);
         mContext.startActivity(intent);
     }
 }

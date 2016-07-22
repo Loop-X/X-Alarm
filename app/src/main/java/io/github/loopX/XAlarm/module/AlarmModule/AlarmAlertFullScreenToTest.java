@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -12,13 +11,9 @@ import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
 
-import java.util.UUID;
-
 import io.github.loopX.XAlarm.R;
 import io.github.loopX.XAlarm.XAlarmApp;
-import io.github.loopX.XAlarm.database.AlarmDBService;
 import io.github.loopX.XAlarm.module.Alarm.AlarmRingtonePlayer;
-import io.github.loopX.XAlarm.module.Alarm.AlarmScheduler;
 import io.github.loopX.XAlarm.module.Alarm.AlarmVibrator;
 import io.github.loopX.XAlarm.module.UnlockTypeModule.alarmType.UnlockFragment;
 import io.github.loopX.XAlarm.module.UnlockTypeModule.alarmType.UnlockFragmentFactory;

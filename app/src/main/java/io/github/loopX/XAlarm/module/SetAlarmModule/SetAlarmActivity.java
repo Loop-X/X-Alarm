@@ -386,6 +386,10 @@ public class SetAlarmActivity extends BaseActivity {
                 Intent intent = new Intent();
                 intent.putExtra(AlarmScheduler.X_ALARM_ID, mAlarm.getId());
                 setResult(RESULT_OK, intent);
+
+                // Update alarm in DB
+                AlarmDBService.getInstance(this).updateAlarm(mAlarm);
+
                 finish();
                 break;
         }

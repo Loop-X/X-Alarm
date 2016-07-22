@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.text.format.DateFormat;
+import android.util.Log;
 
 import java.util.Calendar;
 
@@ -95,7 +96,6 @@ public class AlarmScheduler {
      * @param pendingIntent
      */
     private static void setAlarm(Context context, long time, PendingIntent pendingIntent) {
-
         AlarmManager alarmManager =
                 (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
@@ -121,7 +121,6 @@ public class AlarmScheduler {
     }
 
     private static PendingIntent createPendingIntent(Context context, Alarm alarm) {
-
         Intent intent = new Intent(context, AlarmWakeReceiver.class);
         intent.putExtra(X_ALARM_ID, alarm.getId());
 

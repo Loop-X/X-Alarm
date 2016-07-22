@@ -1,17 +1,11 @@
 package io.github.loopX.XAlarm.module.AlarmModule;
 
-import android.app.NotificationManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
@@ -21,6 +15,7 @@ import java.util.UUID;
 import io.github.loopX.XAlarm.R;
 import io.github.loopX.XAlarm.database.AlarmDBService;
 import io.github.loopX.XAlarm.module.Alarm.Alarm;
+import io.github.loopX.XAlarm.module.Alarm.AlarmNotificationManager;
 import io.github.loopX.XAlarm.module.Alarm.AlarmRingtonePlayer;
 import io.github.loopX.XAlarm.module.Alarm.AlarmScheduler;
 import io.github.loopX.XAlarm.module.Alarm.AlarmVibrator;
@@ -35,16 +30,19 @@ import io.github.loopX.XAlarm.module.UnlockTypeModule.alarmType.UnlockFragmentFa
  */
 public class AlarmAlertFullScreen extends FragmentActivity implements UnlockFragment.OnAlarmAction {
 
+    private final static String TAG = "AlarmAlertFullScreen";
+
     protected static final String SCREEN_OFF = "screen_off";
 
     protected Alarm mAlarm;
     private AlarmVibrator mVibrator;
-    private AlarmRingtonePlayer mPlayer;
+    private AlarmRingtonePlayer mRingtonePlayer;
 
     @Override
     protected void onCreate(Bundle icicle) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(icicle);
+
         setContentView(R.layout.framelayout_alarm_unlock);
 
         UUID alarmID = (UUID) getIntent().getSerializableExtra(AlarmScheduler.X_ALARM_ID);
@@ -71,7 +69,7 @@ public class AlarmAlertFullScreen extends FragmentActivity implements UnlockFrag
         }
 
         mVibrator = new AlarmVibrator(this);
-        mPlayer = new AlarmRingtonePlayer(this);
+        mRingtonePlayer = new AlarmRingtonePlayer(this);
 
         // Register to get the alarm killed/snooze/dismiss intent.
         // IntentFilter filter = new IntentFilter(Alarms.ALARM_KILLED);
@@ -98,7 +96,7 @@ public class AlarmAlertFullScreen extends FragmentActivity implements UnlockFrag
             mVibrator.vibrate();
         }
 
-        mPlayer.play(mAlarm.getAlarmTone());
+        mRingtonePlayer.play(mAlarm.getAlarmTone());
 
     }
 
@@ -108,7 +106,7 @@ public class AlarmAlertFullScreen extends FragmentActivity implements UnlockFrag
         // No longer care about the alarm being killed.
         // unregisterReceiver(mReceiver);
         mVibrator.cleanup();
-        mPlayer.cleanup();
+        mRingtonePlayer.cleanup();
     }
 
     @Override
@@ -128,7 +126,7 @@ public class AlarmAlertFullScreen extends FragmentActivity implements UnlockFrag
 
     @Override
     public void onBackPressed() {
-        // Don't allow back to dismiss. This method is overriden by AlarmAlert
+        // Don't allow back to dismiss. This method is overridden by AlarmAlert
         // so that the dialog is dismissed.
         return;
     }
@@ -136,13 +134,16 @@ public class AlarmAlertFullScreen extends FragmentActivity implements UnlockFrag
     @Override
     public void closeAlarm() {
 
+        // If alarm not vibrate mode. So vibrate 0.5s in the end
         if (mAlarm.isVibrate()) {
             mVibrator.stop();
         } else {
             mVibrator.vibrate(500);
         }
 
-        mPlayer.stop();
+        mRingtonePlayer.stop();
+
+        AlarmNotificationManager.getInstance(this).disableNotifications();
 
         finish();
     }

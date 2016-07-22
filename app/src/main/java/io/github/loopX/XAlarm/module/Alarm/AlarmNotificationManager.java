@@ -52,7 +52,7 @@ public class AlarmNotificationManager {
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("X-Alarm!")
                 .setContentText(context.getString(R.string.default_label))
-                .setOngoing(true)
+                .setOngoing(true) // Can not be dismissed
                 .setDefaults(NotificationCompat.DEFAULT_LIGHTS)
                 .setContentIntent(contentIntent);
 

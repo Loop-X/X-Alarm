@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 import io.github.loopX.XAlarm.database.AlarmDBService;
 import io.github.loopX.XAlarm.infrastructure.BaseActivity;
@@ -160,21 +161,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             case R.id.iv_top_main_content_indicator:
                 if(mAlarm.isEnabled()) {
                     mAlarm.setEnabled(false);
+                    mAlarm.cancel();
                     ivMainContentIndicator.setImageResource(R.drawable.main_mid_off);
-                    AlarmScheduler.cancelAlarm(this, mAlarm);
                     ToastMaster.setToast(Toast.makeText(MainActivity.this,
                             getString(R.string.turn_off_alarm),
                             Toast.LENGTH_SHORT));
                 } else {
                     mAlarm.setEnabled(true);
+                    mAlarm.schedule();
                     ivMainContentIndicator.setImageResource(R.drawable.main_mid);
-                    AlarmScheduler.scheduleAlarm(this, mAlarm);
                     ToastMaster.setToast(Toast.makeText(MainActivity.this,
                             getString(R.string.turn_on_alarm),
                             Toast.LENGTH_SHORT));
                 }
                 ToastMaster.showToast();
-                AlarmDBService.getInstance(this).updateAlarm(mAlarm);
                 break;
             case R.id.iv_left_menu_indicator:
                 if (loopXDragMenuLayout.getMenuStatus() == DragMenuLayout.MenuStatus.Close){
@@ -201,16 +201,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         switch (requestCode) {
             case SET_ALARM_REQUEST_CODE:
-                mAlarm = data.getParcelableExtra(AlarmScheduler.X_ALARM_ID);
-
-                AlarmDBService.getInstance(this).updateAlarm(mAlarm);
+                UUID alarmID = (UUID) data.getSerializableExtra(AlarmScheduler.X_ALARM_ID);
+                mAlarm = AlarmDBService.getInstance(this).getAlarm(alarmID);
 
                 setAlarmTimeOnTextView(mAlarm);
 
                 String text = null;
 
                 if(mAlarm.isEnabled()) {
-                    long newTime = AlarmScheduler.scheduleAlarm(this, mAlarm);
+                    long newTime = mAlarm.schedule();
                     ivMainContentIndicator.setImageResource(R.drawable.main_mid);
                     text = AlarmScheduler.formatToast(MainActivity.this, newTime);
                 } else {
