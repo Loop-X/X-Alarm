@@ -46,10 +46,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     public static final int UNLOCK_TYPE_REQUEST_CODE = 2;
 
     private Alarm mAlarm;
-    private int alarmId;
 
     public final static String M12 = "hh:mm";
-    public final static String M24 = "kk:mm";
+    public final static String M24 = "HH:mm";
 
     private ImageView ivRightMenuIndicator;
     private ImageView ivLeftMenuIndicator;

@@ -69,7 +69,6 @@ public class SetAlarmActivity extends BaseActivity {
     private RippleBackgroundView rippleBackgroundView;
     
     private Boolean is24hMode;
-    private Boolean isOn;
     private String AMPM;
     
     private int maxRippleRadius;
@@ -208,7 +207,7 @@ public class SetAlarmActivity extends BaseActivity {
         if(is24hMode) {
             amPmWheelView.setVisibility(View.INVISIBLE);
             AMPM = "";
-            dateFormatHour = new SimpleDateFormat("kk", locale);
+            dateFormatHour = new SimpleDateFormat("HH", locale);
         } else {
             amPmWheelView.setVisibility(View.VISIBLE);
             SimpleDateFormat dateFormatAMPM = new SimpleDateFormat("a", locale);
