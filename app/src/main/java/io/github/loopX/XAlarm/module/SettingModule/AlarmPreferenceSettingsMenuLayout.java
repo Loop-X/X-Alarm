@@ -102,7 +102,11 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
 
                 } else {
                     if(mRingtone != null) {
-                        stopRingtone();
+                        if(mRingtone.isPlaying()) {
+                            stopRingtone();
+                        } else {
+                            mRingtone.play();
+                        }
                     } else {
                         mRingtone = RingtoneManager.getRingtone(mContext,
                                 Uri.parse(XAlarmApp.getResourcePath() + "/raw/ringtoe_" + i));
@@ -145,7 +149,6 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
     public void stopRingtone() {
         if(mRingtone != null) {
             mRingtone.stop();
-            mRingtone = null;
         }
     }
 

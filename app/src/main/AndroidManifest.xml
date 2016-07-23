@@ -59,45 +59,22 @@
             android:taskAffinity=""
             android:theme="@android:style/Theme.Wallpaper.NoTitleBar" />
 
-        <provider
-            android:name="io.github.loopX.XAlarm.service.AlarmProvider"
-            android:authorities="io.github.loopX.XAlarm"
-            android:exported="false" />
+        <receiver android:name=".module.Alarm.AlarmWakeReceiver"
+            android:enabled="true"
+            android:exported="false"/>
 
-        <!-- 闹钟执行时触发 -->
-        <receiver android:name="io.github.loopX.XAlarm.service.AlarmReceiver" >
-            <intent-filter>
-                <action android:name="com.yummywakeup.ALARM_ALERT" />
-                <action android:name="yummy_alarm_killed" />
-                <action android:name="cancel_snooze" />
-            </intent-filter>
-        </receiver>
-
-        <!-- 用来响铃和振动，和AlarmReceiver同时执行 -->
-        <!--
-      This service receives the same intent as AlarmReceiver but it does
-      not respond to the same broadcast. The AlarmReceiver will receive
-      the alert broadcast and will start this service with the same
-      intent. The service plays the alarm alert and vibrates the device.
-      This allows the alert to continue playing even if another activity
-      causes the AlarmAlert activity to pause.
-        -->
-        <service
-            android:name="io.github.loopX.XAlarm.service.AlarmKlaxon">
-            <intent-filter>
-                <action android:name="com.yummywakeup.ALARM_ALERT" />
-            </intent-filter>
-        </service>
+        <service android:name=".module.Alarm.AlarmRingingService"
+            android:enabled="true" />
 
         <!-- 重新开机后初始化闹钟 -->
-        <receiver android:name="io.github.loopX.XAlarm.service.AlarmInitReceiver" >
+        <!-- receiver android:name="io.github.loopX.XAlarm.service.AlarmInitReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.TIME_SET" />
                 <action android:name="android.intent.action.TIMEZONE_CHANGED" />
                 <action android:name="android.intent.action.LOCALE_CHANGED" />
             </intent-filter>
-        </receiver>
+        </receiver-->
     </application>
 
 </manifest>

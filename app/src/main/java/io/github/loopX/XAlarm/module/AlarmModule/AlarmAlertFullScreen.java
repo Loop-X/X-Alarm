@@ -1,39 +1,24 @@
-/*
- * Copyright (C) 2009 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package io.github.loopX.XAlarm.module.AlarmModule;
 
-import android.app.NotificationManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
 
+import java.util.UUID;
+
 import io.github.loopX.XAlarm.R;
-import io.github.loopX.XAlarm.module.AlarmModule.model.Alarm;
+import io.github.loopX.XAlarm.database.AlarmDBService;
+import io.github.loopX.XAlarm.module.Alarm.Alarm;
+import io.github.loopX.XAlarm.module.Alarm.AlarmNotificationManager;
+import io.github.loopX.XAlarm.module.Alarm.AlarmRingtonePlayer;
+import io.github.loopX.XAlarm.module.Alarm.AlarmScheduler;
+import io.github.loopX.XAlarm.module.Alarm.AlarmVibrator;
 import io.github.loopX.XAlarm.module.UnlockTypeModule.alarmType.UnlockFragment;
 import io.github.loopX.XAlarm.module.UnlockTypeModule.alarmType.UnlockFragmentFactory;
 
@@ -45,45 +30,30 @@ import io.github.loopX.XAlarm.module.UnlockTypeModule.alarmType.UnlockFragmentFa
  */
 public class AlarmAlertFullScreen extends FragmentActivity implements UnlockFragment.OnAlarmAction {
 
+    private final static String TAG = "AlarmAlertFullScreen";
+
     protected static final String SCREEN_OFF = "screen_off";
 
     protected Alarm mAlarm;
-
-    // Receives the ALARM_KILLED action from the AlarmKlaxon,
-    // and also ALARM_SNOOZE_ACTION / ALARM_DISMISS_ACTION from other applications
-    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (action.equals(Alarms.ALARM_DISMISS_ACTION)) {
-                dismiss(false);
-            } else {
-                Alarm alarm = intent.getParcelableExtra(Alarms.ALARM_INTENT_EXTRA);
-                if (alarm != null && mAlarm.id == alarm.id) {
-                    dismiss(true);
-                }
-            }
-        }
-    };
+    private AlarmVibrator mVibrator;
+    private AlarmRingtonePlayer mRingtonePlayer;
 
     @Override
     protected void onCreate(Bundle icicle) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(icicle);
+
         setContentView(R.layout.framelayout_alarm_unlock);
 
-        mAlarm = getIntent().getParcelableExtra(Alarms.ALARM_INTENT_EXTRA);
-        //sign changed by reason
-        // ToDo why here it needs to get alarm for another time
-        mAlarm = Alarms.getAlarm(getContentResolver(), mAlarm.id);
+        UUID alarmID = (UUID) getIntent().getSerializableExtra(AlarmScheduler.X_ALARM_ID);
+        mAlarm = AlarmDBService.getInstance(this).getAlarm(alarmID);
 
         /**
          * Pop-up unlock fragment according to unlock type
          */
-        Log.d("yummywakeup", "Alarm will infalte fragment " + mAlarm.unlockType);
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = manager.beginTransaction();
-        UnlockFragment unlockFragment = UnlockFragmentFactory.create(mAlarm.unlockType);
+        UnlockFragment unlockFragment = UnlockFragmentFactory.create(mAlarm.getUnlockType());
         fragmentTransaction.replace(R.id.fg_alarm, unlockFragment);
         fragmentTransaction.commit();
 
@@ -98,23 +68,13 @@ public class AlarmAlertFullScreen extends FragmentActivity implements UnlockFrag
                     | WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON);
         }
 
-        // Register to get the alarm killed/snooze/dismiss intent.
-        IntentFilter filter = new IntentFilter(Alarms.ALARM_KILLED);
-        filter.addAction(Alarms.ALARM_DISMISS_ACTION);
-        registerReceiver(mReceiver, filter);
-    }
+        mVibrator = new AlarmVibrator(this);
+        mRingtonePlayer = new AlarmRingtonePlayer(this);
 
-    // Dismiss the alarm.
-    private void dismiss(boolean killed) {
-        // The service told us that the alarm has been killed, do not modify
-        // the notification or stop the service.
-        if (!killed) {
-            // Cancel the notification and stop playing the alarm
-            NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            nm.cancel(mAlarm.id);
-            stopService(new Intent(Alarms.ALARM_ALERT_ACTION));
-        }
-        finish();
+        // Register to get the alarm killed/snooze/dismiss intent.
+        // IntentFilter filter = new IntentFilter(Alarms.ALARM_KILLED);
+        // filter.addAction(Alarms.ALARM_DISMISS_ACTION);
+        // registerReceiver(mReceiver, filter);
     }
 
     /**
@@ -124,16 +84,29 @@ public class AlarmAlertFullScreen extends FragmentActivity implements UnlockFrag
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        Log.v("yummywakeup", "AlarmAlert.OnNewIntent()");
-        mAlarm = intent.getParcelableExtra(Alarms.ALARM_INTENT_EXTRA);
+        UUID alarmID = (UUID) getIntent().getSerializableExtra(AlarmScheduler.X_ALARM_ID);
+        mAlarm = AlarmDBService.getInstance(this).getAlarm(alarmID);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (mAlarm.isVibrate()) {
+            mVibrator.vibrate();
+        }
+
+        mRingtonePlayer.play(mAlarm.getAlarmTone());
+
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.v("yummywakeup", "AlarmAlert.onDestroy()");
         // No longer care about the alarm being killed.
-        unregisterReceiver(mReceiver);
+        // unregisterReceiver(mReceiver);
+        mVibrator.cleanup();
+        mRingtonePlayer.cleanup();
     }
 
     @Override
@@ -153,22 +126,26 @@ public class AlarmAlertFullScreen extends FragmentActivity implements UnlockFrag
 
     @Override
     public void onBackPressed() {
-        // Don't allow back to dismiss. This method is overriden by AlarmAlert
+        // Don't allow back to dismiss. This method is overridden by AlarmAlert
         // so that the dialog is dismissed.
         return;
     }
 
     @Override
     public void closeAlarm() {
-        Vibrator mVibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
-        if (mAlarm.vibrate) {
-            mVibrator.cancel();
+        // If alarm not vibrate mode. So vibrate 0.5s in the end
+        if (mAlarm.isVibrate()) {
+            mVibrator.stop();
         } else {
             mVibrator.vibrate(500);
         }
 
-        dismiss(false);
+        mRingtonePlayer.stop();
+
+        AlarmNotificationManager.getInstance(this).disableNotifications();
+
+        finish();
     }
 
     @Override

@@ -10,7 +10,7 @@ public class AlarmDBSchema {
      */
     public static final class AlarmTable {
 
-        public static final String NAME = "xalarm.tb.alarm";
+        public static final String NAME = "tb_xalarm";
 
         public static final class Columns {
 

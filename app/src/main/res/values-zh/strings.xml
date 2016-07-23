@@ -27,7 +27,7 @@
     <string name="never">"从不"</string>
     <string name="day_concat">", "</string>
     <string name="turn_on_alarm">打开闹钟</string>
-    <string name="turn_off_alarm">关闭闹钟</string>
+    <string name="turn_off_alarm">闹钟已关闭</string>
     <string name="shake_your_phone">摇动解锁</string>
     <string name="puzzle_alarm">拼图解锁</string>
     <string name="shake">摇动解锁</string>

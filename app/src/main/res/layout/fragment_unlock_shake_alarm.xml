@@ -5,6 +5,14 @@
     android:layout_height="match_parent"
     android:background="@color/loopX_1">
 
+    <io.github.loopX.XAlarm.view.waveview.WaveView
+        android:id="@+id/iv_water"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        wave:above_wave_color="#E3F2FD"
+        wave:blow_wave_color="#0EE7FF"
+        wave:wave_height="large"
+        wave:wave_hz="slow" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -40,17 +48,5 @@
             android:textColor="@color/loopX_2"
             android:textSize="40sp" />
     </RelativeLayout>
-
-
-    <io.github.loopX.XAlarm.view.waveview.WaveView
-        android:id="@+id/iv_water"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#00000000"
-        wave:above_wave_color="#E3F2FD"
-        wave:blow_wave_color="#0EE7FF"
-        wave:wave_height="large"
-        wave:wave_hz="slow" />
-
 
 </FrameLayout>

@@ -2,8 +2,11 @@ package io.github.loopX.XAlarm.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import io.github.loopX.XAlarm.module.Alarm.Alarm;
@@ -29,6 +32,36 @@ public class AlarmDBService {
             mAlarmDBService = new AlarmDBService(context);
         }
         return mAlarmDBService;
+    }
+
+
+    /**
+     * Get all alarms existing in DB
+     * @return list of alarms
+     */
+    public List<Alarm> getAlarms() {
+
+        List<Alarm> alarms = new ArrayList<>();
+
+        AlarmCursorWrapper cursor = new AlarmCursorWrapper(mDatabase.query(
+                AlarmTable.NAME,
+                null, // gets all columns
+                null,
+                null,
+                null,
+                null,
+                AlarmTable.Columns.HOUR + ", " + AlarmTable.Columns.MINUTE
+        ));
+
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            alarms.add(cursor.getAlarm());
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return alarms;
     }
 
     /**
@@ -60,6 +93,17 @@ public class AlarmDBService {
             cursor.close();
         }
 
+    }
+
+    /**
+     * Add a new alarm in DB
+     * @param alarm alarm to add
+     */
+    public void addAlarm(Alarm alarm) {
+
+        ContentValues values = createContentValues(alarm);
+
+        mDatabase.insert(AlarmTable.NAME, null, values);
     }
 
     /**
