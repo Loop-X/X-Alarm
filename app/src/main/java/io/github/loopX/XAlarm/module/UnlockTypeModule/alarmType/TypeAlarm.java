@@ -104,6 +104,13 @@ public class TypeAlarm extends UnlockFragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        mInputMethodManager.hideSoftInputFromWindow(
+                getActivity().getCurrentFocus().getWindowToken(), 0);
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
 
