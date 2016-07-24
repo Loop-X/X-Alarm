@@ -54,9 +54,6 @@
         <activity
             android:name="io.github.loopX.XAlarm.module.AlarmModule.AlarmAlertFullScreenToTest"
             android:configChanges="orientation|keyboardHidden|keyboard|navigation"
-            android:excludeFromRecents="true"
-            android:launchMode="singleInstance"
-            android:taskAffinity=""
             android:theme="@android:style/Theme.Wallpaper.NoTitleBar" />
 
         <receiver android:name=".module.Alarm.AlarmWakeReceiver"

@@ -12,6 +12,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import io.github.loopX.XAlarm.R;
+import io.github.loopX.XAlarm.module.Alarm.AlarmNotificationManager;
 import io.github.loopX.XAlarm.tools.CalculationFormula;
 import io.github.loopX.XAlarm.tools.ToastMaster;
 import io.github.loopX.XAlarm.view.YummyEditText;
@@ -79,6 +80,7 @@ public class MathAlarm extends UnlockFragment {
 
     }
 
+
     public void initListener() {
         etCalculResult.addTextChangedListener(new TextWatcher() {
             @Override
@@ -122,11 +124,17 @@ public class MathAlarm extends UnlockFragment {
                 Toast.LENGTH_SHORT));
         ToastMaster.showToast();
 
-        if(mTimer != null) {
+        if(mTimer == null) {
             mTimer = new Timer(true);
             mTimer.schedule(task, 1200);
         }
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        mInputMethodManager.hideSoftInputFromWindow(
+                getActivity().getCurrentFocus().getWindowToken(), 0);
     }
 
     @Override

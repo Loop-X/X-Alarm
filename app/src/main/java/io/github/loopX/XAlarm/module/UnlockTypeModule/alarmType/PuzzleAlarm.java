@@ -46,7 +46,7 @@ public class PuzzleAlarm extends UnlockFragment {
                         Toast.LENGTH_SHORT));
                 ToastMaster.showToast();
 
-                if(mTimer != null) {
+                if(mTimer == null) {
                     mTimer = new Timer(true);
                     mTimer.schedule(task, 1200);
                 }

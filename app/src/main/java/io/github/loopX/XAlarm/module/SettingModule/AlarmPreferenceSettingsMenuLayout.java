@@ -78,12 +78,6 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
         /** Init Ringtone **/
 
         mAlarmRingtonePlayer = new AlarmRingtonePlayer(XAlarmApp.getAppContext());
-        /*
-        mRingtoneManager = new RingtoneManager(mContext);
-        for(int i = 0; i < 4; i++) {
-            RingtoneManager.setActualDefaultRingtoneUri(mContext, RingtoneManager.TYPE_ALARM,
-                    Uri.parse(XAlarmApp.getResourcePath() + "/raw/ringtone_" + i));
-        }*/
 
         lvRingtoneList = (ListView) findViewById(R.id.lv_ringtone_list);
 
