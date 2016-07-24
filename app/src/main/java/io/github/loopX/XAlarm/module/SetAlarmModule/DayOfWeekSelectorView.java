@@ -99,7 +99,7 @@ public class DayOfWeekSelectorView extends FrameLayout implements View.OnClickLi
         }
 
         if (dayOfWeekSelectorListener != null) {
-            dayOfWeekSelectorListener.onDayOfWeekSelector(daysOfWeek,dayOfWeekView.isSelected());
+            dayOfWeekSelectorListener.onDayOfWeekSelector(daysOfWeek - 1, dayOfWeekView.isSelected());
         }
     }
 
