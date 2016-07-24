@@ -61,8 +61,6 @@ public class TimePickWheelMask extends WheelMask {
 
     @Override
     public void draw(Canvas canvas) {
-
-       
         canvas.drawRect(topMaskRect, topMaskPaint);
         canvas.drawRect(bottomMaskRect,bottomMaskPaint);
         

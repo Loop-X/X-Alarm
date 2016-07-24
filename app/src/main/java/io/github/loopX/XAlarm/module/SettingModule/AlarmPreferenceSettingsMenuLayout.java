@@ -19,6 +19,7 @@ import com.kyleduo.switchbutton.SwitchButton;
 
 import io.github.loopX.XAlarm.R;
 import io.github.loopX.XAlarm.XAlarmApp;
+import io.github.loopX.XAlarm.module.Alarm.AlarmRingtonePlayer;
 
 public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
 
@@ -32,6 +33,7 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
     private CustomAdapter mAdapter;
 
     private RingtoneManager mRingtoneManager;
+    private AlarmRingtonePlayer mAlarmRingtonePlayer;
     private Ringtone mRingtone;
 
     public AlarmPreferenceSettingsMenuLayout(Context context) {
@@ -75,11 +77,13 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
 
         /** Init Ringtone **/
 
+        mAlarmRingtonePlayer = new AlarmRingtonePlayer(XAlarmApp.getAppContext());
+        /*
         mRingtoneManager = new RingtoneManager(mContext);
         for(int i = 0; i < 4; i++) {
-            RingtoneManager.setActualDefaultRingtoneUri(mContext, RingtoneManager.TYPE_RINGTONE,
+            RingtoneManager.setActualDefaultRingtoneUri(mContext, RingtoneManager.TYPE_ALARM,
                     Uri.parse(XAlarmApp.getResourcePath() + "/raw/ringtone_" + i));
-        }
+        }*/
 
         lvRingtoneList = (ListView) findViewById(R.id.lv_ringtone_list);
 
@@ -90,29 +94,20 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                if (CustomAdapter.mLastSelectPosition != i) {
+                Uri uri = Uri.parse(XAlarmApp.getResourcePath() + "/raw/ringtone_" + i);
 
-                    stopRingtone();
-                    mRingtone = RingtoneManager.getRingtone(mContext,
-                            Uri.parse(XAlarmApp.getResourcePath() + "/raw/ringtone_" + i));
+                if (CustomAdapter.mLastSelectPosition != i) {
+                    mAlarmRingtonePlayer.stop();
+                    mAlarmRingtonePlayer.play(uri);
 
                     CustomAdapter.mLastSelectPosition = i;
                     mAdapter.notifyDataSetChanged();
-                    mRingtone.play();
-
                 } else {
-                    if(mRingtone != null) {
-                        if(mRingtone.isPlaying()) {
-                            stopRingtone();
-                        } else {
-                            mRingtone.play();
-                        }
+                    if(mAlarmRingtonePlayer.isPlaying()) {
+                        mAlarmRingtonePlayer.stop();
                     } else {
-                        mRingtone = RingtoneManager.getRingtone(mContext,
-                                Uri.parse(XAlarmApp.getResourcePath() + "/raw/ringtoe_" + i));
-                        mRingtone.play();
+                        mAlarmRingtonePlayer.play(uri);
                     }
-
                 }
             }
         });
@@ -147,9 +142,7 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
     }
 
     public void stopRingtone() {
-        if(mRingtone != null) {
-            mRingtone.stop();
-        }
+        mAlarmRingtonePlayer.stop();
     }
 
     public void setInitRingtone(int i) {

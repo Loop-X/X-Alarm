@@ -59,4 +59,11 @@ public class AlarmRingtonePlayer {
         }
     }
 
+    public boolean isPlaying() {
+        if (mPlayer != null) {
+           return mPlayer.isPlaying();
+        }
+        return false;
+    }
+
 }
