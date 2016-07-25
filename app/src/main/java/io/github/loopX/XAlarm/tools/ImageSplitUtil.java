@@ -15,10 +15,11 @@ public class ImageSplitUtil {
         int height = bitmap.getHeight();
 
         int pieceWidth = Math.min(width, height)/sizeOfRow;
-
+        
+        ImagePiece imagePiece;
         for (int i = 0; i < sizeOfRow; i++) {
             for (int j = 0; j < sizeOfRow; j++) {
-                ImagePiece imagePiece = new ImagePiece();
+                imagePiece = new ImagePiece();
                 imagePiece.setIndex(j + i * sizeOfRow);
 
                 int x = j * pieceWidth;
