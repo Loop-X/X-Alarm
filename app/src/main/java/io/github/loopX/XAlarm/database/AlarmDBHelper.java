@@ -5,7 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import io.github.loopX.XAlarm.database.AlarmDBSchema.AlarmTable;
 
 public class AlarmDBHelper extends SQLiteOpenHelper {
 
@@ -19,7 +18,7 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL( "create table " + AlarmDBSchema.AlarmTable.NAME + "(" +
+        db.execSQL( "create table " + AlarmTable.NAME + "(" +
                 " _id integer primary key autoincrement, " +
                 AlarmTable.Columns.UUID + ", " +
                 AlarmTable.Columns.ENABLED + ", " +

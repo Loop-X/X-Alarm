@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.UUID;
 
 import io.github.loopX.XAlarm.module.Alarm.Alarm;
-import io.github.loopX.XAlarm.database.AlarmDBSchema.AlarmTable;
 
 /**
  * This class is service level for alarm. It provides functions to get/update/delete
