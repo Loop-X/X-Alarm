@@ -334,7 +334,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             // Update right menu
             setRightMenuStatus();
 
-            ToastMaster.setToast(Toast.makeText(this, getString(R.string.setting_updated), Toast.LENGTH_SHORT));
+        //    ToastMaster.setToast(Toast.makeText(this, getString(R.string.setting_updated), Toast.LENGTH_SHORT));
             ToastMaster.showToast();
         } else {
             ivLeftMenuIndicator.setImageResource(R.drawable.main_left);
