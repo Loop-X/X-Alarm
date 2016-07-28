@@ -18,6 +18,8 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".XAlarmApp"
         android:allowBackup="true"
@@ -25,20 +27,25 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="io.github.loopX.XAlarm.MainActivity">
+
+        <activity android:name="io.github.loopX.XAlarm.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name="io.github.loopX.XAlarm.module.SetAlarmModule.SetAlarmActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait">
         </activity>
         
-        <activity android:name="io.github.loopX.XAlarm.module.UnlockTypeModule.UnlockTypeActivity"
+        <activity
+            android:name="io.github.loopX.XAlarm.module.UnlockTypeModule.UnlockTypeActivity"
             android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"
             />
 
         <!-- 闹钟执行时弹出一个全屏的Activity -->
@@ -48,13 +55,15 @@
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
             android:taskAffinity=""
-            android:theme="@android:style/Theme.Wallpaper.NoTitleBar" />
+            android:theme="@android:style/Theme.Wallpaper.NoTitleBar"
+            android:screenOrientation="portrait"/>
 
         <!-- Used as demo of unlock type for user -->
         <activity
             android:name=".module.Alarm.AlarmAlertFullScreenToTest"
             android:configChanges="orientation|keyboardHidden|keyboard|navigation"
-            android:theme="@android:style/Theme.Wallpaper.NoTitleBar" />
+            android:theme="@android:style/Theme.Wallpaper.NoTitleBar"
+            android:screenOrientation="portrait"/>
 
         <receiver android:name=".module.Alarm.AlarmWakeReceiver"
             android:enabled="true"
@@ -62,6 +71,10 @@
 
         <service android:name=".module.Alarm.AlarmRingingService"
             android:enabled="true" />
+
+        <activity android:name=".About"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"/>
 
         <!-- 重新开机后初始化闹钟 -->
         <!-- receiver android:name="io.github.loopX.XAlarm.service.AlarmInitReceiver" >
