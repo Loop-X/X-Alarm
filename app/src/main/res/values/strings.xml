@@ -67,6 +67,8 @@
         so every developer could contribute on it.
         Please visit <a href="http://loop-x.github.io/X-Alarm/">application website</a> for more details.
     </string>
-
+    <string name="dong_chuan">Develop - DONG Chuan  <a href="mailto:dongchuan55@gmail.com">Contact</a></string>
+    <string name="sun_meng">Develop - SUN Meng  <a href="mailto:sunfreedomsun@gmail.com">Contact</a></string>
+    <string name="kk">UI Design - kk  <a href="mailto:youngxkk@gmail.com">Contact</a></string>
 
 </resources>

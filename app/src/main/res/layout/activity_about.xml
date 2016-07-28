@@ -45,6 +45,30 @@
                 android:textSize="20sp"
                 android:textColor="@color/loopX_2_50_alpha"/>
 
+            <io.github.loopX.XAlarm.view.YummyTextView
+                android:text="@string/kk"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="@color/loopX_2"/>
+
+            <io.github.loopX.XAlarm.view.YummyTextView
+                android:text="@string/dong_chuan"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="@color/loopX_2"/>
+
+            <io.github.loopX.XAlarm.view.YummyTextView
+                android:text="@string/sun_meng"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="@color/loopX_2"/>
+
         </LinearLayout>
 
     </ScrollView>
