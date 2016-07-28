@@ -12,7 +12,7 @@ import android.support.v4.content.ContextCompat;
 import com.wx.wheelview.widget.WheelMask;
 
 import io.github.loopX.XAlarm.R;
-import io.github.loopX.XAlarm.UIUtils;
+import io.github.loopX.XAlarm.tools.UIUtils;
 
 /**
  * Author SunMeng

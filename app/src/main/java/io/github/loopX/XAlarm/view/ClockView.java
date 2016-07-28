@@ -27,7 +27,7 @@ import java.util.Calendar;
 import java.util.TimeZone;
 
 import io.github.loopX.XAlarm.R;
-import io.github.loopX.XAlarm.UIUtils;
+import io.github.loopX.XAlarm.tools.UIUtils;
 import io.github.loopX.XAlarm.tools.BaseSpringListener;
 import io.github.loopX.XAlarm.tools.ReboundAnimation;
 

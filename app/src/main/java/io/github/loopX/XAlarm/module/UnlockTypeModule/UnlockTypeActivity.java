@@ -20,9 +20,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import io.github.loopX.XAlarm.R;
-import io.github.loopX.XAlarm.UIUtils;
+import io.github.loopX.XAlarm.tools.UIUtils;
 import io.github.loopX.XAlarm.infrastructure.BaseActivity;
-import io.github.loopX.XAlarm.module.AlarmModule.AlarmAlertFullScreenToTest;
+import io.github.loopX.XAlarm.module.Alarm.AlarmAlertFullScreenToTest;
 import io.github.loopX.XAlarm.view.RippleBackgroundView;
 
 public class UnlockTypeActivity extends BaseActivity {

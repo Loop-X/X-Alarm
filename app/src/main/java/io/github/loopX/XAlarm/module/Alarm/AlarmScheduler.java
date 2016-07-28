@@ -5,13 +5,11 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.text.format.DateFormat;
-import android.util.Log;
 
 import java.util.Calendar;
 
 import io.github.loopX.XAlarm.R;
-import io.github.loopX.XAlarm.module.AlarmModule.AlarmAlertFullScreen;
+import io.github.loopX.XAlarm.model.Alarm;
 
 public class AlarmScheduler {
 

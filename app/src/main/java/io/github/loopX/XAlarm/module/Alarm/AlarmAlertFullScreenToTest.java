@@ -1,4 +1,4 @@
-package io.github.loopX.XAlarm.module.AlarmModule;
+package io.github.loopX.XAlarm.module.Alarm;
 
 import android.content.Intent;
 import android.net.Uri;

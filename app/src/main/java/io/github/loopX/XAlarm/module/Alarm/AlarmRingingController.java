@@ -2,14 +2,12 @@ package io.github.loopX.XAlarm.module.Alarm;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.util.Log;
 
 import java.util.UUID;
 
 import io.github.loopX.XAlarm.XAlarmApp;
 import io.github.loopX.XAlarm.database.AlarmDBService;
-import io.github.loopX.XAlarm.module.AlarmModule.AlarmAlertFullScreen;
+import io.github.loopX.XAlarm.model.Alarm;
 
 public final class AlarmRingingController {
 

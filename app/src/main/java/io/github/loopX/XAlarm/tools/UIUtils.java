@@ -1,4 +1,4 @@
-package io.github.loopX.XAlarm;
+package io.github.loopX.XAlarm.tools;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -6,6 +6,8 @@ import android.support.annotation.ColorRes;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.WindowManager;
+
+import io.github.loopX.XAlarm.XAlarmApp;
 
 /**
  * Author UFreedom

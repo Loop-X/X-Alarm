@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.util.Calendar;
 
 import io.github.loopX.XAlarm.R;
-import io.github.loopX.XAlarm.UIUtils;
+import io.github.loopX.XAlarm.tools.UIUtils;
 import io.github.loopX.XAlarm.view.RippleBackgroundView;
 
 public class DayOfWeekSelectorView extends FrameLayout implements View.OnClickListener {

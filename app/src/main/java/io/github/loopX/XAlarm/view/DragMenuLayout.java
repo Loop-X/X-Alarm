@@ -11,7 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import io.github.loopX.XAlarm.UIUtils;
+import io.github.loopX.XAlarm.tools.UIUtils;
 
 public class DragMenuLayout extends FrameLayout {
     

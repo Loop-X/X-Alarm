@@ -2,14 +2,13 @@ package io.github.loopX.XAlarm.database;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import io.github.loopX.XAlarm.module.Alarm.Alarm;
+import io.github.loopX.XAlarm.model.Alarm;
 
 /**
  * This class is service level for alarm. It provides functions to get/update/delete

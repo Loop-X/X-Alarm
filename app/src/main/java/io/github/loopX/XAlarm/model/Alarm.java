@@ -1,4 +1,4 @@
-package io.github.loopX.XAlarm.module.Alarm;
+package io.github.loopX.XAlarm.model;
 
 import android.content.Context;
 import android.net.Uri;
@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import io.github.loopX.XAlarm.XAlarmApp;
 import io.github.loopX.XAlarm.database.AlarmDBService;
+import io.github.loopX.XAlarm.module.Alarm.AlarmScheduler;
 import io.github.loopX.XAlarm.module.UnlockTypeModule.UnlockTypeEnum;
 
 /**

@@ -43,7 +43,7 @@
 
         <!-- 闹钟执行时弹出一个全屏的Activity -->
         <activity
-            android:name="io.github.loopX.XAlarm.module.AlarmModule.AlarmAlertFullScreen"
+            android:name=".module.Alarm.AlarmAlertFullScreen"
             android:configChanges="orientation|keyboardHidden|keyboard|navigation"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
@@ -52,7 +52,7 @@
 
         <!-- Used as demo of unlock type for user -->
         <activity
-            android:name="io.github.loopX.XAlarm.module.AlarmModule.AlarmAlertFullScreenToTest"
+            android:name=".module.Alarm.AlarmAlertFullScreenToTest"
             android:configChanges="orientation|keyboardHidden|keyboard|navigation"
             android:theme="@android:style/Theme.Wallpaper.NoTitleBar" />
 
