@@ -61,5 +61,12 @@
     <string name="type_alarm_sentence_15">Knowledge without practice makes but half an artist</string>
     <string name="about">About</string>
     <string name="feedback">Feedback</string>
+    <string name="about_x_alarm">
+        X-Alarm helps you wake up by completing a game or other tasks.
+        It is also an open source application,
+        so every developer could contribute on it.
+        Please visit <a href="http://loop-x.github.io/X-Alarm/">application website</a> for more details.
+    </string>
+
 
 </resources>

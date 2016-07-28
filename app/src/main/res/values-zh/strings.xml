@@ -61,5 +61,11 @@
     <string name="type_alarm_sentence_15">有知识而无时间只算半个能人</string>
     <string name="about">关于</string>
     <string name="feedback">反馈</string>
+    <string name="about_x_alarm">
+        X-Alarm 通过各种方式来帮助懒虫们起床.
+        它同时也是一个开源项目,
+        任何感兴趣的开发人员都可以参与开发.
+        请参观 <a href="http://loop-x.github.io/X-Alarm/">项目主页</a> 获得具体信息.
+    </string>
 
 </resources>
