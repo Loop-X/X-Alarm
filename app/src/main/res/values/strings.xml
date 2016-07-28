@@ -59,5 +59,7 @@
     <string name="type_alarm_sentence_13">Take control of your own destiny</string>
     <string name="type_alarm_sentence_14">Keep on going never give up</string>
     <string name="type_alarm_sentence_15">Knowledge without practice makes but half an artist</string>
+    <string name="about">About</string>
+    <string name="feedback">Feedback</string>
 
 </resources>

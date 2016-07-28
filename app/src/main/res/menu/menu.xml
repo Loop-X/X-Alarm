@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".AlarmMainActivity">
+
+    <item android:id="@+id/action_about"
+        android:title="@string/about"
+        android:orderInCategory="101"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/action_feedback"
+        android:title="@string/feedback"
+        android:orderInCategory="102"
+        app:showAsAction="never" />
+
+</menu>

@@ -6,6 +6,9 @@ import android.os.Build;
 import android.os.Handler;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
@@ -376,5 +379,32 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         */
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_about) {
+            launchChildActivity(About.class);
+            return true;
+        } else if (id == R.id.action_feedback) {
+            // ToDo launchChildActivity
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void launchChildActivity(Class childClass) {
+        Intent intent = new Intent(this, childClass);
+        startActivity(intent);
+        this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
 
 }
