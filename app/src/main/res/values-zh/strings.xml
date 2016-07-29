@@ -65,10 +65,15 @@
         X-Alarm 通过各种方式来帮助懒虫们起床.
         它同时也是一个开源项目,
         任何感兴趣的开发人员都可以参与开发.
-        请参观 <a href="http://loop-x.github.io/X-Alarm/">项目主页</a> 获得具体信息.
+        请参观 <a href="http://loop-x.github.io/X-Alarm/">项目主页</a> 了解具体信息.
     </string>
     <string name="dong_chuan">开发 - 董川</string>
     <string name="sun_meng">开发 - 孙猛</string>
     <string name="kk">设计 - youngxkk</string>
+    <string name="report_feedback">
+        如果你有任何新的想法, 疑问或者报告应用的错误, 欢迎点击下方的按钮给我们的团队发送邮件.
+        你也可以直接进入项目的 <a href="https://github.com/Loop-X/X-Alarm/issues">Github</a>
+        页面创建 issue tickets.
+    </string>
 
 </resources>

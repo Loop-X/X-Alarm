@@ -70,5 +70,10 @@
     <string name="dong_chuan">Develop - DONG Chuan</string>
     <string name="sun_meng">Develop - SUN Meng</string>
     <string name="kk">UI Design - youngxkk</string>
+    <string name="report_feedback">
+        If you have any ideas, questions or bugs to report,
+        you could click the button below to send emails to our team.
+        Or you could go to <a href="https://github.com/Loop-X/X-Alarm/issues">Github</a> directly to create issue tickets
+    </string>
 
 </resources>
