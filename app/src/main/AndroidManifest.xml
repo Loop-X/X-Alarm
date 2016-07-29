@@ -65,26 +65,26 @@
             android:theme="@android:style/Theme.Wallpaper.NoTitleBar"
             android:screenOrientation="portrait"/>
 
-        <receiver android:name=".module.Alarm.AlarmWakeReceiver"
-            android:enabled="true"
-            android:exported="false"/>
-
-        <service android:name=".module.Alarm.AlarmRingingService"
-            android:enabled="true" />
-
         <activity android:name=".About"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"/>
 
-        <!-- 重新开机后初始化闹钟 -->
-        <!-- receiver android:name="io.github.loopX.XAlarm.service.AlarmInitReceiver" >
+        <receiver android:name=".module.Alarm.AlarmWakeReceiver"
+            android:enabled="true"
+            android:exported="false"/>
+
+        <receiver
+            android:name=".module.Alarm.AlarmRegistrar">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.TIME_SET" />
-                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
-                <action android:name="android.intent.action.LOCALE_CHANGED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
+                <action android:name="android.intent.action.TIME_SET"/>
+                <action android:name="android.intent.action.DATE_CHANGED"/>
             </intent-filter>
-        </receiver-->
-    </application>
+        </receiver>
+
+        <service android:name=".module.Alarm.AlarmRingingService"
+            android:enabled="true" />
+
 
 </manifest>
