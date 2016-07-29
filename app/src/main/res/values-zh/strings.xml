@@ -67,8 +67,8 @@
         任何感兴趣的开发人员都可以参与开发.
         请参观 <a href="http://loop-x.github.io/X-Alarm/">项目主页</a> 获得具体信息.
     </string>
-    <string name="dong_chuan">开发 - 董川  <a href="mailto:dongchuan55@gmail.com">发送邮件</a></string>
-    <string name="sun_meng">开发 - 孙猛  <a href="mailto:sunfreedomsun@gmail.com">发送邮件</a></string>
-    <string name="kk">设计 - kk  <a href="mailto:youngxkk@gmail.com">发送邮件</a></string>
+    <string name="dong_chuan">开发 - 董川</string>
+    <string name="sun_meng">开发 - 孙猛</string>
+    <string name="kk">设计 - youngxkk</string>
 
 </resources>
