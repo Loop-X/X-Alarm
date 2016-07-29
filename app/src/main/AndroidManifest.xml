@@ -86,5 +86,7 @@
         <service android:name=".module.Alarm.AlarmRingingService"
             android:enabled="true" />
 
+    </application>
+
 
 </manifest>
