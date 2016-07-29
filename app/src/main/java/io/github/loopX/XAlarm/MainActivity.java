@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -193,6 +194,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     loopXDragMenuLayout.closeMenuWithAnimation();
                 }
                 break;
+            case R.id.btn_about:
+                Intent intentToAbout = new Intent(this, About.class);
+                startActivity(intentToAbout);
+                break;
         }
     }
 
@@ -367,7 +372,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             mWindow.setStatusBarColor(getColor(R.color.loopX_1_50_alpha));
         }
 
-
         /*
         if (hasFocus) {
             final View decorView = getWindow().getDecorView();
@@ -381,30 +385,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_MENU) {
+            if (event.getAction() == KeyEvent.ACTION_UP) {
+                if (loopXDragMenuLayout.getMenuStatus() == DragMenuLayout.MenuStatus.Close){
+                    loopXDragMenuLayout.openRightMenuWithAnimation();
+                }else {
+                    loopXDragMenuLayout.closeMenuWithAnimation();
+                }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_about) {
-            launchChildActivity(About.class);
-            return true;
-        } else if (id == R.id.action_feedback) {
-            // ToDo launchChildActivity
-            return true;
+                return true;
+            }
         }
-        return super.onOptionsItemSelected(item);
+        return super.onKeyUp(keyCode, event);
     }
-
-    private void launchChildActivity(Class childClass) {
-        Intent intent = new Intent(this, childClass);
-        startActivity(intent);
-        this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-    }
-
 
 }

@@ -47,13 +47,31 @@
 
     </RelativeLayout>
 
-    
-
+    <!-- List of ringtones -->
     <ListView
         android:id="@+id/lv_ringtone_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:choiceMode="singleChoice" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/btn_about"
+            android:layout_width="135dp"
+            android:layout_height="38dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:onClick="onClick"
+            android:textSize="14sp"
+            android:background="@drawable/btn_have_a_try"
+            android:textColor="@color/loopX_3"
+            android:text="@string/about"/>
+
+    </RelativeLayout>
+
 
 </merge>
