@@ -145,6 +145,9 @@ public class AlarmAlertFullScreen extends FragmentActivity implements UnlockFrag
 
         AlarmNotificationManager.getInstance(this).disableNotifications();
 
+        // Set next alarm
+        mAlarm.schedule();
+
         finish();
     }
 
