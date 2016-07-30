@@ -13,7 +13,7 @@ import io.github.loopX.XAlarm.view.YummyTextView;
 
 public class CustomAdapter extends ArrayAdapter<Object> {
 
-    String[] mRingtoneNames = {"WARM BREEZE", "FOREST GLADE", "MORNING MIST", "SUNRISE"};
+    String[] mRingtoneNames = {"WARM BREEZE", "DISTANT MEMORIES", "MORNING MIST", "SUNRISE"};
 
     Context mContext;
     int mResourceId;
