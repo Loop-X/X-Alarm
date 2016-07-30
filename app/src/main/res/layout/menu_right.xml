@@ -15,8 +15,8 @@
         android:id="@+id/sb_alarm_volume"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:minHeight="2dp"
         android:maxHeight="2dp"
         android:progressDrawable="@drawable/seekbar_progress"
@@ -68,7 +68,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="16dp">
 
         <Button
             android:id="@+id/btn_share"
