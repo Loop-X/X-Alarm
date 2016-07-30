@@ -21,7 +21,7 @@
             android:gravity="center_horizontal"
             android:text="@string/type"
             android:textColor="@color/loopX_3"
-            android:textSize="20sp" />
+            android:textSize="19sp" />
 
         <ImageView
             android:id="@+id/iv_unlock_type_0"
@@ -58,7 +58,7 @@
             android:gravity="center_horizontal"
             android:text="@string/math"
             android:textColor="@color/loopX_3"
-            android:textSize="20sp" />
+            android:textSize="19sp" />
 
         <ImageView
             android:id="@+id/iv_unlock_type_1"
@@ -95,7 +95,7 @@
             android:gravity="center_horizontal"
             android:text="@string/puzzle"
             android:textColor="@color/loopX_3"
-            android:textSize="20sp" />
+            android:textSize="19sp" />
 
         <ImageView
             android:id="@+id/iv_unlock_type_2"
@@ -132,7 +132,7 @@
             android:gravity="center_horizontal"
             android:text="@string/shake"
             android:textColor="@color/loopX_3"
-            android:textSize="20sp" />
+            android:textSize="19sp" />
 
         <ImageView
             android:id="@+id/iv_unlock_type_3"
