@@ -2,25 +2,27 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#FFFFFF</color>
 
     <color name="loopX_1">#080717</color>
     <color name="loopX_1_50_alpha">#80080717</color>
     <color name="loopX_2">#E60044</color>
+    <color name="loopX_2_50_alpha">#80E60044</color>
     <color name="loopX_2_90_alpha">#EFE60044</color>
     <color name="loopX_3">#FFFFFF</color>
+    <color name="loopX_3_10_alpha">#1AFFFFFF</color>
+    <color name="loopX_3_20_alpha">#33FFFFFF</color>
+    <color name="loopX_3_50_alpha">#80FFFFFF</color>
+    <color name="loopX_3_40_alpha">#66FFFFFF</color>
+    <color name="loopX_3_60_alpha">#AFFFFFFF</color>
     <color name="loopX_4">#555563</color>
     <color name="loopX_5">#1AFFFFFF</color>
     <color name="loopX_6">#FFDC1846</color>
-
-    <color name="loopX_3_60_alpha">#AFFFFFFF</color>
-    <color name="loopX_3_40_alpha">#66FFFFFF</color>
-    <color name="loopX_3_20_alpha">#33FFFFFF</color>
-    <color name="loopX_3_10_alpha">#1AFFFFFF</color>
-    <color name="loopX_2_50_alpha">#80E60044</color>
+    <color name="loopX_7">#21202C</color>
 
     <color name="alarm_set_top_alarm_off">#FF171625</color>
     <color name="alarm_set_top_alarm_on">#E60044</color>
-    <color name="alarm_wave">#0EE7FF</color>
+    <color name="alarm_wave_above">#E3F2FD</color>
+    <color name="alarm_wave_blow">#0EE7FF</color>
 
 </resources>

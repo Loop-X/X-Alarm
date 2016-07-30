@@ -61,4 +61,5 @@
             android:textColor="@color/loopX_3"
             android:textSize="25sp" />
     </FrameLayout>
+
 </RelativeLayout>

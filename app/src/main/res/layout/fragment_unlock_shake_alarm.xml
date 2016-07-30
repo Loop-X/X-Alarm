@@ -9,8 +9,8 @@
         android:id="@+id/iv_water"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        wave:above_wave_color="#E3F2FD"
-        wave:blow_wave_color="@color/alarm_wave"
+        wave:above_wave_color="@color/alarm_wave_above"
+        wave:blow_wave_color="@color/alarm_wave_blow"
         wave:wave_height="large"
         wave:wave_hz="slow" />
 
@@ -47,6 +47,7 @@
             android:text="@string/shake_your_phone"
             android:textColor="@color/loopX_2"
             android:textSize="40sp" />
+
     </RelativeLayout>
 
 </FrameLayout>
