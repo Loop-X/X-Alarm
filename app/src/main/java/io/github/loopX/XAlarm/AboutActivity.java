@@ -1,7 +1,9 @@
 package io.github.loopX.XAlarm;
 
-import android.support.v7.widget.Toolbar;
+import android.os.Build;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -42,5 +44,19 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener{
                 finish();
                 break;
         }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        Window window = this.getWindow();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getColor(R.color.loopX_1));
+        }
+
     }
 }

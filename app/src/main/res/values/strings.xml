@@ -18,6 +18,16 @@
         <item msgid="3663661342600168814">"Alarm set for <xliff:g id="HOURS">%2$s</xliff:g> <xliff:g id="MINUTES">%3$s</xliff:g> from now"</item>
         <item msgid="7779544127785487304">"Alarm set for <xliff:g id="DAYS">%1$s</xliff:g> <xliff:g id="HOURS">%2$s</xliff:g> <xliff:g id="MINUTES">%3$s</xliff:g> from now"</item>
     </string-array>
+    <string-array name="alarm_distance">
+        <item msgid="5163476010406761625">"1 minute from now"</item>
+        <item msgid="7110525731259629055">"<xliff:g id="DAYS">%1$s</xliff:g> from now"</item>
+        <item msgid="7003982794086186185">"<xliff:g id="HOURS">%2$s</xliff:g> from now"</item>
+        <item msgid="7311021123230077742">"<xliff:g id="DAYS">%1$s</xliff:g> <xliff:g id="HOURS">%2$s</xliff:g> from now"</item>
+        <item msgid="8431715191823114872">"<xliff:g id="MINUTES">%3$s</xliff:g> from now"</item>
+        <item msgid="3244151088673185428">"<xliff:g id="DAYS">%1$s</xliff:g> <xliff:g id="MINUTES">%3$s</xliff:g> from now"</item>
+        <item msgid="3663661342600168814">"<xliff:g id="HOURS">%2$s</xliff:g> <xliff:g id="MINUTES">%3$s</xliff:g> from now"</item>
+        <item msgid="7779544127785487304">"<xliff:g id="DAYS">%1$s</xliff:g> <xliff:g id="HOURS">%2$s</xliff:g> <xliff:g id="MINUTES">%3$s</xliff:g> from now"</item>
+    </string-array>
     <string name="day">"1 day"</string>
     <string name="days">"<xliff:g id="DAYS">%s</xliff:g> days"</string>
     <string name="hour">"1 hour"</string>

@@ -18,6 +18,16 @@
         <item msgid="3663661342600168814">"已将闹钟设置为从现在起 <xliff:g id="HOURS">%2$s</xliff:g> <xliff:g id="MINUTES">%3$s</xliff:g>后提醒"</item>
         <item msgid="7779544127785487304">"已将闹钟设置为从现在起 <xliff:g id="DAYS">%1$s</xliff:g> <xliff:g id="HOURS">%2$s</xliff:g> <xliff:g id="MINUTES">%3$s</xliff:g>后提醒"</item>
     </string-array>
+    <string-array name="alarm_distance">
+        <item msgid="5163476010406761625">"还有 1 分钟"</item>
+        <item msgid="7110525731259629055">"还有 <xliff:g id="DAYS">%1$s</xliff:g>"</item>
+        <item msgid="7003982794086186185">"还有 <xliff:g id="HOURS">%2$s</xliff:g>"</item>
+        <item msgid="7311021123230077742">"还有 <xliff:g id="DAYS">%1$s</xliff:g> <xliff:g id="HOURS">%2$s</xliff:g>"</item>
+        <item msgid="8431715191823114872">"还有 <xliff:g id="MINUTES">%3$s</xliff:g>"</item>
+        <item msgid="3244151088673185428">"还有 <xliff:g id="DAYS">%1$s</xliff:g> <xliff:g id="MINUTES">%3$s</xliff:g>"</item>
+        <item msgid="3663661342600168814">"还有 <xliff:g id="HOURS">%2$s</xliff:g> <xliff:g id="MINUTES">%3$s</xliff:g>"</item>
+        <item msgid="7779544127785487304">"还有 <xliff:g id="DAYS">%1$s</xliff:g> <xliff:g id="HOURS">%2$s</xliff:g> <xliff:g id="MINUTES">%3$s</xliff:g>"</item>
+    </string-array>
     <string name="day">"1 天"</string>
     <string name="days">"<xliff:g id="DAYS">%s</xliff:g> 天"</string>
     <string name="hour">"1 小时"</string>

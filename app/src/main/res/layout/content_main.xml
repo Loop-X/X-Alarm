@@ -77,7 +77,7 @@
         android:id="@+id/tv_alarm_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/im_set_alarm"
+        android:layout_above="@+id/tv_alarm_distance"
         android:layout_centerHorizontal="true"
         android:clickable="true"
         android:textAlignment="center"
@@ -95,6 +95,16 @@
         android:textColor="@color/loopX_2"
         tools:text="AM"
         android:textSize="25sp"/>
+
+    <io.github.loopX.XAlarm.view.YummyTextView
+        android:id="@+id/tv_alarm_distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/im_set_alarm"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/loopX_2_50_alpha"
+        tools:text="还有2小时5分钟"
+        android:textSize="20sp"/>
 
     <ImageView
         android:id="@+id/im_set_alarm"

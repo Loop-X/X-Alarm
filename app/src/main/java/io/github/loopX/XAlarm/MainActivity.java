@@ -1,6 +1,9 @@
 package io.github.loopX.XAlarm;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
@@ -13,7 +16,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.rebound.Spring;
@@ -59,8 +61,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     private YummyTextView tvAlarmTime;
     private YummyTextView tvAlarmAMPM;
+    private YummyTextView tvAlarmDistance;
+    private YummyTextView tvWakeUp;
 
-    private TextView tvWakeUp;
     private View setAlarmView;
     protected Handler mHandler;
     private Spring translationYSpring;
@@ -69,7 +72,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private UnlockTypeMenuLayout leftMenu;
     private ListView lvRingtoneList;
     private Window mWindow;
-    
+
+    private BroadcastReceiver mBroadcastReceiver;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_main;
@@ -82,20 +87,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         mHandler = new Handler();
 
-        tvAlarmTime = (YummyTextView) findViewById(R.id.tv_alarm_time);
-        tvAlarmAMPM = (YummyTextView) findViewById(R.id.tv_alarm_am_pm);
-        tvWakeUp    = (YummyTextView) findViewById(R.id.tv_wake_up);
+        tvAlarmTime     = (YummyTextView) findViewById(R.id.tv_alarm_time);
+        tvAlarmAMPM     = (YummyTextView) findViewById(R.id.tv_alarm_am_pm);
+        tvAlarmDistance = (YummyTextView) findViewById(R.id.tv_alarm_distance);
+        tvWakeUp        = (YummyTextView) findViewById(R.id.tv_wake_up);
 
-        loopXDragMenuLayout    = (DragMenuLayout) findViewById(R.id.dragMenuLayout);
-        ivRightMenuIndicator   = (ImageView) findViewById(R.id.iv_right_menu_indicator);
+        loopXDragMenuLayout = (DragMenuLayout) findViewById(R.id.dragMenuLayout);
+        ivRightMenuIndicator = (ImageView) findViewById(R.id.iv_right_menu_indicator);
         ivRightMenuIndicator.setTag(R.drawable.main_right);
-        ivLeftMenuIndicator    = (ImageView) findViewById(R.id.iv_left_menu_indicator);
+        ivLeftMenuIndicator = (ImageView) findViewById(R.id.iv_left_menu_indicator);
         ivMainContentIndicator = (ImageView) findViewById(R.id.iv_top_main_content_indicator);
 
         setAlarmView = findViewById(R.id.im_set_alarm);
 
         rightMenu = (AlarmPreferenceSettingsMenuLayout) loopXDragMenuLayout.findViewById(R.id.menuRight);
-        leftMenu  = (UnlockTypeMenuLayout) loopXDragMenuLayout.findViewById(R.id.menuLeft);
+        leftMenu = (UnlockTypeMenuLayout) loopXDragMenuLayout.findViewById(R.id.menuLeft);
 
         lvRingtoneList = (ListView) loopXDragMenuLayout.findViewById(R.id.lv_ringtone_list);
 
@@ -103,38 +109,38 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         leftMenu.setOnUnlockTypeMenuClickListener(new UnlockTypeMenuLayout.OnUnlockTypeMenuClickListener() {
             @Override
-            public void onClick(UnlockTypeEnum unlockTypeEnum,int currentUnlockType) {
-                Intent intent = new Intent(MainActivity.this,UnlockTypeActivity.class);
-                intent.putExtra("unlockType",unlockTypeEnum.getID());
-                intent.putExtra("currentUnlockType",currentUnlockType);
-                startActivityForResult(intent,UNLOCK_TYPE_REQUEST_CODE);        
+            public void onClick(UnlockTypeEnum unlockTypeEnum, int currentUnlockType) {
+                Intent intent = new Intent(MainActivity.this, UnlockTypeActivity.class);
+                intent.putExtra("unlockType", unlockTypeEnum.getID());
+                intent.putExtra("currentUnlockType", currentUnlockType);
+                startActivityForResult(intent, UNLOCK_TYPE_REQUEST_CODE);
             }
         });
 
-        translationYSpring = ReboundAnimation.getInstance().createSpringFromBouncinessAndSpeed(12,9,new BaseSpringListener(){
+        translationYSpring = ReboundAnimation.getInstance().createSpringFromBouncinessAndSpeed(12, 9, new BaseSpringListener() {
             @Override
             public void onSpringUpdate(Spring spring) {
-                int translationY = (int) transition((float) spring.getCurrentValue(),translationYEndValue,0);
+                int translationY = (int) transition((float) spring.getCurrentValue(), translationYEndValue, 0);
                 setAlarmView.setTranslationY(translationY);
                 tvAlarmTime.setTranslationY(translationY);
                 tvWakeUp.setTranslationY(translationY);
             }
         });
-        
+
         setAlarmView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 setAlarmView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 int[] location = new int[2];
                 setAlarmView.getLocationOnScreen(location);
-                translationYEndValue = UIUtils.getScreenHeight() -  location[1];
-                
+                translationYEndValue = UIUtils.getScreenHeight() - location[1];
+
                 mHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         translationYSpring.setEndValue(1f);
                     }
-                },100);
+                }, 100);
             }
         });
     }
@@ -142,11 +148,68 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void onRefreshData() {
         initAlarm();
-        if(mAlarm.isEnabled()) {
+        if (mAlarm.isEnabled()) {
             ivMainContentIndicator.setImageResource(R.drawable.main_mid);
         } else {
             ivMainContentIndicator.setImageResource(R.drawable.main_mid_off);
         }
+        updateAlarmDistanceText();
+    }
+
+    /**
+     * Update tvAlarmDistance Text View to show time distance
+     */
+    private void updateAlarmDistanceText() {
+        long alarmTime = AlarmScheduler.getAlarmTime(Calendar.getInstance(), mAlarm);
+        String alarmDistanceTime = AlarmScheduler.getTimeToAlarmString(
+                MainActivity.this,
+                alarmTime,
+                R.array.alarm_distance);
+        tvAlarmDistance.setText(alarmDistanceTime);
+    }
+
+    /**
+     * Init alarm
+     */
+    private void initAlarm() {
+        Log.d(TAG, "-----------> initAlarm");
+
+        List<Alarm> alarms = AlarmDBService.getInstance(this).getAlarms();
+
+        if (alarms.isEmpty()) {
+            mAlarm = new Alarm();
+            AlarmDBService.getInstance(this).addAlarm(mAlarm);
+        } else {
+            // Always force to get first alarm in list
+            mAlarm = alarms.get(0);
+        }
+
+        // Set alarm time on TextView
+        setAlarmTimeOnTextView(mAlarm);
+
+        // Set unlock type on left menu
+        setLeftMenuStatus();
+
+        // Set Right Menu Status
+        setRightMenuStatus();
+
+        Log.d(TAG, "<----------- initAlarm");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        mBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context ctx, Intent intent) {
+                if (intent.getAction().compareTo(Intent.ACTION_TIME_TICK) == 0)
+                    updateAlarmDistanceText();
+            }
+        };
+
+        registerReceiver(mBroadcastReceiver, new IntentFilter(Intent.ACTION_TIME_TICK));
+
     }
 
     @Override
@@ -160,7 +223,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 startActivityForResult(intent, SET_ALARM_REQUEST_CODE);
                 break;
             case R.id.iv_top_main_content_indicator:
-                if(mAlarm.isEnabled()) {
+                if (mAlarm.isEnabled()) {
                     mAlarm.setEnabled(false);
                     mAlarm.cancel();
                     ivMainContentIndicator.setImageResource(R.drawable.main_mid_off);
@@ -178,16 +241,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 ToastMaster.showToast();
                 break;
             case R.id.iv_left_menu_indicator:
-                if (loopXDragMenuLayout.getMenuStatus() == DragMenuLayout.MenuStatus.Close){
+                if (loopXDragMenuLayout.getMenuStatus() == DragMenuLayout.MenuStatus.Close) {
                     loopXDragMenuLayout.openLeftMenuWithAnimation();
-                }else {
+                } else {
                     loopXDragMenuLayout.closeMenuWithAnimation();
                 }
                 break;
             case R.id.iv_right_menu_indicator:
-                if (loopXDragMenuLayout.getMenuStatus() == DragMenuLayout.MenuStatus.Close){
+                if (loopXDragMenuLayout.getMenuStatus() == DragMenuLayout.MenuStatus.Close) {
                     loopXDragMenuLayout.openRightMenuWithAnimation();
-                }else {
+                } else {
                     loopXDragMenuLayout.closeMenuWithAnimation();
                 }
                 break;
@@ -223,10 +286,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
                 String text = null;
 
-                if(mAlarm.isEnabled()) {
+                if (mAlarm.isEnabled()) {
                     long newTime = mAlarm.schedule();
                     ivMainContentIndicator.setImageResource(R.drawable.main_mid);
-                    text = AlarmScheduler.formatToast(MainActivity.this, newTime);
+                    text = AlarmScheduler.getTimeToAlarmString(MainActivity.this, newTime, R.array.alarm_set);
                 } else {
                     AlarmScheduler.cancelAlarm(this, mAlarm);
                     ivMainContentIndicator.setImageResource(R.drawable.main_mid_off);
@@ -261,35 +324,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     /**
-     * Init alarm
-     */
-    private void initAlarm() {
-        Log.d(TAG, "-----------> initAlarm");
-
-        List<Alarm> alarms = AlarmDBService.getInstance(this).getAlarms();
-
-        if(alarms.isEmpty()) {
-            mAlarm = new Alarm();
-            AlarmDBService.getInstance(this).addAlarm(mAlarm);
-        } else {
-            // Always force to get first alarm in list
-            mAlarm = alarms.get(0);
-        }
-
-        // Set alarm time on TextView
-        setAlarmTimeOnTextView(mAlarm);
-
-        // Set unlock type on left menu
-        setLeftMenuStatus();
-
-        // Set Right Menu Status
-        setRightMenuStatus();
-
-        Log.d(TAG, "<----------- initAlarm");
-    }
-
-    /**
      * Set current alarm time on TextView
+     *
      * @param alarm
      */
     private void setAlarmTimeOnTextView(Alarm alarm) {
@@ -301,7 +337,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         Locale locale = new Locale("en");
 
-        if(DateFormat.is24HourFormat(this)) {
+        if (DateFormat.is24HourFormat(this)) {
             SimpleDateFormat dateFormatTime = new SimpleDateFormat(M24, locale);
             tvAlarmTime.setText(dateFormatTime.format(cal.getTime()));
             tvAlarmAMPM.setVisibility(View.GONE);
@@ -317,12 +353,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public void onMenuOpened(DragMenuLayout.MenuDirection direction) {
-        if(direction == DragMenuLayout.MenuDirection.RIGHT) {
+        if (direction == DragMenuLayout.MenuDirection.RIGHT) {
             ivRightMenuIndicator.setImageResource(R.drawable.main_right_press);
             ivRightMenuIndicator.setTag(R.drawable.main_right_press);
         } else {
             // To avoid user slide too quickly from right to left
-            if((int) ivRightMenuIndicator.getTag() == R.drawable.main_right_press) {
+            if ((int) ivRightMenuIndicator.getTag() == R.drawable.main_right_press) {
                 onMenuClosed(DragMenuLayout.MenuDirection.RIGHT);
             }
 
@@ -332,7 +368,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public void onMenuClosed(DragMenuLayout.MenuDirection direction) {
-        if(direction == DragMenuLayout.MenuDirection.RIGHT) {
+        if (direction == DragMenuLayout.MenuDirection.RIGHT) {
 
             ivRightMenuIndicator.setImageResource(R.drawable.main_right);
             ivRightMenuIndicator.setTag(R.drawable.main_right);
@@ -342,7 +378,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             /** Update Vibration **/
             mAlarm.setVibrate(rightMenu.getVibrationSetting());
             mAlarm.setAlarmTone(Uri.parse(XAlarmApp.getResourcePath() + "/raw/ringtone_"
-                            + rightMenu.getRingtone()));
+                    + rightMenu.getRingtone()));
 
             // Save alarm
             AlarmDBService.getInstance(this).updateAlarm(mAlarm);
@@ -350,7 +386,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             // Update right menu
             setRightMenuStatus();
 
-        //    ToastMaster.setToast(Toast.makeText(this, getString(R.string.setting_updated), Toast.LENGTH_SHORT));
+            //    ToastMaster.setToast(Toast.makeText(this, getString(R.string.setting_updated), Toast.LENGTH_SHORT));
             ToastMaster.showToast();
         } else {
             ivLeftMenuIndicator.setImageResource(R.drawable.main_left);
@@ -395,9 +431,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_MENU) {
             if (event.getAction() == KeyEvent.ACTION_UP) {
-                if (loopXDragMenuLayout.getMenuStatus() == DragMenuLayout.MenuStatus.Close){
+                if (loopXDragMenuLayout.getMenuStatus() == DragMenuLayout.MenuStatus.Close) {
                     loopXDragMenuLayout.openRightMenuWithAnimation();
-                }else {
+                } else {
                     loopXDragMenuLayout.closeMenuWithAnimation();
                 }
 
@@ -405,6 +441,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             }
         }
         return super.onKeyUp(keyCode, event);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mBroadcastReceiver != null)
+            unregisterReceiver(mBroadcastReceiver);
     }
 
 }

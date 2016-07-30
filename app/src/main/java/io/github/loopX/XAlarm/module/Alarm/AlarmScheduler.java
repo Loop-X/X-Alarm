@@ -34,7 +34,7 @@ public class AlarmScheduler {
      * @param alarm alarm to get time
      * @return alarm time
      */
-    private static long getAlarmTime(Calendar calendarFrom, Alarm alarm) {
+    public static long getAlarmTime(Calendar calendarFrom, Alarm alarm) {
 
         Calendar calendarAlarm = Calendar.getInstance();
 
@@ -130,7 +130,13 @@ public class AlarmScheduler {
                         PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
-    public static String formatToast(Context context, long timeInMillis) {
+    /**
+     * Create a toast string to show when is the next alarm
+     * @param context
+     * @param timeInMillis
+     * @return
+     */
+    public static String getTimeToAlarmString(Context context, long timeInMillis, int idTemplate) {
         long delta = timeInMillis - System.currentTimeMillis();
         long hours = delta / (1000 * 60 * 60);
         long minutes = delta / (1000 * 60) % 60;
@@ -157,7 +163,7 @@ public class AlarmScheduler {
                 (dispHour ? 2 : 0) |
                 (dispMinute ? 4 : 0);
 
-        String[] formats = context.getResources().getStringArray(R.array.alarm_set);
+        String[] formats = context.getResources().getStringArray(idTemplate);
         return String.format(formats[index], daySeq, hourSeq, minSeq);
     }
 
