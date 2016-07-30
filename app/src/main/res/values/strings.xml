@@ -5,6 +5,7 @@
     <string name="volume">Volume</string>
     <string name="vibration">Vibration</string>
     <string name="Ringtone">Ringtone</string>
+    <string name="back">Back</string>
     <string name="default_label">"Click to go to unlock alarm"</string>
     <string name="alarm_alert_alert_silenced">"Alarm has ringed <xliff:g id="MINUTES">%d</xliff:g> minutes"</string>
     <string-array name="alarm_set">
@@ -65,7 +66,13 @@
     <string name="about_x_alarm_title">About X-ALARM:</string>
     <string name="about_x_alarm_content">
         X-ALARM is a cool application to help lazy boys/girls to get up.
-        Yes, we are all lazy in the morning. :D
+        Yes, we are all lazy in the morning :D
+    </string>
+    <string name="about_x_alarm_content_b">
+        X-Alarm not only provides a very soothing ringtone which wakes you up smoothly
+        instead of being awakened suddenly.
+        But also offers a variety of interesting ways to unlock alarm
+        so you have to get up to unlock it!
     </string>
 
     <string name="about_you_title">About you:</string>

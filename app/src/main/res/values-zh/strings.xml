@@ -5,6 +5,7 @@
     <string name="volume">音量</string>
     <string name="vibration">震动</string>
     <string name="Ringtone">铃声</string>
+    <string name="back">返回</string>
     <string name="default_label">"点击去解锁闹钟"</string>
     <string name="alarm_alert_alert_silenced">"闹钟已响 <xliff:g id="MINUTES">%d</xliff:g> 分钟"</string>
     <string-array name="alarm_set">
@@ -65,7 +66,13 @@
     <string name="about_x_alarm_title">关于X-ALARM:</string>
     <string name="about_x_alarm_content">
         X-ALARM 是一个多功能的闹钟应用,
-        通过各种方式帮助懒虫们起床 :)
+        通过各种方式帮助懒虫们起床 :D
+    </string>
+    <string name="about_x_alarm_content_b">
+        应用不仅提供了非常舒缓的音乐,
+        让你自然清醒,
+        而不是被惊醒.
+        同时应用也提供了多种有趣的解锁方式让你不得不起床解锁闹钟.
     </string>
 
     <string name="about_you_title">关于你:</string>

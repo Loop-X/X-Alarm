@@ -3,24 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/loopX_1"
     android:orientation="vertical" >
-
-    <android.support.design.widget.AppBarLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/tb_about"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
-            app:navigationContentDescription="@string/abc_action_bar_up_description"
-            android:background="@color/loopX_2"
-            app:navigationIcon="?attr/homeAsUpIndicator"
-            app:title="@string/about"
-            />
-
-    </android.support.design.widget.AppBarLayout>
 
     <RelativeLayout
         android:id="@+id/rl_about"
@@ -47,48 +31,56 @@
                     android:layout_marginBottom="@dimen/activity_horizontal_margin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:textColor="@color/loopX_2_90_alpha"/>
+                    android:textSize="16sp"
+                    android:textColor="@color/loopX_3"/>
 
                 <io.github.loopX.XAlarm.view.YummyTextView
                     android:text="@string/about_x_alarm_content"
                     android:layout_marginBottom="@dimen/activity_horizontal_margin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:textColor="@color/loopX_2_50_alpha"/>
+                    android:textSize="14sp"
+                    android:textColor="@color/loopX_3_50_alpha"/>
+
+                <io.github.loopX.XAlarm.view.YummyTextView
+                    android:text="@string/about_x_alarm_content_b"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="@color/loopX_3_50_alpha"/>
 
                 <io.github.loopX.XAlarm.view.YummyTextView
                     android:text="@string/about_you_title"
                     android:layout_marginBottom="@dimen/activity_horizontal_margin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:textColor="@color/loopX_2_90_alpha"/>
+                    android:textSize="16sp"
+                    android:textColor="@color/loopX_3"/>
 
                 <io.github.loopX.XAlarm.view.YummyTextView
                     android:text="@string/about_you_content"
                     android:layout_marginBottom="@dimen/activity_horizontal_margin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:textColor="@color/loopX_2_50_alpha"/>
+                    android:textSize="14sp"
+                    android:textColor="@color/loopX_3_50_alpha"/>
 
                 <io.github.loopX.XAlarm.view.YummyTextView
                     android:text="@string/about_app_title"
                     android:layout_marginBottom="@dimen/activity_horizontal_margin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:textColor="@color/loopX_2_90_alpha"/>
+                    android:textSize="16sp"
+                    android:textColor="@color/loopX_3"/>
 
                 <io.github.loopX.XAlarm.view.YummyTextView
                     android:text="@string/about_app_content"
                     android:layout_marginBottom="@dimen/activity_horizontal_margin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:textColor="@color/loopX_2_50_alpha"/>
+                    android:textSize="14sp"
+                    android:textColor="@color/loopX_3_50_alpha"/>
 
             </LinearLayout>
 
@@ -100,8 +92,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/tv_email"
-            android:textSize="20sp"
-            android:textColor="@color/loopX_2_90_alpha"/>
+            android:textSize="16sp"
+            android:textColor="@color/loopX_3"/>
 
         <io.github.loopX.XAlarm.view.YummyTextView
             android:id="@+id/tv_email"
@@ -109,9 +101,21 @@
             android:layout_marginBottom="@dimen/activity_horizontal_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/btn_about_ok"
+            android:textSize="16sp"
+            android:textColor="@color/loopX_3"/>
+
+        <Button
+            android:id="@+id/btn_about_ok"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
             android:layout_alignParentBottom="true"
-            android:textSize="20sp"
-            android:textColor="@color/loopX_2_50_alpha"/>
+            android:onClick="onClick"
+            android:background="@color/loopX_7"
+            android:gravity="center"
+            android:text="@string/back"
+            android:textColor="@color/loopX_3"
+            android:textSize="25sp" />
 
     </RelativeLayout>
 

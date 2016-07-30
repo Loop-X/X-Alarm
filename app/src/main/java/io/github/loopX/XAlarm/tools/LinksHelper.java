@@ -8,13 +8,24 @@ import android.widget.TextView;
 
 public class LinksHelper {
 
-    public static void enableLinks(TextView view) {
+    /**
+     * Enable links and remove underline
+     * @param view
+     * @param isWithUnderLine true to remove underline
+     */
+    public static void enableLinks(TextView view, Boolean isWithUnderLine) {
         if (view != null) {
             view.setMovementMethod(LinkMovementMethod.getInstance());
-            stripUnderlines(view);
+            if(!isWithUnderLine) {
+                stripUnderlines(view);
+            }
         }
     }
 
+    /**
+     * Remove underline
+     * @param textView
+     */
     public static void stripUnderlines(TextView textView) {
         Spannable s = (Spannable) textView.getText();
         URLSpan[] spans = s.getSpans(0, s.length(), URLSpan.class);
