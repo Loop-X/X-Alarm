@@ -65,7 +65,7 @@
             android:theme="@android:style/Theme.Wallpaper.NoTitleBar"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".About"
+        <activity android:name=".AboutActivity"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"/>
 

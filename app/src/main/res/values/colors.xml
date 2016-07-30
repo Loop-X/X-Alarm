@@ -21,5 +21,6 @@
 
     <color name="alarm_set_top_alarm_off">#FF171625</color>
     <color name="alarm_set_top_alarm_on">#E60044</color>
+    <color name="alarm_wave">#0EE7FF</color>
 
 </resources>

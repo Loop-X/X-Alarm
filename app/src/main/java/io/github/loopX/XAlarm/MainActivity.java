@@ -7,9 +7,6 @@ import android.os.Handler;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
@@ -195,8 +192,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 }
                 break;
             case R.id.btn_about:
-                Intent intentToAbout = new Intent(this, About.class);
+                Intent intentToAbout = new Intent(this, AboutActivity.class);
                 startActivity(intentToAbout);
+                break;
+            case R.id.btn_share:
+                Intent intentToShare = new Intent(Intent.ACTION_SEND);
+                intentToShare.setType("text/plain");
+                intentToShare.putExtra(Intent.EXTRA_SUBJECT, "X Alarm");
+                String sAux = "\n独特的起床闹钟\n\n";
+                // ToDo 分享
+                sAux = sAux + "XXXXX \n\n";
+                intentToShare.putExtra(Intent.EXTRA_TEXT, sAux);
+                startActivity(Intent.createChooser(intentToShare, "Choose one"));
                 break;
         }
     }
