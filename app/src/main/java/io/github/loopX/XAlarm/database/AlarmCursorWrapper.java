@@ -7,7 +7,7 @@ import android.net.Uri;
 
 import java.util.UUID;
 
-import io.github.loopX.XAlarm.model.Alarm;
+import io.github.loopX.XAlarm.module.Alarm.Alarm;
 
 /**
  * This class wraps cursor to add a function which gets alarm instance

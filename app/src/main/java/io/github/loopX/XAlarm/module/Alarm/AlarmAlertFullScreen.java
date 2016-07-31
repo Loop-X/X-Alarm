@@ -14,11 +14,6 @@ import java.util.UUID;
 
 import io.github.loopX.XAlarm.R;
 import io.github.loopX.XAlarm.database.AlarmDBService;
-import io.github.loopX.XAlarm.model.Alarm;
-import io.github.loopX.XAlarm.module.Alarm.AlarmNotificationManager;
-import io.github.loopX.XAlarm.module.Alarm.AlarmRingtonePlayer;
-import io.github.loopX.XAlarm.module.Alarm.AlarmScheduler;
-import io.github.loopX.XAlarm.module.Alarm.AlarmVibrator;
 import io.github.loopX.XAlarm.module.UnlockTypeModule.alarmType.UnlockFragment;
 import io.github.loopX.XAlarm.module.UnlockTypeModule.alarmType.UnlockFragmentFactory;
 

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import io.github.loopX.XAlarm.model.Alarm;
+import io.github.loopX.XAlarm.module.Alarm.Alarm;
 
 /**
  * This class is service level for alarm. It provides functions to get/update/delete

@@ -7,7 +7,6 @@ import java.util.UUID;
 
 import io.github.loopX.XAlarm.XAlarmApp;
 import io.github.loopX.XAlarm.database.AlarmDBService;
-import io.github.loopX.XAlarm.model.Alarm;
 
 public final class AlarmRingingController {
 

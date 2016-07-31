@@ -29,7 +29,7 @@ import java.util.UUID;
 import io.github.loopX.XAlarm.database.AlarmDBService;
 import io.github.loopX.XAlarm.infrastructure.BaseActivity;
 import io.github.loopX.XAlarm.module.Alarm.AlarmScheduler;
-import io.github.loopX.XAlarm.model.Alarm;
+import io.github.loopX.XAlarm.module.Alarm.Alarm;
 import io.github.loopX.XAlarm.module.SetAlarmModule.SetAlarmActivity;
 import io.github.loopX.XAlarm.module.SettingModule.AlarmPreferenceSettingsMenuLayout;
 import io.github.loopX.XAlarm.module.UnlockTypeModule.UnlockTypeActivity;

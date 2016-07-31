@@ -9,7 +9,6 @@ import android.os.Build;
 import java.util.Calendar;
 
 import io.github.loopX.XAlarm.R;
-import io.github.loopX.XAlarm.model.Alarm;
 
 public class AlarmScheduler {
 

@@ -7,7 +7,6 @@ import android.content.Intent;
 import java.util.List;
 
 import io.github.loopX.XAlarm.database.AlarmDBService;
-import io.github.loopX.XAlarm.model.Alarm;
 
 /**
  * This BroadcastReceiver is registered to be called for the following system intents:

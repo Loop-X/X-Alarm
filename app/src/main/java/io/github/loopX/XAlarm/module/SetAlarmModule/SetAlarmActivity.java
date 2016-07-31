@@ -26,7 +26,7 @@ import io.github.loopX.XAlarm.R;
 import io.github.loopX.XAlarm.tools.UIUtils;
 import io.github.loopX.XAlarm.database.AlarmDBService;
 import io.github.loopX.XAlarm.infrastructure.BaseActivity;
-import io.github.loopX.XAlarm.model.Alarm;
+import io.github.loopX.XAlarm.module.Alarm.Alarm;
 import io.github.loopX.XAlarm.module.Alarm.AlarmScheduler;
 import io.github.loopX.XAlarm.tools.ToastMaster;
 import io.github.loopX.XAlarm.view.RippleBackgroundView;
