@@ -28,9 +28,9 @@
 
                 <io.github.loopX.XAlarm.view.YummyTextView
                     android:text="@string/about_x_alarm_title"
-                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
                     android:textSize="16sp"
                     android:textColor="@color/loopX_3"/>
 
@@ -44,7 +44,7 @@
 
                 <io.github.loopX.XAlarm.view.YummyTextView
                     android:text="@string/about_x_alarm_content_b"
-                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
@@ -60,7 +60,7 @@
 
                 <io.github.loopX.XAlarm.view.YummyTextView
                     android:text="@string/about_you_content"
-                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
@@ -76,7 +76,7 @@
 
                 <io.github.loopX.XAlarm.view.YummyTextView
                     android:text="@string/about_app_content"
-                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
@@ -115,7 +115,7 @@
             android:gravity="center"
             android:text="@string/back"
             android:textColor="@color/loopX_3"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
 
     </RelativeLayout>
 

@@ -22,7 +22,7 @@
 
     <color name="alarm_set_top_alarm_off">#FF171625</color>
     <color name="alarm_set_top_alarm_on">#E60044</color>
-    <color name="alarm_wave_above">#E3F2FD</color>
-    <color name="alarm_wave_blow">#0EE7FF</color>
+    <color name="alarm_wave_blow">#E3F2FD</color>
+    <color name="alarm_wave_above">#0EE7FF</color>
 
 </resources>

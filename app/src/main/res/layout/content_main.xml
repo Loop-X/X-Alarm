@@ -63,17 +63,6 @@
         android:layout_alignTop="@id/centerView"/>
 
     <io.github.loopX.XAlarm.view.YummyTextView
-        android:id="@+id/tv_wake_up"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/tv_alarm_time"
-        android:text="@string/wake_up_in"
-        android:textAlignment="center"
-        android:textColor="@color/loopX_2_50_alpha"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <io.github.loopX.XAlarm.view.YummyTextView
         android:id="@+id/tv_alarm_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

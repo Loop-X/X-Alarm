@@ -90,7 +90,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         tvAlarmTime     = (YummyTextView) findViewById(R.id.tv_alarm_time);
         tvAlarmAMPM     = (YummyTextView) findViewById(R.id.tv_alarm_am_pm);
         tvAlarmDistance = (YummyTextView) findViewById(R.id.tv_alarm_distance);
-        tvWakeUp        = (YummyTextView) findViewById(R.id.tv_wake_up);
 
         loopXDragMenuLayout = (DragMenuLayout) findViewById(R.id.dragMenuLayout);
         ivRightMenuIndicator = (ImageView) findViewById(R.id.iv_right_menu_indicator);
@@ -123,7 +122,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 int translationY = (int) transition((float) spring.getCurrentValue(), translationYEndValue, 0);
                 setAlarmView.setTranslationY(translationY);
                 tvAlarmTime.setTranslationY(translationY);
-                tvWakeUp.setTranslationY(translationY);
+                tvAlarmAMPM.setTranslationY(translationY);
+                tvAlarmDistance.setTranslationY(translationY);
             }
         });
 
