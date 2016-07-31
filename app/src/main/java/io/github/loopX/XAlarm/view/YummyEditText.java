@@ -1,9 +1,10 @@
 package io.github.loopX.XAlarm.view;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.EditText;
+
+import io.github.loopX.XAlarm.tools.TypefaceHelp;
 
 
 public class YummyEditText extends EditText {
@@ -24,9 +25,7 @@ public class YummyEditText extends EditText {
     }
     
     private void style(Context context) {
-        Typeface tf = Typeface.createFromAsset(context.getAssets(),
-                "fonts/BebasNeue.otf");
-        setTypeface(tf);
+        setTypeface(TypefaceHelp.get(context,"fonts/BebasNeue.otf"));
     }
 
 }

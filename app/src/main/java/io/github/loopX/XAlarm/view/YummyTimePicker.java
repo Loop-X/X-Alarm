@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.loopX.XAlarm.R;
+import io.github.loopX.XAlarm.tools.TypefaceHelp;
 
 public class YummyTimePicker extends View {
 
@@ -191,8 +192,7 @@ public class YummyTimePicker extends View {
         }
 
         private Typeface getTypeface() {
-            return Typeface.createFromAsset(YummyTimePicker.this.getContext().getAssets(),
-                    "fonts/BebasNeue.otf");
+            return  TypefaceHelp.get(getContext(),"fonts/BebasNeue.otf");
         }
 
         @Override
