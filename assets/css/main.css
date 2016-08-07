@@ -1993,13 +1993,14 @@
 
 	#banner {
 		position: relative;
+		height: 100vh;
 		color: #fff;
 		text-shadow: 0 0 0.5px rgba(255, 255, 255, 0.25);
 		text-align: center;
-		background: #35b88f url("images/banner.png") bottom center no-repeat;
+		background: #35b88f url("images/banner.png") repeat;
 		padding: 5em 0 5em 0;
 		margin: 0;
-		background-size: 125% auto;
+		background-size: 100% auto;
 	}
 
 		#banner .button {
