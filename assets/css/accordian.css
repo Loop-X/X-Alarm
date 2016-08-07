@@ -1,0 +1,71 @@
+/*
+Width of image = 640px
+total images = 5
+so width of hovered image = 640px
+let's set width of un-hovered image = 40px
+so total container width = 640 + 40*4 = 800px;
+default width = 800/5 = 160px;
+*/
+.accordion-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.35);
+    -moz-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.35);
+    -webkit-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.35);
+}
+
+/*A small hack to prevent flickering on some browsers*/
+.accordion-slider ul {
+    width: 2000px;
+    /*This will give ample space to the last item to move
+    instead of falling down/flickering during hovers.*/
+}
+
+.accordion-slider li {
+    position: relative;
+    float: left;
+    display: block; /* Inline objects don't have heights or widths */
+    width: 5%;
+
+    border-left: 1px solid #888;
+
+    box-shadow: 0 0 25px 10px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 0 25px 10px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 0 25px 10px rgba(0, 0, 0, 0.5);
+
+    transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+}
+
+
+.accordion-slider ul:hover li {width: 5%; height: auto;}
+
+.accordion-slider ul li:hover {width: 185px; height: auto;}
+
+.accordion-slider li img {
+    display: block;
+    max-width: 185px;
+    height: auto;
+}
+
+/* Image title styles */
+.accordion-slider-image-title {
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 185px;
+
+}
+
+.accordion-slider-image-title a {
+    display: block; /* Inline objects don't have heights or widths */
+    color: #fff;
+    text-decoration: none; /* Remove underline */
+    padding: 20px;
+    font-size: 16px;
+}
