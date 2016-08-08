@@ -24,7 +24,7 @@
         android:layout_height="match_parent"
         android:background="@color/loopX_1"
         android:orientation="vertical"
-        android:paddingLeft="160dp"
+        android:paddingLeft="130dp"
         android:paddingRight="20dp"
         android:tag="rightMenu" />
 

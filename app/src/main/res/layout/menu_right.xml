@@ -9,6 +9,7 @@
         android:background="@color/loopX_2"
         android:gravity="center"
         android:text="@string/volume"
+        android:layout_marginLeft="10dp"
         android:textColor="@color/loopX_3" />
 
     <SeekBar
@@ -25,6 +26,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:orientation="horizontal">
 
         <io.github.loopX.XAlarm.view.YummyTextView
@@ -50,7 +52,8 @@
     <io.github.loopX.XAlarm.view.YummyTextView
         android:layout_width="51.5dp"
         android:layout_height="24.5dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="71dp"
+        android:layout_marginLeft="10dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:background="@color/loopX_2"
@@ -63,12 +66,14 @@
         android:id="@+id/lv_ringtone_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="59dp"
+        android:layout_marginLeft="10dp"
         android:choiceMode="singleChoice" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
         android:layout_marginBottom="16dp">
 
         <Button
