@@ -89,7 +89,7 @@ public class PuzzleLayout extends RelativeLayout implements View.OnClickListener
 
     private void initBitmap() {
         Random random = new Random();
-        String imgName = "puzzle_" + (random.nextInt(11) + 1);
+        String imgName = "puzzle_" + (random.nextInt(22) + 1);
 
         if (mBitmap == null) {
             mBitmap = BitmapFactory.decodeResource(getResources(),
