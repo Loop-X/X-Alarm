@@ -9,16 +9,64 @@ android {
         minSdkVersion project.minSdkVersion
         targetSdkVersion project.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
 
         vectorDrawables.useSupportLibrary = true
 
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+    def signingProps = new Properties();
+    new File("LoopX.properties").withInputStream {
+        stream -> signingProps.load(stream)
+    }
+    def signingConfigGetter = new ConfigSlurper().parse(signingProps)
+    
+    signingConfigs {
+        
+        debug {
+            keyAlias signingConfigGetter.keyAlias
+            keyPassword signingConfigGetter.keyPassword
+            storeFile file('LoopX.jks')
+            storePassword signingConfigGetter.storePassword
         }
+        
+        release {
+            keyAlias signingConfigGetter.keyAlias
+            keyPassword signingConfigGetter.keyPassword
+            storeFile file('LoopX.jks')
+            storePassword signingConfigGetter.storePassword
+            
+        }
+        
+    }
+    
+    
+    buildTypes {
+        
+        debug {
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            
+        }
+        
+        release {
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            
+        }
+    }
+
+    productFlavors {
+        
+    }
+    
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
     }
 }
 
