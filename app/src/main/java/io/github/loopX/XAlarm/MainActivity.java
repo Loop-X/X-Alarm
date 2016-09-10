@@ -160,6 +160,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
      * Update tvAlarmDistance Text View to show time distance
      */
     private void updateAlarmDistanceText() {
+        
+        if (!mAlarm.isEnabled()){
+            tvAlarmDistance.setText(R.string.alarm_closed_hint); 
+            return;
+        }
         long alarmTime = AlarmScheduler.getAlarmTime(Calendar.getInstance(), mAlarm);
         String alarmDistanceTime = AlarmScheduler.getTimeToAlarmString(
                 MainActivity.this,
@@ -238,6 +243,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                             getString(R.string.turn_on_alarm),
                             Toast.LENGTH_SHORT));
                 }
+                updateAlarmDistanceText();
                 ToastMaster.showToast();
                 break;
             case R.id.iv_left_menu_indicator:
@@ -295,7 +301,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     ivMainContentIndicator.setImageResource(R.drawable.main_mid_off);
                     text = getString(R.string.turn_off_alarm);
                 }
-
+                updateAlarmDistanceText();
                 ToastMaster.setToast(Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT));
                 ToastMaster.showToast();
                 break;

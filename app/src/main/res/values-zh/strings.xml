@@ -102,5 +102,6 @@
     <string name="about_contact_content">
         <a href="mailto:loopxlab@gmail.com">loopxlab@gmail.com</a>
     </string>
+    <string name="alarm_closed_hint">闹钟已关闭</string>
 
 </resources>
