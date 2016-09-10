@@ -102,5 +102,7 @@
         <a href="mailto:loopxlab@gmail.com">loopxlab@gmail.com</a>
     </string>
     <string name="alarm_closed_hint">Alarm Closed</string>
+    <string name="about_title">ABOUT</string>
+    <string name="version_hint">X Alarm  v<xliff:g id="version">%1$s</xliff:g></string>
 
 </resources>

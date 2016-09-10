@@ -12,6 +12,8 @@ import io.github.loopX.XAlarm.tools.LinksHelper;
 
 public class AboutActivity extends BaseActivity implements View.OnClickListener{
 
+    private TextView versionTextView;
+    
     @Override
     public int getLayoutId() {
         return R.layout.activity_about;
@@ -30,6 +32,9 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener{
         TextView tvEmail = (TextView) findViewById(R.id.tv_email);
         LinksHelper.enableLinks(tvEmail, true);
 
+        versionTextView = (TextView) findViewById(R.id.version);
+        versionTextView.setText(getString(R.string.version_hint,BuildConfig.VERSION_NAME));
+        findViewById(R.id.back).setOnClickListener(this);
     }
 
     @Override
@@ -40,7 +45,7 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener{
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_about_ok:
+            case R.id.back:
                 finish();
                 break;
         }
