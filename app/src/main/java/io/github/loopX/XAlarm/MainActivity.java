@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.facebook.rebound.Spring;
+import com.tendcloud.tenddata.TCAgent;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -28,8 +29,8 @@ import java.util.UUID;
 
 import io.github.loopX.XAlarm.database.AlarmDBService;
 import io.github.loopX.XAlarm.infrastructure.BaseActivity;
-import io.github.loopX.XAlarm.module.Alarm.AlarmScheduler;
 import io.github.loopX.XAlarm.module.Alarm.Alarm;
+import io.github.loopX.XAlarm.module.Alarm.AlarmScheduler;
 import io.github.loopX.XAlarm.module.SetAlarmModule.SetAlarmActivity;
 import io.github.loopX.XAlarm.module.SettingModule.AlarmPreferenceSettingsMenuLayout;
 import io.github.loopX.XAlarm.module.UnlockTypeModule.UnlockTypeActivity;
@@ -392,11 +393,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             // Update right menu
             setRightMenuStatus();
 
-            //    ToastMaster.setToast(Toast.makeText(this, getString(R.string.setting_updated), Toast.LENGTH_SHORT));
-            ToastMaster.showToast();
+            sendTCAgent(rightMenu.getRingtone());
+            
         } else {
             ivLeftMenuIndicator.setImageResource(R.drawable.main_left);
         }
+    }
+
+    private void sendTCAgent(int ringtone) {
+        String eventLabel = rightMenu.getRingtoneName(ringtone);
+        TCAgent.onEvent(this,"铃声类型",eventLabel);
     }
 
     private void setRightMenuStatus() {

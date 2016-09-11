@@ -11,22 +11,20 @@ import android.widget.ImageView;
 import io.github.loopX.XAlarm.R;
 import io.github.loopX.XAlarm.view.YummyTextView;
 
-public class CustomAdapter extends ArrayAdapter<Object> {
+public class RingtoneAdapter extends ArrayAdapter<Object> {
 
-    String[] mRingtoneNames = {"WARM BREEZE", "DISTANT MEMORIES", "MORNING MIST", "SUNRISE"};
+    private  String[] mRingtoneNames = {"WARM BREEZE", "DISTANT MEMORIES", "MORNING MIST", "SUNRISE"};
 
-    Context mContext;
-    int mResourceId;
-    public static int mLastSelectPosition = -1;
+    private Context mContext;
+    private int mLastSelectPosition = -1;
 
-    public CustomAdapter(Context context, int resource) {
+    public RingtoneAdapter(Context context, int resource) {
         this(context, resource, 0);
     }
 
-    public CustomAdapter(Context context, int resource, int textViewResourceId) {
+    public RingtoneAdapter(Context context, int resource, int textViewResourceId) {
         super(context, resource, textViewResourceId);
         mContext = context;
-        mResourceId = resource;
     }
 
     @Override
@@ -69,8 +67,20 @@ public class CustomAdapter extends ArrayAdapter<Object> {
         return view;
     }
 
-    static class ViewHolder {
+    public String getRingtoneName(int position) {
+        return mRingtoneNames[position];
+    }
+
+    private static class ViewHolder {
         YummyTextView tvRingtoneTitle;
         ImageView imRingtoneSelect;
+    }
+    
+    public int getSelectedPosition(){
+        return mLastSelectPosition;
+    }
+
+    public void setSelectedPosition(int position) {
+        this.mLastSelectPosition = position;
     }
 }

@@ -30,7 +30,7 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
     private SeekBar sbAlarmVolume;
     private SwitchButton sbAlarmVibration;
     private ListView lvRingtoneList;
-    private CustomAdapter mAdapter;
+    private RingtoneAdapter mAdapter;
 
     private RingtoneManager mRingtoneManager;
     private AlarmRingtonePlayer mAlarmRingtonePlayer;
@@ -81,7 +81,7 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
 
         lvRingtoneList = (ListView) findViewById(R.id.lv_ringtone_list);
 
-        mAdapter = new CustomAdapter(mContext, R.layout.ringtone_list_item);
+        mAdapter = new RingtoneAdapter(mContext, R.layout.ringtone_list_item);
         lvRingtoneList.setAdapter(mAdapter);
         lvRingtoneList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -90,11 +90,11 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
 
                 Uri uri = Uri.parse(XAlarmApp.getResourcePath() + "/raw/ringtone_" + i);
 
-                if (CustomAdapter.mLastSelectPosition != i) {
+                if (mAdapter.getSelectedPosition() != i) {
                     mAlarmRingtonePlayer.stop();
                     mAlarmRingtonePlayer.play(uri);
 
-                    CustomAdapter.mLastSelectPosition = i;
+                    mAdapter.setSelectedPosition(i);
                     mAdapter.notifyDataSetChanged();
                 } else {
                     if(mAlarmRingtonePlayer.isPlaying()) {
@@ -140,10 +140,18 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
     }
 
     public void setInitRingtone(int i) {
-        CustomAdapter.mLastSelectPosition = i;
+        mAdapter.setSelectedPosition(i);
         mAdapter.notifyDataSetChanged();
     }
 
+    public int getRingtone(){
+        return mAdapter.getSelectedPosition();
+    }
+
+    public String getRingtoneName(int position) {
+        return mAdapter.getRingtoneName(position);
+    }
+    
     public void setInitVibration(boolean isVibration) {
         sbAlarmVibration.setChecked(isVibration);
     }
@@ -152,8 +160,6 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
         return sbAlarmVibration.isChecked();
     }
 
-    public int getRingtone() {
-        return CustomAdapter.mLastSelectPosition;
-    }
+   
 
 }

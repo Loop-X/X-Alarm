@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.facebook.rebound.SpringUtil;
+import com.tendcloud.tenddata.TCAgent;
 import com.wx.wheelview.common.WheelConstants;
 import com.wx.wheelview.widget.WheelView;
 
@@ -389,6 +390,8 @@ public class SetAlarmActivity extends BaseActivity {
                 // Update alarm in DB
                 AlarmDBService.getInstance(this).updateAlarm(mAlarm);
 
+                TCAgent.onEvent(this,"闹钟状态",mAlarm.isEnabled()? "开启" : "关闭" );
+                
                 finish();
                 break;
         }

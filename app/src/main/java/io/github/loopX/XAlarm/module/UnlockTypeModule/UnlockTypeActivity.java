@@ -2,9 +2,9 @@ package io.github.loopX.XAlarm.module.UnlockTypeModule;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -16,13 +16,15 @@ import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.widget.TextView;
 
+import com.tendcloud.tenddata.TCAgent;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
 import io.github.loopX.XAlarm.R;
-import io.github.loopX.XAlarm.tools.UIUtils;
 import io.github.loopX.XAlarm.infrastructure.BaseActivity;
 import io.github.loopX.XAlarm.module.Alarm.AlarmAlertFullScreenToTest;
+import io.github.loopX.XAlarm.tools.UIUtils;
 import io.github.loopX.XAlarm.view.RippleBackgroundView;
 
 public class UnlockTypeActivity extends BaseActivity {
@@ -81,6 +83,7 @@ public class UnlockTypeActivity extends BaseActivity {
                         @Override
                         public void run() {
                             int current =  viewPager.getCurrentItem();
+                            sendTCAgent(current);
                             Intent intent  = new Intent(UnlockTypeActivity.this, UnlockTypeActivity.class);
                             int returnValue = convertItemPositionToUnlockTypeId(current);
                             intent.putExtra("unlockType", returnValue);
@@ -92,6 +95,31 @@ public class UnlockTypeActivity extends BaseActivity {
 
             }
         });
+    }
+
+    private void sendTCAgent(int current) {
+        
+        String eventLabel ;
+        switch (current){
+            case MODE_TYPE:
+                eventLabel = "打字解锁";
+                break;
+            case MODE_MATH:
+                eventLabel = "计算解锁";
+                break;
+            case MODE_PAINT:
+                eventLabel = "拼图解锁";
+                break;
+            case MODE_SHAKE:
+                eventLabel = "摇动解锁";
+                break;
+            default:
+                eventLabel = "打字解锁";
+                break;
+
+        }
+        
+        TCAgent.onEvent(this,"解锁类型",eventLabel);
     }
 
     private int convertItemPositionToUnlockTypeId(int current) {
