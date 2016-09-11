@@ -4,6 +4,8 @@ android {
     compileSdkVersion project.compileSdkVersion
     buildToolsVersion project.buildToolsVersion
 
+    
+    
     defaultConfig {
         applicationId "io.github.loopX.XAlarm"
         minSdkVersion project.minSdkVersion
@@ -15,12 +17,15 @@ android {
 
     }
 
-    def signingProps = new Properties();
+    def loopXProps = new Properties();
     new File("LoopX.properties").withInputStream {
-        stream -> signingProps.load(stream)
+        stream -> loopXProps.load(stream)
     }
-    def signingConfigGetter = new ConfigSlurper().parse(signingProps)
     
+    def signingConfigGetter = new ConfigSlurper().parse(loopXProps)
+
+    def talkingDataAppId = signingConfigGetter.talkingDataAppId
+
     signingConfigs {
         
         debug {
@@ -28,6 +33,7 @@ android {
             keyPassword signingConfigGetter.keyPassword
             storeFile file('LoopX.jks')
             storePassword signingConfigGetter.storePassword
+
         }
         
         release {
@@ -35,7 +41,6 @@ android {
             keyPassword signingConfigGetter.keyPassword
             storeFile file('LoopX.jks')
             storePassword signingConfigGetter.storePassword
-            
         }
         
     }
@@ -43,11 +48,13 @@ android {
     
     buildTypes {
         
+
         debug {
             minifyEnabled false
             zipAlignEnabled false
             shrinkResources false
-            
+
+            buildConfigField "String", "TALKING_DATA_ID", "\"$talkingDataAppId\""
         }
         
         release {
@@ -56,13 +63,38 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+
+            buildConfigField "String", "TALKING_DATA_ID", "\"$talkingDataAppId\""
             
         }
     }
 
     productFlavors {
         
+        
+
+        self {
+            buildConfigField "String", "TALKING_DATA_ID", "\"$talkingDataAppId\""
+            buildConfigField "String", "CHANNEL", "\"default\""
+        }
+
+      /*  googlePlay{
+            buildConfigField "String", "TALKING_DATA_ID", "\"$talkingDataAppId\""
+            buildConfigField "String", "CHANNEL", "\"play.google.com\""
+        }*/
+        
+        
+        meizu{
+            buildConfigField "String", "TALKING_DATA_ID", "\"$talkingDataAppId\""
+            buildConfigField "String", "CHANNEL", "\"meizu\""
+        }
+        
+        smartisan{
+            buildConfigField "String", "TALKING_DATA_ID", "\"$talkingDataAppId\""
+            buildConfigField "String", "CHANNEL", "\"smartisan\""
+        }
     }
+    
     
     packagingOptions {
         exclude 'META-INF/LICENSE'
@@ -78,6 +110,6 @@ dependencies {
     compile 'com.android.support:design:24.2.0'
     compile 'com.facebook.rebound:rebound:0.3.8'
     compile 'com.kyleduo.switchbutton:library:1.4.1'
-    
-    compile project(":wheelviewLibrary")
+    compile project(':wheelviewLibrary')
+    compile files('lib/TalkingData_Analytics_Android_SDK_V2.2.37.jar')
 }

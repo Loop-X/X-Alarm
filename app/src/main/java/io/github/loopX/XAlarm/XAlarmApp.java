@@ -2,7 +2,8 @@ package io.github.loopX.XAlarm;
 
 import android.app.Application;
 import android.content.Context;
-import android.util.Log;
+
+import com.tendcloud.tenddata.TCAgent;
 
 
 /**
@@ -33,5 +34,11 @@ public class XAlarmApp extends Application{
         super.onCreate();
         XAlarmApp.mContext = getApplicationContext();
         XAlarmApp.mPackageName = XAlarmApp.mContext.getPackageName();
+
+        if (!BuildConfig.DEBUG) {
+            TCAgent.LOG_ON = true;
+            TCAgent.init(this, BuildConfig.TALKING_DATA_ID, BuildConfig.CHANNEL);
+            TCAgent.setReportUncaughtExceptions(true);
+        }
     }
 }
