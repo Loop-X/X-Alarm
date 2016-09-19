@@ -16,6 +16,15 @@
 #   public *;
 #}
 
+-dontusemixedcaseclassnames
+-dontskipnonpubliclibraryclasses
+-verbose
+
+-dontpreverify
+-optimizationpasses 5
+-optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
+
+
 -dontwarn com.tendcloud.tenddata.**
 -keep class com.tendcloud.** {*;}
 -keep public class com.tendcloud.tenddata.** { public protected *;}
@@ -24,3 +33,46 @@ public void *(***);
 }
 -keep class com.talkingdata.sdk.TalkingDataSDK {public *;}
 -keep class com.apptalkingdata.** {*;}
+
+# keep setters in Views so that animations can still work.
+# see http://proguard.sourceforge.net/manual/examples.html#beans
+-keepclassmembers public class * extends android.view.View {
+   void set*(***);
+   *** get*();
+}
+
+# For enumeration classes, see http://proguard.sourceforge.net/manual/examples.html#enumerations
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+-keep class * implements android.os.Parcelable {
+  public static final android.os.Parcelable$Creator *;
+}
+
+-keepclassmembers class **.R$* {
+    public static <fields>;
+}
+
+-dontwarn android.support.**
+-dontwarn java.**
+
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep public class * extends android.content.ContentProvider
+-keep public class * extends android.app.backup.BackupAgentHelper
+-keep public class * extends android.preference.Preference
+-keep public class * extends android.widget.LinearLayout
+-keep public class * extends android.widget.RelativeLayout
+-keep public class * extends android.view.View
+-keep public class * extends android.support.v4.app.Fragment
+
+-keep io.github.loopX.XAlarm.database.** {*;}
+-keep io.github.loopX.XAlarm.infrastructure.** {*;}
+-keep io.github.loopX.XAlarm.module.** {*;}
+-keep io.github.loopX.XAlarm.tools.** {*;}
+-keep io.github.loopX.XAlarm.view.** {*;}
+
