@@ -93,6 +93,11 @@ android {
             buildConfigField "String", "TALKING_DATA_ID", "\"$talkingDataAppId\""
             buildConfigField "String", "CHANNEL", "\"smartisan\""
         }
+        
+        _360{
+            buildConfigField "String", "TALKING_DATA_ID", "\"$talkingDataAppId\""
+            buildConfigField "String", "CHANNEL", "\"360市场\""
+        }
     }
     
     
