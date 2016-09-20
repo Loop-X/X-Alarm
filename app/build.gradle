@@ -5,7 +5,6 @@ android {
     buildToolsVersion project.buildToolsVersion
 
     
-    
     defaultConfig {
         applicationId "io.github.loopX.XAlarm"
         minSdkVersion project.minSdkVersion
@@ -17,33 +16,68 @@ android {
 
     }
 
-    def loopXProps = new Properties();
-    new File("LoopX.properties").withInputStream {
-        stream -> loopXProps.load(stream)
+    println "------------------ X Alarm --------------------- "
+
+    
+    def talkingDataAppId = ""
+    def haveLoopXPros = false;
+    Properties loopXProps  = new Properties()
+    
+    if (new File("LoopX.properties").exists()) {
+
+        new File("LoopX.properties").withInputStream {
+            stream -> loopXProps.load(stream)
+        }
+        
+        talkingDataAppId = loopXProps['talkingDataAppId']
+        haveLoopXPros = true;
+
+        println "------------------ Reading 'LoopX.properties' succeed! --------------------- "
+        println "------------------ talkingDataAppId: " + talkingDataAppId +  "--------------------- "
+
+    }else {
+        println "------------------ No 'LoopX.properties' file found! --------------------- "
     }
     
-    def signingConfigGetter = new ConfigSlurper().parse(loopXProps)
+    if (haveLoopXPros){
 
-    def talkingDataAppId = signingConfigGetter.talkingDataAppId
 
-    signingConfigs {
+        println "------------------ Do signing configs! --------------------- "
+        println "------------------ keyAlias: " + loopXProps['keyAlias'] +  "--------------------- "
+        println "------------------ keyPassword: " + loopXProps['keyPassword'] +  "--------------------- "
+        println "------------------ storePassword: " + loopXProps['storePassword'] +  "--------------------- "
         
-        debug {
-            keyAlias signingConfigGetter.keyAlias
-            keyPassword signingConfigGetter.keyPassword
-            storeFile file('LoopX.jks')
-            storePassword signingConfigGetter.storePassword
+        signingConfigs {
+            debug {
+                println "------------------ Debug signing configs! --------------------- "
+                
+                keyAlias loopXProps['keyAlias']
+                keyPassword loopXProps['keyPassword']
+                storeFile file('LoopX.jks')
+                storePassword loopXProps['storePassword']
+            }
 
+            release {
+                println "------------------ Release signing configs! --------------------- "
+                
+                keyAlias loopXProps['keyAlias']
+                keyPassword loopXProps['keyPassword']
+                storeFile file('LoopX.jks')
+                storePassword loopXProps['storePassword']
+            }
         }
-        
-        release {
-            keyAlias signingConfigGetter.keyAlias
-            keyPassword signingConfigGetter.keyPassword
-            storeFile file('LoopX.jks')
-            storePassword signingConfigGetter.storePassword
+    }else {
+
+        println "------------------ No signing configs! --------------------- "
+
+        signingConfigs {
+            release {
+               
+            }
         }
-        
     }
+    
+    
     
     
     buildTypes {
@@ -54,17 +88,20 @@ android {
             zipAlignEnabled false
             shrinkResources false
 
-            buildConfigField "String", "TALKING_DATA_ID", "\"$talkingDataAppId\""
+            manifestPlaceholders = [TALKING_DATA_APP_ID: talkingDataAppId]
         }
         
         release {
             minifyEnabled false
             zipAlignEnabled true
-            shrinkResources true
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            
+            if (haveLoopXPros){
+                signingConfig signingConfigs.release
+            }
 
-            buildConfigField "String", "TALKING_DATA_ID", "\"$talkingDataAppId\""
+            manifestPlaceholders = [TALKING_DATA_APP_ID: talkingDataAppId]
             
         }
     }
@@ -74,17 +111,17 @@ android {
         
 
         self {
-            buildConfigField "String", "TALKING_DATA_ID", "\"$talkingDataAppId\""
+            manifestPlaceholders = [TALKING_DATA_APP_ID: talkingDataAppId]
             buildConfigField "String", "CHANNEL", "\"default\""
         }
 
-      /*  googlePlay{
-            buildConfigField "String", "TALKING_DATA_ID", "\"$talkingDataAppId\""
+        googlePlay{
+            manifestPlaceholders = [TALKING_DATA_APP_ID: talkingDataAppId]
             buildConfigField "String", "CHANNEL", "\"play.google.com\""
-        }*/
+        }
         
         
-        meizu{
+        /*meizu{
             buildConfigField "String", "TALKING_DATA_ID", "\"$talkingDataAppId\""
             buildConfigField "String", "CHANNEL", "\"meizu\""
         }
@@ -97,7 +134,7 @@ android {
         _360{
             buildConfigField "String", "TALKING_DATA_ID", "\"$talkingDataAppId\""
             buildConfigField "String", "CHANNEL", "\"360市场\""
-        }
+        }*/
     }
     
     
@@ -116,5 +153,6 @@ dependencies {
     compile 'com.facebook.rebound:rebound:0.3.8'
     compile 'com.kyleduo.switchbutton:library:1.4.1'
     compile project(':wheelviewLibrary')
-    compile files('lib/TalkingData_Analytics_Android_SDK_V2.2.37.jar')
+  //  compile files('lib/TalkingData_Analytics_Android_SDK_V2.2.37.jar')
+    compile files('lib/TalkingData_Analytics_Android_SDK_GP_V2.2.37.jar')
 }
