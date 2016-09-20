@@ -70,9 +70,9 @@ public void *(***);
 -keep public class * extends android.view.View
 -keep public class * extends android.support.v4.app.Fragment
 
--keep io.github.loopX.XAlarm.database.** {*;}
--keep io.github.loopX.XAlarm.infrastructure.** {*;}
--keep io.github.loopX.XAlarm.module.** {*;}
--keep io.github.loopX.XAlarm.tools.** {*;}
--keep io.github.loopX.XAlarm.view.** {*;}
+-keep class io.github.loopX.XAlarm.database.** {*;}
+-keep class io.github.loopX.XAlarm.infrastructure.** {*;}
+-keep class io.github.loopX.XAlarm.module.** {*;}
+-keep class io.github.loopX.XAlarm.tools.** {*;}
+-keep class io.github.loopX.XAlarm.view.** {*;}
 
