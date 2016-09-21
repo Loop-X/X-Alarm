@@ -146,6 +146,26 @@ android {
             buildConfigField "String", "CHANNEL", "\"yingyongbao\""
         }
     }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+
+            String folderName = new Date().format('yyyy-MM-dd')
+            def outputFile = output.outputFile
+
+            if(variant.buildType.name.equals('release')){
+                if (outputFile != null && outputFile.name.endsWith('.apk')) {
+
+                    def fileName = folderName + "/X-Alarm-" + variant.productFlavors[0].name + "-" + variant.getVersionName() +"-release.apk"
+                    output.outputFile = new File(outputFile.parent, fileName)
+                    
+                    println "------------------ Release file name: " + fileName + " --------------------- "
+                }
+            }else if (variant.buildType.name.equals('debug')) {
+                 //do something
+            }
+        }
+    }
     
     
     packagingOptions {
@@ -153,6 +173,7 @@ android {
         exclude 'META-INF/NOTICE'
     }
 }
+
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
