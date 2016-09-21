@@ -115,13 +115,13 @@ android {
             buildConfigField "String", "CHANNEL", "\"default\""
         }
 
-        googlePlay{
+     /*   googlePlay{
             manifestPlaceholders = [TALKING_DATA_APP_ID: talkingDataAppId]
             buildConfigField "String", "CHANNEL", "\"play.google.com\""
-        }
+        }*/
         
         
-        /*meizu{
+        meizu{
             buildConfigField "String", "TALKING_DATA_ID", "\"$talkingDataAppId\""
             buildConfigField "String", "CHANNEL", "\"meizu\""
         }
@@ -134,7 +134,12 @@ android {
         _360{
             buildConfigField "String", "TALKING_DATA_ID", "\"$talkingDataAppId\""
             buildConfigField "String", "CHANNEL", "\"360市场\""
-        }*/
+        }
+
+        xiaomi{
+            buildConfigField "String", "TALKING_DATA_ID", "\"$talkingDataAppId\""
+            buildConfigField "String", "CHANNEL", "\"xiaomi\""
+        }
     }
     
     
@@ -153,6 +158,6 @@ dependencies {
     compile 'com.facebook.rebound:rebound:0.3.8'
     compile 'com.kyleduo.switchbutton:library:1.4.1'
     compile project(':wheelviewLibrary')
-  //  compile files('lib/TalkingData_Analytics_Android_SDK_V2.2.37.jar')
-    compile files('lib/TalkingData_Analytics_Android_SDK_GP_V2.2.37.jar')
+    compile files('lib/TalkingData_Analytics_Android_SDK_V2.2.37.jar')
+    //  compile files('lib/TalkingData_Analytics_Android_SDK_GP_V2.2.37.jar')
 }
