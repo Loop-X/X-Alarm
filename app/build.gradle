@@ -140,6 +140,11 @@ android {
             buildConfigField "String", "TALKING_DATA_ID", "\"$talkingDataAppId\""
             buildConfigField "String", "CHANNEL", "\"xiaomi\""
         }
+
+        yingyongbao{
+            buildConfigField "String", "TALKING_DATA_ID", "\"$talkingDataAppId\""
+            buildConfigField "String", "CHANNEL", "\"yingyongbao\""
+        }
     }
     
     
