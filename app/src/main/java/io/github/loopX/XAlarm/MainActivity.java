@@ -219,6 +219,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        rightMenu.stopRingtone();
+    }
+
+    @Override
     public void onClick(View v) {
 
         switch (v.getId()) {

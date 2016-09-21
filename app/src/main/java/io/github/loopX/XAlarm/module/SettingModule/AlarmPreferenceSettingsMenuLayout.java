@@ -136,7 +136,9 @@ public class AlarmPreferenceSettingsMenuLayout extends LinearLayout {
     }
 
     public void stopRingtone() {
-        mAlarmRingtonePlayer.stop();
+        if (mAlarmRingtonePlayer != null){
+            mAlarmRingtonePlayer.stop();
+        }
     }
 
     public void setInitRingtone(int i) {
