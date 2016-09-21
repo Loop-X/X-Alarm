@@ -43,6 +43,8 @@ import io.github.loopX.XAlarm.view.DragMenuLayout;
 import io.github.loopX.XAlarm.view.UnlockTypeMenuLayout;
 import io.github.loopX.XAlarm.view.YummyTextView;
 
+import static android.os.Build.VERSION_CODES.M;
+
 public class MainActivity extends BaseActivity implements View.OnClickListener, DragMenuLayout.DragMenuStateListener {
 
     private static final String TAG = "ywp.MainActivity";
@@ -427,7 +429,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= M) {
             mWindow.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             mWindow.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             mWindow.setStatusBarColor(getColor(R.color.loopX_1_50_alpha));
@@ -443,6 +445,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
         */
 
+    }
+
+
+    
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        
+        if (keyCode == KeyEvent.KEYCODE_BACK){
+            if (loopXDragMenuLayout.getMenuStatus() == DragMenuLayout.MenuStatus.Open){
+                loopXDragMenuLayout.closeMenuWithAnimation();
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
