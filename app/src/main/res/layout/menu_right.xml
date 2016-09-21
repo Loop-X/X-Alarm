@@ -77,23 +77,23 @@
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="16dp">
 
-        <Button
+        <ImageView
             android:id="@+id/btn_share"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:onClick="onClick"
             android:layout_toLeftOf="@+id/btn_about"
             android:layout_alignParentBottom="true"
-            android:background="@drawable/icon_share" />
+            android:src="@drawable/icon_share" />
 
-        <Button
+        <ImageView
             android:id="@+id/btn_about"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:onClick="onClick"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:background="@drawable/icon_info" />
+            android:src="@drawable/icon_info" />
 
     </RelativeLayout>
 
