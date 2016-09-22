@@ -1,5 +1,12 @@
 # X Alarm
 
+X-ALARM is a cool application to help lazy boys/girls to get up.
+ 
+Yes, we are all lazy in the morning :D
+
+X-Alarm not only provides a very soothing ringtone which wakes you up smoothly instead of being awakened suddenly.But also 
+offers a variety of interesting ways to unlock alarm so you have to get up to unlock it!
+
 
 
 
