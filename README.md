@@ -19,7 +19,7 @@ offers a variety of interesting ways to unlock alarm so you have to get up to un
 
 
 
-X Alarm 
+For more information, please visit our website [X-Alarm](http://loop-x.github.io/X-Alarm/)
 
 
 License ![License](https://img.shields.io/badge/license-AGPL%20v3.0-blue.svg)
