@@ -1,5 +1,10 @@
 # X Alarm
 
+<div align="center">
+<img src="https://github.com/Loop-X/X-Alarm/blob/master/images/x-alarm-nexus.png"  width="588"  height="780" />
+</div>
+ 
+ 
 X-ALARM is a cool application to help lazy boys/girls to get up.
  
 Yes, we are all lazy in the morning :D
