@@ -1,7 +1,7 @@
 # X Alarm
 
 <div align="center">
-<img src="https://github.com/Loop-X/X-Alarm/blob/master/images/x-alarm-nexus.png"  width="588"  height="780" />
+<img src="https://github.com/Loop-X/X-Alarm/blob/master/images/x-alarm-nexus.png"  width="441"  height="585" />
 </div>
  
  
