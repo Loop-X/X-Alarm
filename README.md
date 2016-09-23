@@ -9,7 +9,7 @@ offers a variety of interesting ways to unlock alarm so you have to get up to un
 
 
 <div align="left">
-<img src="https://github.com/Loop-X/X-Alarm/blob/master/images/x-alarm-awesome.jpg"  width="1130"  height="727" />
+<img src="https://github.com/Loop-X/X-Alarm/blob/master/images/x-alarm-awesome.jpg"  width="969"  height="623.4" />
  </div>
 
 License ![License](https://img.shields.io/badge/license-AGPL%20v3.0-blue.svg)
