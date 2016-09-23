@@ -8,6 +8,7 @@ X-Alarm not only provides a very soothing ringtone which wakes you up smoothly i
 offers a variety of interesting ways to unlock alarm so you have to get up to unlock it!
 
 
+![](https://github.com/Loop-X/X-Alarm/blob/master/images/x-alarm-awesome.jpg)
 
 
 License ![License](https://img.shields.io/badge/license-AGPL%20v3.0-blue.svg)
