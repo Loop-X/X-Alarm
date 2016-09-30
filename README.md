@@ -1,5 +1,5 @@
 <div align="center">
-<img src="http://oeapkptbn.bkt.clouddn.com/x-alarm-nexus.png"  width="441"  height="585" />
+<img src="https://github.com/Loop-X/X-Alarm/blob/master/images/x-alarm-nexus.png"  width="441"  height="585" />
 </div>
  
  <h3 align="center">X Alarm</h3>
@@ -15,7 +15,7 @@ Yes, we are all lazy in the morning :D
  <h3 align="center">Features</h3>
 
 <div align="center">
-<img src="http://oeapkptbn.bkt.clouddn.com/x-alarm-awesome.jpg"  width="680"  height="480" />
+<img src="https://github.com/Loop-X/X-Alarm/blob/master/images/x-alarm-awesome.jpg"  width="680"  height="480" />
  </div>
 
  <p align="center">
