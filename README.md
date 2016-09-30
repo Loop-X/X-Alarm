@@ -23,10 +23,19 @@ X-Alarm not only provides a very soothing ringtone which wakes you up smoothly i
 offers a variety of interesting ways to unlock alarm so you have to get up to unlock it!
  </p>
 
+<p align="center">
 For more information, please visit our website [X-Alarm](http://loop-x.github.io/X-Alarm/)
+</p>
 
 
-License ![License](https://img.shields.io/badge/license-AGPL%20v3.0-blue.svg)
+
+<p align="center">
+<a target="_blank" href="https://github.com/Loop-X/X-Alarm/releases"><img src="https://img.shields.io/badge/release-1.0.0-brightgreen.svg" ></a>
+<a target="_blank" href="http://loop-x.github.io/X-Alarm/"><img src="https://img.shields.io/badge/andorid-4.0-green.svg" alt="npm"></a>
+<a target="_blank" href='https://github.com/Loop-X/X-Alarm/blob/master/LICENSE.txt'><img src='https://img.shields.io/badge/license-AGPL%20v3.0-blue.svg'  /></a>
+</p>
+
+License 
 --------
 
 [GNU Affero General Public License v3.0](https://github.com/Loop-X/X-Alarm/blob/master/LICENSE.txt)
