@@ -24,7 +24,7 @@ offers a variety of interesting ways to unlock alarm so you have to get up to un
  </p>
 
 <p align="center">
-For more information, please visit our website [X-Alarm](http://loop-x.github.io/X-Alarm/)
+For more information, please visit our website http://loop-x.github.io/X-Alarm/
 </p>
 
 
